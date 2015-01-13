@@ -48,14 +48,14 @@ angular.module('alumniApp')
 
     $scope.userRegistration = function() {
 
-    	var registrationData = {
-    		'first_name' : registration.first_name.value,
-    		'last_name' : registration.last_name.value,
-    		'nsu_id' : registration.nsu_id.value,
-    		'email' : registration.email.value,
-    		'phone' : registration.phone.value,
-    		'csrf_test_name': $scope.csrf_test_name
-    	}
+    	var registrationData = $.param({
+    	    		'csrf_test_name': $scope.csrf_test_name,
+    	    		'first_name' : registration.first_name.value,
+    	    		'last_name' : registration.last_name.value,
+    	    		'nsu_id' : registration.nsu_id.value,
+    	    		'email' : registration.email.value,
+    	    		'phone' : registration.phone.value,
+    	    	})
 
     	$http.post('api/index.php/survey/registration',registrationData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  		.success(function(data) {
