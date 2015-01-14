@@ -16,44 +16,29 @@
 
  	var getTemplate = function(fieldType,userAnswer) {
  		var template = '';
-
+ 		console.log(userAnswer);
  		switch(fieldType.type) {
  			case 'input':
- 			var name = 'survey_question_id_'+fieldType.survey_question_id;
- 			userAnswer[name] = '';
- 			template = '<input class="form-control" type="text" value="" name="'+name+'">';
+ 			var name = 'q_'+fieldType.survey_question_id;
+ 			template = '<input class="form-control" type="text" value="" ng-model="'+name+'" name="'+name+'">';
  			break;
  			case 'textarea':
- 			var name = 'survey_question_id_'+fieldType.survey_question_id;
- 			userAnswer[name] = '';
- 			template = '<textarea class="form-control" value="" name="'+name+'"></textarea>';
+ 			var name = 'q_'+fieldType.survey_question_id;
+ 			template = '<textarea class="form-control" value="" ng-model="'+name+'" name="'+name+'"></textarea>';
  			break;
  			case 'radio':
  			template+='<div class="radio">';
  			angular.forEach(fieldType.answers, function(e,i) {
- 				var name = 'survey_question_id_'+e.survey_question_id;
- 				userAnswer.push({
- 					'name': name,
- 					'value': '',
- 					'type': ''
- 				})
- 				userAnswer[name] = 'survey_question_id_'+e.survey_question_id+'_survey_answer_id'+e.survey_answer_id;
- 				template+='<label><input type="radio" value="'+e.survey_answer_id+'" ng-model="'+name+'" name="survey_question_id_'+e.survey_question_id+'">'+e.answer+'</label><br>';
+ 				var name = 'q_'+e.survey_question_id;
+ 				template+='<label><input type="radio" value="'+e.survey_answer_id+'" ng-model="'+name+'">'+e.answer+'</label><br>';
  			});
  			template+='</div>';
  			break;
  			case 'checkbox':
  			template+='<div class="checkbox">';
  			angular.forEach(fieldType.answers, function(e,i) {	
- 				var name = 'survey_question_id_'+e.survey_question_id;
- 				
- 				userAnswer.push({
- 					'name': name,
- 					'value': '',
- 					'type': ''
- 				})
- 				userAnswer[name] = 'survey_question_id_'+e.survey_question_id+'_survey_answer_id'+e.survey_answer_id;
- 				template+='<label><input type="checkbox" value="'+e.survey_answer_id+'" ng-model="'+name+'" name="survey_question_id_'+e.survey_question_id+'">'+e.answer+'</label><br>';
+ 				var name = 'q_'+e.survey_question_id+'_a_'+e.survey_answer_id;
+ 				template+='<label><input type="checkbox" value="'+e.survey_answer_id+'" ng-model="'+name+'">'+e.answer+'</label><br>';
  			});
  			template+='</div>';
  			break;
@@ -64,7 +49,8 @@
 
 
  	var linker = function(scope, element, attrs) {
- 		element.html(getTemplate(scope.data),scope.userAnswer).show();
+ 		console.log(scope.userAnswer)
+ 		element.html(getTemplate(scope.data,scope.userAnswer)).show();
  		console.log(scope.userAnswer);
  		$compile(element.contents())(scope);
  	}

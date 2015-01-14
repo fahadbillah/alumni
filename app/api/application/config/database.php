@@ -48,9 +48,12 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = '192.168.100.219';
-$db['default']['username'] = 'adnan';
-$db['default']['password'] = '1234';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = '';
+// $db['default']['hostname'] = '192.168.100.219';
+// $db['default']['username'] = 'adnan';
+// $db['default']['password'] = '1234';
 $db['default']['database'] = 'nsu_sob_alumni';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

@@ -52,12 +52,12 @@
 <form name="survey" ng-if="!registrationDone" ng-submit="submitSurvey()" novalidate>
 
 	
-	<div class="form-group" ng-repeat-start="(key, value) in allQuestions">
+	<div class="form-group" ng-if="value.group == group" ng-repeat-start="(key, value) in allQuestions">
 		<label for="">{{value.question}}</label>
 		<form-fields data="value"></form-fields>
 	</div>
 
-	<hr ng-repeat-end>
+	<hr ng-if="value.group == group" ng-repeat-end>
 
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
