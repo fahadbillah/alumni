@@ -3,6 +3,7 @@
 function jsonify($data)
 {
 	echo json_encode($data);
+	exit();
 }
 
 function vd($data){

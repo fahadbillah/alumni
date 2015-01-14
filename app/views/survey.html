@@ -1,10 +1,10 @@
-<form name="registration" ng-if="!registrationDone" novalidate>
+<form name="registration" ng-if="registrationDone" novalidate>
 
 	<div class="form-group">
 		<label for="">First Name</label>
 		<input type="text" class="form-control" name="first_name" ng-model="first_name" placeholder="Input field" required>
 		<!-- <div class="alert alert-danger" ng-show="registration.first_name.$dirty && registration.first_name.$invalid"> -->
-			<span ng-show="registration.first_name.$error.required && registration.first_name.$dirty" class="label label-danger">first_name is required.</span>
+		<span ng-show="registration.first_name.$error.required && registration.first_name.$dirty" class="label label-danger">first_name is required.</span>
 		<!-- </div> -->
 	</div>
 
@@ -12,7 +12,7 @@
 		<label for="">Last Name</label>
 		<input type="text" class="form-control" name="last_name" ng-model="last_name" placeholder="Input field" required>
 		<!-- <div class="alert alert-danger" ng-show="registration.last_name.$dirty && registration.last_name.$invalid"> -->
-			<span ng-show="registration.last_name.$error.required && registration.last_name.$dirty" class="label label-danger">last_name is required.</span>
+		<span ng-show="registration.last_name.$error.required && registration.last_name.$dirty" class="label label-danger">last_name is required.</span>
 		<!-- </div> -->
 	</div>
 
@@ -21,8 +21,8 @@
 		<label for="">NSU ID</label>
 		<input type="number" class="form-control" name="nsu_id" ng-model="nsu_id" placeholder="Input field" required>
 		<!-- <div class="alert alert-danger" ng-show="registration.nsu_id.$dirty && registration.nsu_id.$invalid"> -->
-			<span ng-show="registration.nsu_id.$error.required && registration.nsu_id.$dirty" class="label label-danger">nsu_id is required.</span>
-			<span ng-show="registration.nsu_id.$error.number && registration.nsu_id.$dirty" class="label label-danger">Invalid nsu_id.</span>
+		<span ng-show="registration.nsu_id.$error.required && registration.nsu_id.$dirty" class="label label-danger">nsu_id is required.</span>
+		<span ng-show="registration.nsu_id.$error.number && registration.nsu_id.$dirty" class="label label-danger">Invalid nsu_id.</span>
 		<!-- </div> -->
 	</div>
 
@@ -31,8 +31,8 @@
 		<label for="">email</label>
 		<input type="email" class="form-control" name="email" ng-model="email" placeholder="Input field" required>
 		<!-- <div class="alert alert-danger" ng-show="registration.email.$dirty && registration.email.$invalid"> -->
-			<span ng-show="registration.email.$error.required && registration.email.$dirty" class="label label-danger">Email is required.</span>
-			<span ng-show="registration.email.$error.email && registration.email.$dirty"  class="label label-danger">Invalid email address.</span>
+		<span ng-show="registration.email.$error.required && registration.email.$dirty" class="label label-danger">Email is required.</span>
+		<span ng-show="registration.email.$error.email && registration.email.$dirty"  class="label label-danger">Invalid email address.</span>
 		<!-- </div> -->
 	</div>
 
@@ -41,9 +41,23 @@
 		<label for="">Phone</label>
 		<input type="text" class="form-control" name="phone" ng-model="phone" placeholder="Input field" required>
 		<div class="alert alert-danger" ng-show="registration.phone.$dirty && registration.phone.$invalid">
-		<span ng-show="registration.phone.$error.required && registration.phone.$dirty">phone is required.</span>
+			<span ng-show="registration.phone.$error.required && registration.phone.$dirty">phone is required.</span>
 		</div>
 	</div>
 
 	<button type="submit" class="btn btn-primary" ng-disabled="registration.$pristine || registration.$invalid" ng-click="userRegistration()">Submit</button>
+</form>
+
+
+<form name="survey" ng-if="!registrationDone" ng-submit="submitSurvey()" novalidate>
+
+	
+	<div class="form-group" ng-repeat-start="(key, value) in allQuestions">
+		<label for="">{{value.question}}</label>
+		<form-fields data="value"></form-fields>
+	</div>
+
+	<hr ng-repeat-end>
+
+	<button type="submit" class="btn btn-primary">Submit</button>
 </form>

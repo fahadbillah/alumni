@@ -4,7 +4,6 @@ function get_post()
 {
 	$processed_data = array();
 	$data = explode('&', file_get_contents("php://input"));
-	var_dump($data);
 	foreach ($data as $key => $value) {
 		$splid_data = explode('=', $value);
 		if (in_array('csrf_test_name', $splid_data)) 
