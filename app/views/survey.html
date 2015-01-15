@@ -1,4 +1,4 @@
-<form name="registration" ng-if="registrationDone" novalidate>
+<form name="registration" ng-if="!registrationDone" novalidate>
 
 	<div class="form-group">
 		<label for="">First Name</label>
@@ -49,7 +49,7 @@
 </form>
 
 
-<form name="survey" ng-if="!registrationDone" ng-submit="submitSurvey()" novalidate>
+<form name="survey" ng-if="registrationDone" ng-submit="submitSurvey()" novalidate>
 
 	
 	<div class="form-group" ng-if="value.group == group" ng-repeat-start="(key, value) in allQuestions">

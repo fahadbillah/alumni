@@ -10,14 +10,15 @@
  */
  angular
  .module('alumniApp', [
-  'ngAnimate',
-  'ngCookies',
-  'ngResource',
-  'ngRoute',
-  'ngSanitize',
-  'ngTouch'
-  ])
- .config(function ($routeProvider) {
+         'ngAnimate',
+         'ngCookies',
+         'ngResource',
+         'ngRoute',
+         'ngSanitize',
+         'ngTouch'
+         ])
+ .config(function ($routeProvider,$locationProvider) {
+  $locationProvider.html5Mode(true);
   $routeProvider
   .when('/', {
     templateUrl: 'views/main.html',
@@ -34,6 +35,10 @@
   .when('/survey/:referralLink', {
     templateUrl: 'views/survey.html',
     controller: 'SurveyCtrl'
+  })
+  .when('/profile', {
+    templateUrl: 'views/profile.html',
+    controller: 'ProfileCtrl'
   })
   .otherwise({
     redirectTo: '/'

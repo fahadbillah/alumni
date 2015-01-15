@@ -28,6 +28,16 @@ class Survey_model extends CI_Model {
 		return $questions;
 	}
 
+	public function get_last_group_no()
+	{
+		return	$this->db->select_max('group','last_group_no')->from('survey_questions')->get()->result_array()[0]['last_group_no'];
+	}
+
+	public function insert_answer($question_answer)
+	{
+		return $this->db->insert('user_answers', $question_answer);
+	}
+
 }
 
 /* End of file survey_model.php */

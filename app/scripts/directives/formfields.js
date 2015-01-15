@@ -30,7 +30,7 @@
  			template+='<div class="radio">';
  			angular.forEach(fieldType.answers, function(e,i) {
  				var name = 'q_'+e.survey_question_id;
- 				template+='<label><input type="radio" value="'+e.survey_answer_id+'" ng-model="'+name+'">'+e.answer+'</label><br>';
+ 				template+='<label><input type="radio" value="'+e.survey_answer_id+'" ng-value="'+e.survey_answer_id+'" ng-model="'+name+'" name="'+name+'">'+e.answer+'</label><br>';
  			});
  			template+='</div>';
  			break;
@@ -38,7 +38,7 @@
  			template+='<div class="checkbox">';
  			angular.forEach(fieldType.answers, function(e,i) {	
  				var name = 'q_'+e.survey_question_id+'_a_'+e.survey_answer_id;
- 				template+='<label><input type="checkbox" value="'+e.survey_answer_id+'" ng-model="'+name+'">'+e.answer+'</label><br>';
+ 				template+='<label><input type="checkbox" value="'+e.survey_answer_id+'" ng-value="'+e.survey_answer_id+'" ng-model="'+name+'" name="'+name+'">'+e.answer+'</label><br>';
  			});
  			template+='</div>';
  			break;
