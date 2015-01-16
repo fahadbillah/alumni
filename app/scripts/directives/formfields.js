@@ -16,7 +16,6 @@
 
  	var getTemplate = function(fieldType,userAnswer) {
  		var template = '';
- 		console.log(userAnswer);
  		switch(fieldType.type) {
  			case 'input':
  			var name = 'q_'+fieldType.survey_question_id;
@@ -49,9 +48,7 @@
 
 
  	var linker = function(scope, element, attrs) {
- 		console.log(scope.userAnswer)
  		element.html(getTemplate(scope.data,scope.userAnswer)).show();
- 		console.log(scope.userAnswer);
  		$compile(element.contents())(scope);
  	}
 

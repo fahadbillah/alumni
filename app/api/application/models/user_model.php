@@ -37,7 +37,9 @@ class User_model extends CI_Model {
 			twitter_link,
 			linkedin_link,
 			referral_link,
-			profile_pic
+			profile_pic,
+			admin,
+			referer
 			');
 		$this->db->from('users');
 		$this->db->where('user_id', $user_id);
@@ -71,6 +73,44 @@ class User_model extends CI_Model {
 			return false;
 	}
 
+	public function login_check($login_data)
+	{
+		$this->db->select('
+			user_id,
+			first_name,
+			last_name,
+			email,
+			nsu_id,
+			about_me,
+			phone,
+			dob,
+			create_date,
+			update_date,
+			facebook_link,
+			twitter_link,
+			linkedin_link,
+			referral_link,
+			profile_pic,
+			admin,
+			referer
+			');
+		$this->db->from('users');
+		$this->db->where('nsu_id', (int) $login_data['nsu_id']);
+		$this->db->where('password', sha1($login_data['password']));
+		$q = $this->db->get();
+		$result = $q->result_array();
+
+		if (count($result)>0) {
+			return array(
+				'success' => true,
+				'user_data' => $result
+				);
+		}else{
+			return array(
+				'success' => false,
+				);
+		}
+	}
 }
 
 /* End of file user.php */

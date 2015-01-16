@@ -19,11 +19,23 @@
 
  	var user_id = $routeParams.userId;
 
+ 	$scope.referralLinks = {
+ 		'facebook': '',
+ 		'twitter': '',
+ 		'linkedIn': '',
+ 		'email': '',
+ 	}
+
+ 	var makeReferralLink = function(argument) {
+ 		$scope.facebook = '//www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fstaging.nsuschoolofbusiness.org%2F%23%2Fsurvey%2F{{$scope.user_data.referral_link}}&amp;layout=button&amp;appId=485258221589254';
+ 	}
+
  	$http.get('api/index.php/user/get_user_info/'+user_id)
  	.success(function(data) {
  		console.log(data);
  		if (data.success === true) {
  			$scope.user_data = data.user_data[0];
+ 			makeReferralLink();
  		} else{
 
  		};

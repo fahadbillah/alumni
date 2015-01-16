@@ -10,7 +10,6 @@ class Survey extends CI_Controller {
 
 	public function index()
 	{
-		jsonify(array('success' => true, 'csrf_test_name' => $this->input->cookie('XSRF-TOKEN')));
 	}
 
 	public function get_all_questions()
@@ -26,7 +25,8 @@ class Survey extends CI_Controller {
 	public function registration()
 	{
 		$post_data = get_post();
-		$post_data['password'] = sha1(generate_random_string(8));
+		$post_data['password'] = sha1(123);
+		// $post_data['password'] = sha1(generate_random_string(8));
 		$post_data['token'] = generate_random_string(40);
 		$post_data['referral_link'] = generate_random_string(10);
 
@@ -50,10 +50,10 @@ class Survey extends CI_Controller {
 		if ($result['success'] === true) {
 
 			$session_data = array(
-			                      'is_logged_in' => true,
-			                      'user_data' => $result['last_inserted_data']
-			                      );
-			
+				'is_logged_in' => true,
+				'user_data' => $result['last_inserted_data']
+				);
+
 			$this->session->set_userdata( $session_data );
 
 			$return_data['success'] = true;
@@ -71,9 +71,9 @@ class Survey extends CI_Controller {
 			$user_id = $this->session->userdata('user_data')[0]['user_id'];
 		} else {
 			$return_data = array(
-			                     'success' => false,
-			                     'message' => 'Please login first!'
-			                     );
+				'success' => false,
+				'message' => 'Please login first!'
+				);
 			jsonify($return_data);
 		}
 
@@ -102,33 +102,33 @@ class Survey extends CI_Controller {
 		}
 
 		$question_answer = array(
-		                         'user_id' => $user_id,
-		                         'survey_question_id' => $survey_question_id ,
-		                         'survey_answer_id' => $survey_answer_id,
-		                         'other_answer' => $other_answer,
-		                         );
+			'user_id' => $user_id,
+			'survey_question_id' => $survey_question_id ,
+			'survey_answer_id' => $survey_answer_id,
+			'other_answer' => $other_answer,
+			);
 
 
 		$result = $this->Survey_model->insert_answer($question_answer);
 
 		if ($result) {	
 			$return_data = array(
-			                     'success' => true,
-			                     'message' => 'Answer submitted successfully!',
-			                     'return_data' => array(
-			                                            'result' => $result,
-			                                            'question_answer' => $question_answer,
-			                                            )
-			                     );
+				'success' => true,
+				'message' => 'Answer submitted successfully!',
+				'return_data' => array(
+					'result' => $result,
+					'question_answer' => $question_answer,
+					)
+				);
 		} else {
 			$return_data = array(
-			                     'success' => false,
-			                     'message' => 'Answer submit failed!',
-			                     'return_data' => array(
-			                                            'result' => $result,
-			                                            'question_answer' => $question_answer,
-			                                            )
-			                     );
+				'success' => false,
+				'message' => 'Answer submit failed!',
+				'return_data' => array(
+					'result' => $result,
+					'question_answer' => $question_answer,
+					)
+				);
 		}
 
 

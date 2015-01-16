@@ -22,7 +22,7 @@ class User extends CI_Controller {
 
 		$returned_data = array(
 			'success' => (count($user_data) == 0)? false:true,
-			'message' => 'Logout Successfully!',
+			'message' => 'User info loaded successfully!',
 			'user_data' => $user_data,
 			);
 		jsonify($returned_data);
