@@ -1,11 +1,11 @@
 <!doctype html>
 <html class="no-js">
 <head>
-  <base href="http://127.0.0.1:8080/alumni/app/">
-  <meta charset="utf-8">
+  <!-- <base href="http://localhost/alumni/app/"> -->
   <meta property="og:title" content="NSU School Of Business" />
   <meta property="og:description" content="NSU School Of Business." />
-  <meta property="og:image" content="http://www.mysite.com/images/my_lovely_face.jpg" />
+  <meta property="og:image" content="http://staging.nsuschoolofbusiness.org/images/nsu_logo.png" />
+  <meta charset="utf-8">
   <!-- etc. -->
 
   <title>Survey</title>
@@ -30,9 +30,9 @@
       <div class="container">
         <div class="header">
           <ul class="nav nav-pills pull-right">
-            <li class="active"><a ng-href="survey">Survey</a></li>
-            <li><a ng-href="about">About</a></li>
-            <li><a ng-href="/">Home</a></li>
+            <li class="active"><a ng-href="#/survey">Survey</a></li>
+            <li><a ng-href="#/about">About</a></li>
+            <li><a ng-href="#/">Home</a></li>
           </ul>
           <h3 class="text-muted">alumni</h3>
         </div>
@@ -56,7 +56,15 @@
      ga('send', 'pageview');
      </script>
 
-     <!-- build:js(.) scripts/oldieshim.js -->
+     <div id="fb-root"></div>
+     <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=485258221589254&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <!-- build:js(.) scripts/oldieshim.js -->
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.js"></script>
@@ -74,7 +82,7 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-socialshare/angular-socialshare.js"></script>
+    <!-- <script src="bower_components/angular-socialshare/angular-socialshare.js"></script> -->
     <!-- endbower -->
     <!-- endbuild -->
 

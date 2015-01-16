@@ -10,15 +10,15 @@
  */
  angular
  .module('alumniApp', [
-         'ngAnimate',
-         'ngCookies',
-         'ngResource',
-         'ngRoute',
-         'ngSanitize',
-         'ngTouch'
-         ])
+   'ngAnimate',
+   'ngCookies',
+   'ngResource',
+   'ngRoute',
+   'ngSanitize',
+   'ngTouch'
+   ])
  .config(function ($routeProvider,$locationProvider) {
-  $locationProvider.html5Mode(true);
+  // $locationProvider.html5Mode(true).hashPrefix('!');
   $routeProvider
   .when('/', {
     templateUrl: 'views/main.html',
@@ -37,6 +37,10 @@
     controller: 'SurveyCtrl'
   })
   .when('/profile', {
+    templateUrl: 'views/profile.html',
+    controller: 'ProfileCtrl'
+  })
+  .when('/profile/:userId', {
     templateUrl: 'views/profile.html',
     controller: 'ProfileCtrl'
   })

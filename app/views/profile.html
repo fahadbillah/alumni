@@ -9,31 +9,35 @@
 			<tbody>
 				<tr>
 					<th>Name</th>
-					<td>Fahad Billah</td>
+					<td>{{ user_data.first_name }} {{ user_data.last_name }} </td>
 				</tr>
 				<tr>
 					<th>NSU ID</th>
-					<td>0930527542</td>
+					<td>{{user_data.nsu_id}}</td>
 				</tr>
 				<tr>
 					<th>Email</th>
-					<td> <a href="mailto:fahadbillah@yahoo">fahadbillah@yahoo</a> </td>
+					<td> <a href="mailto:{{user_data.email}}">{{user_data.email}}</a> </td>
 				</tr>
 				<tr>
 					<th>Phone No.</th>
-					<td>01966662623</td>
+					<td>{{user_data.phone}}</td>
 				</tr>
 				<tr>
 					<th>About Me</th>
-					<td>Nothing much</td>
+					<td>{{user_data.about_me}}</td>
 				</tr>
 				<tr>
 					<th>Activity Score</th>
-					<td>9001</td>
+					<td>{{user_data.total_point}}</td>
 				</tr>
 				<tr>
 					<th>Referral Link</th>
-					<td><a href="localhost/alumni/#/survey/TTulEWIWE">TTulEWIWE</a></td>
+					<td>
+						<!-- {{user_data.referral_link}} -->
+						<!-- <iframe src="//www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fstaging.nsuschoolofbusiness.org%2F%23%2Fsurvey%2FluuTT0tUCK&amp;layout=button&amp;appId=485258221589254" scrolling="no" frameborder="0" style="border:none; overflow:hidden;height: 19px;width: 60px;" allowtransparency="true"></iframe> -->
+						<div class="fb-share-button" data-href="http://staging.nsuschoolofbusiness.org/#/survey/{{user_data.referral_link}}" data-layout="button"></div>
+					</td>
 				</tr>
 			</tbody>
 		</table>

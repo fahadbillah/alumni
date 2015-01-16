@@ -42,7 +42,20 @@ class User_model extends CI_Model {
 		$this->db->from('users');
 		$this->db->where('user_id', $user_id);
 		$q = $this->db->get();
-		return $q->result_array();
+		$user_data = $q->result_array();
+
+		if (count($user_data) > 0) {
+			$user_data[0]['total_point'] = $this->get_user_point($user_id);
+		}
+		return $user_data;
+
+	}
+
+	public function get_user_point($user_id)
+	{
+		$this->db->where('referer', $user_id);
+		$this->db->from('users');
+		return $this->db->count_all_results();
 	}
 
 	public function get_referer_user_id($referral_link)
