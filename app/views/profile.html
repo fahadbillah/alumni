@@ -5,7 +5,7 @@
 	</div>
 
 	<div class="col-md-12">
-		<table class="table table-bordered table-hover table-striped">
+		<table class="table table-bordered table-hover table-striped table-responsive">
 			<tbody>
 				<tr>
 					<th>Name</th>
@@ -34,7 +34,8 @@
 				<tr>
 					<th>Referral Link</th>
 					<td>
-						<div share-square="true" share-links="http://localhost/alumni/app/#/survey/{{user_data.referral_link}}" share-title="NSU School Of Business"></div>
+						<iframe style="width:100%;border:none;" src="api/index.php/user/share_referral"></iframe>
+						<!-- <div share-square="true" share-links="http://localhost/alumni/app/#/survey/{{user_data.referral_link}}" share-title="NSU School Of Business"></div> -->
 
 						<!-- {{user_data.referral_link}} -->
 						<!-- <iframe src="{{referralLink.facebook}}" scrolling="no" frameborder="0" style="border:none; overflow:hidden;height: 19px;width: 60px;" allowtransparency="true"></iframe> -->

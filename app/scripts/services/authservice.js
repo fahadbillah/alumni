@@ -8,27 +8,14 @@
  * Service in the alumniApp.
  */
  angular.module('alumniApp')
- .factory('AuthService', ['$http','Session', function ($http, Session) {
+ .factory('AuthService', ['$http','$cookies','Session', function ($http,$cookies,Session) {
  	var authService = {};
 
  	authService.login = function (credentials) {
  		console.log(credentials);
+ 		credentials.csrf_test_name = $cookies['XSRF-TOKEN'];
 
- 		return $http.get('api/index.php/auth')
- 		.success(function(data, status, headers, config) {
- 			console.log(data);
- 			if (data.csrf_test_name === false) {
- 				this.login();
- 			};
- 			credentials.csrf_test_name = data.csrf_test_name;
- 			var loginData = $.param(credentials);
-
- 			// var loginData = $.param({
- 			// 	'csrf_test_name': $scope.credentials.csrf_test_name,
- 			// 	'nsu_id' : $scope.credentials.nsu_id,
- 			// 	'password' : $scope.credentials.password,
- 			// })
-
+ 		var loginData = $.param(credentials);
 
  		return $http
  		.post('api/index.php/auth/login', loginData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
@@ -37,12 +24,6 @@
  				res.data.user.role);
  			return res.data.user;
  		});
- 	})
- 		.error(function(data, status, headers, config) {
- 			console.log('error occured!!!')
- 			console.log(data)
- 		});
-
 
  	};
 

@@ -68,7 +68,7 @@ class Survey extends CI_Controller {
 
 		$user_id = $this->session->userdata('user_data');
 		if (isset($user_id)) {
-			$user_id = $this->session->userdata('user_data')[0]['user_id'];
+			$user_id = $this->session->userdata('user_data')['id'];
 		} else {
 			$return_data = array(
 				'success' => false,
@@ -130,11 +130,13 @@ class Survey extends CI_Controller {
 					)
 				);
 		}
-
-
-
-
 		jsonify($return_data);
+	}
+
+	public function referral($referral_id)
+	{
+		$site_url = 'http://staging.nsuschoolofbusiness.org/#/survey/'.$referral_id;
+		redirect($site_url, 'refresh');
 	}
 
 }

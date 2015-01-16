@@ -7,11 +7,24 @@
  * # LogoutCtrl
  * Controller of the alumniApp
  */
-angular.module('alumniApp')
-  .controller('LogoutCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+ angular.module('alumniApp')
+ .controller('LogoutCtrl', ['$scope','$http',function ($scope,$http) {
+ 	$scope.awesomeThings = [
+ 	'HTML5 Boilerplate',
+ 	'AngularJS',
+ 	'Karma'
+ 	];
+
+
+
+ 	$http.get('api/index.php/auth/logout')
+ 	.success(function(data) {
+ 		console.log(data);
+ 		if (data.success === true) {
+ 		} else{
+ 		};
+ 	})
+ 	.error(function(data) {
+ 		console.log(data);
+ 	});
+ }]);

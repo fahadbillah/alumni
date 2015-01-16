@@ -47,7 +47,7 @@
             <ul class="nav navbar-nav navbar-right">
               <li><a ng-href="#/"> <i class="fa fa-home"></i> Home</a></li>
               <li class="active"><a ng-href="#/survey">Survey</a></li>
-              <li><a ng-href="#/login">Login</a></li>
+              <li ng-if="!isAuthenticated()"><a ng-href="#/login">Login</a></li>
               <li class="dropdown" ng-if="currentUser">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Fahad <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">

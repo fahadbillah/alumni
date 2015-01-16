@@ -34,7 +34,7 @@
  	.success(function(data) {
  		console.log(data);
  		if (data.success === true) {
- 			$scope.user_data = data.user_data[0];
+ 			$scope.user_data = data.user_data;
  			makeReferralLink();
  		} else{
 

@@ -8,20 +8,20 @@
  * Controller of the alumniApp
  */
  angular.module('alumniApp')
- .controller('LoginCtrl', function ($http,$scope, $rootScope, AUTH_EVENTS, AuthService,Xsrf) {
- 	$scope.credentials = {
- 		nsu_id: '',
- 		password: ''
- 	};
- 	$scope.login = function (credentials) {
- 		AuthService.login(credentials).then(function (user) {
- 			$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
- 			$scope.setCurrentUser(user);
- 		}, function () {
- 			$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
- 		});
- 	};
- });
+ .controller('LoginCtrl', ['$http', '$scope', '$cookies', '$rootScope', 'AUTH_EVENTS', 'AuthService', function ($http, $scope, $cookies, $rootScope, AUTH_EVENTS, AuthService) {
+  	$scope.credentials = {
+  		nsu_id: '',
+  		password: ''
+  	};
+  	$scope.login = function (credentials) {
+  		AuthService.login(credentials).then(function (user) {
+  			$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+  			$scope.setCurrentUser(user);
+  		}, function () {
+  			$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+  		});
+  	};
+  }]);
  // .controller('LoginCtrl', ['$scope','$location','$http', function ($scope,$location,$http) {
  // 	$scope.awesomeThings = [
  // 	'HTML5 Boilerplate',

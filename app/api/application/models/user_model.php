@@ -76,7 +76,7 @@ class User_model extends CI_Model {
 	public function login_check($login_data)
 	{
 		$this->db->select('
-			user_id,
+			user_id as id,
 			first_name,
 			last_name,
 			email,
@@ -91,7 +91,7 @@ class User_model extends CI_Model {
 			linkedin_link,
 			referral_link,
 			profile_pic,
-			admin,
+			admin as role,
 			referer
 			');
 		$this->db->from('users');
@@ -110,6 +110,11 @@ class User_model extends CI_Model {
 				'success' => false,
 				);
 		}
+	}
+
+	public function get_referral_link($user_id)
+	{
+		return $this->db->select('referral_link')->from('users')->get()->result_array()[0]['referral_link'];
 	}
 }
 

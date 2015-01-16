@@ -75,7 +75,7 @@
      redirectTo: '/'
    });
  }])
-.run(function ($rootScope, AUTH_EVENTS, AuthService) {
+.run(['$rootScope', '$http', '$cookies', 'AUTH_EVENTS', 'AuthService', function ($rootScope, $http, $cookies, AUTH_EVENTS, AuthService) {
   $rootScope.$on('$routeChangeStart ', function (event, next) {
     var authorizedRoles = next.data.authorizedRoles;
     console.log(authorizedRoles);
@@ -83,11 +83,13 @@
       event.preventDefault();
       if (AuthService.isAuthenticated()) {
         // user is not allowed
+        console.log('user is not allowed from app.js')
         $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
       } else {
         // user is not logged in
+        console.log('user is not logged from app.js')
         $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
       }
     }
   });
-});
+}]);

@@ -5,6 +5,13 @@ class User extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		if($this->session->userdata('is_logged_in') === null){
+			$returned_data['success'] = false;
+			$returned_data['message'] = 'You are logged out! Please login again.';
+			$returned_data['redirect_to'] = '/login';
+			jsonify($returned_data);
+		}
+		$this->load->model('user_model');
 	}
 
 	public function index()
@@ -15,15 +22,14 @@ class User extends CI_Controller {
 	public function get_user_info($user_id)
 	{
 		$session_data = $this->session->userdata('user_data');
-		$user_id = ((int)$user_id == 0)? $session_data[0]['user_id'] : $user_id;
+		$user_id = ((int)$user_id == 0)? $session_data['id'] : $user_id;
 
-		$this->load->model('user_model');
 		$user_data = $this->user_model->select_a_user_from_user_table_by_user_id($user_id);
 
 		$returned_data = array(
 			'success' => (count($user_data) == 0)? false:true,
 			'message' => 'User info loaded successfully!',
-			'user_data' => $user_data,
+			'user_data' => $user_data[0],
 			);
 		jsonify($returned_data);
 	}
@@ -43,16 +49,15 @@ class User extends CI_Controller {
 		jsonify($session_data);
 	}
 
-
-	public function logout()
+	public function share_referral()
 	{
-		$this->session->sess_destroy();
+		$session_data = $this->session->userdata('user_data');
+		$user_id = $session_data['id'];
+		$result['site_url'] = 'http://staging.nsuschoolofbusiness.org/api/index.php/referral/referral_id/';
+		$result['referral_link'] = $this->user_model->get_referral_link($user_id);
 
-		$returned_data = array(
-			'success' => true,
-			'message' => 'Logout Successfully!'
-			);
-		jsonify($returned_data);
+		$this->load->view('social_share', $result);
+
 	}
 }
 
