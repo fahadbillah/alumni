@@ -8,7 +8,7 @@
  * Controller of the alumniApp
  */
  angular.module('alumniApp')
- .controller('LogoutCtrl', ['$scope','$http',function ($scope,$http) {
+ .controller('LogoutCtrl', ['$scope','$http','$location','$rootScope','Session','AUTH_EVENTS',function ($scope,$http,$location,$rootScope,Session,AUTH_EVENTS) {
  	$scope.awesomeThings = [
  	'HTML5 Boilerplate',
  	'AngularJS',
@@ -21,8 +21,14 @@
  	.success(function(data) {
  		console.log(data);
  		if (data.success === true) {
+
  		} else{
  		};
+
+ 		Session.destroy();
+ 		$rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+ 		$scope.setCurrentUser(null);
+ 		// $location.replace('/login');
  	})
  	.error(function(data) {
  		console.log(data);

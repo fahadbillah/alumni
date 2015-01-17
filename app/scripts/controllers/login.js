@@ -8,20 +8,25 @@
  * Controller of the alumniApp
  */
  angular.module('alumniApp')
- .controller('LoginCtrl', ['$http', '$scope', '$cookies', '$rootScope', 'AUTH_EVENTS', 'AuthService', function ($http, $scope, $cookies, $rootScope, AUTH_EVENTS, AuthService) {
-  	$scope.credentials = {
-  		nsu_id: '',
-  		password: ''
-  	};
-  	$scope.login = function (credentials) {
-  		AuthService.login(credentials).then(function (user) {
-  			$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-  			$scope.setCurrentUser(user);
-  		}, function () {
-  			$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-  		});
-  	};
-  }]);
+ .controller('LoginCtrl', ['$http', '$scope', '$cookies', '$rootScope', '$location', 'AUTH_EVENTS', 'AuthService', function ($http, $scope, $cookies, $rootScope, $location, AUTH_EVENTS, AuthService) {
+   $scope.credentials = {
+    nsu_id: '',
+    password: ''
+  };
+  $scope.login = function (credentials) {
+    AuthService.login(credentials).then(function (user) {
+      if(user.success){
+        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+        $scope.setCurrentUser(user.id);
+        $location.path('/profile');
+      }else{
+        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+      }
+    }, function(){
+     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+   });
+  };
+}]);
  // .controller('LoginCtrl', ['$scope','$location','$http', function ($scope,$location,$http) {
  // 	$scope.awesomeThings = [
  // 	'HTML5 Boilerplate',

@@ -28,7 +28,6 @@
       <![endif]-->
 
       <!-- Add your site or application content here -->
-      
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
@@ -46,10 +45,10 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
               <li><a ng-href="#/"> <i class="fa fa-home"></i> Home</a></li>
-              <li class="active"><a ng-href="#/survey">Survey</a></li>
-              <li ng-if="!isAuthenticated()"><a ng-href="#/login">Login</a></li>
+              <li class=""><a ng-href="#/survey">Survey</a></li>
+              <li ng-if="!isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/login">Login</a></li>
               <li class="dropdown" ng-if="currentUser">
-                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Fahad <span class="caret"></span></a>
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentUser.first_name}} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li ng-if="isAuthorized(userRoles.admin)"><a href="#/adminpanel">Admin</a></li>
                   <li><a href="#/profile">Profile</a></li>

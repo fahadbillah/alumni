@@ -20,11 +20,11 @@
  		return $http
  		.post('api/index.php/auth/login', loginData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  		.then(function (res) {
- 			Session.create(res.data.id, res.data.user.id,
- 				res.data.user.role);
- 			return res.data.user;
+ 			if (res.data.success) {
+ 				Session.create(res.data.id, res.data.user.id,res.data.user.role);
+ 			}
+ 			return res.data;
  		});
-
  	};
 
  	authService.isAuthenticated = function () {
@@ -35,8 +35,7 @@
  		if (!angular.isArray(authorizedRoles)) {
  			authorizedRoles = [authorizedRoles];
  		}
- 		return (authService.isAuthenticated() &&
- 			authorizedRoles.indexOf(Session.userRole) !== -1);
+ 		return (authService.isAuthenticated() && authorizedRoles.indexOf(Session.userRole) !== -1);
  	};
 
  	return authService;
