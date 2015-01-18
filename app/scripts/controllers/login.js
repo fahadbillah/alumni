@@ -8,8 +8,18 @@
  * Controller of the alumniApp
  */
  angular.module('alumniApp')
- .controller('LoginCtrl', ['$http', '$scope', '$cookies', '$rootScope', '$location', 'AUTH_EVENTS', 'AuthService', function ($http, $scope, $cookies, $rootScope, $location, AUTH_EVENTS, AuthService) {
-   $scope.credentials = {
+ .controller('LoginCtrl', ['$http', '$scope', '$cookies', '$rootScope', '$location', 'USER_ROLES', 'AUTH_EVENTS', 'AuthService', function ($http, $scope, $cookies, $rootScope, $location, USER_ROLES, AUTH_EVENTS, AuthService) {
+
+
+  if (!AuthService.isAuthorized([USER_ROLES.guest])) {
+    // alert('you are not allowed here')
+    $location.path('/home');
+    return false;
+  };
+
+
+
+  $scope.credentials = {
     nsu_id: '',
     password: ''
   };

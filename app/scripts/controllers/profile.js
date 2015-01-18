@@ -8,14 +8,18 @@
  * Controller of the alumniApp
  */
  angular.module('alumniApp')
- .controller('ProfileCtrl', ['$rootScope','$scope','$http','$location','$routeParams','AUTH_EVENTS','AuthService','FileUploader', function ($rootScope,$scope,$http,$location,$routeParams,AUTH_EVENTS,AuthService,FileUploader) {
+ .controller('ProfileCtrl', ['$rootScope','$scope','$http','$location','$routeParams','USER_ROLES','AUTH_EVENTS','AuthService','FileUploader', function ($rootScope,$scope,$http,$location,$routeParams,USER_ROLES,AUTH_EVENTS,AuthService,FileUploader) {
  	$scope.awesomeThings = [
  	'HTML5 Boilerplate',
  	'AngularJS',
  	'Karma'
  	];
 
- 	// if (AuthService.isAuthorized(['',''])) {};
+ 	if (!AuthService.isAuthorized([USER_ROLES.admin, USER_ROLES.user])) {
+ 		// alert('you are not allowed here')
+ 		$location.path('/login');
+ 		return false;
+ 	};
 
  	// var uploader = $scope.uploader = new FileUploader({
  	// 	url: 'upload.php'
