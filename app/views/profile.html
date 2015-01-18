@@ -1,9 +1,28 @@
+<style type="text/css">
+.dropzone{
+	position:absolute;
+	width: 95%;
+	height:100%;
+	background-color:rgba(176, 176, 176, 0.5);
+	overflow: hidden;
+	border: 2px dashed #7E7E7E;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 8;
+	font-size: 20px;
+	font-weight: 800;
+}
+</style>
 <div>
-
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<img src="https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-frc3/v/t1.0-9/598620_4704428061575_433289932_n.jpg?oh=c5af63ee95d5d217a0a5cf801e7d4442&oe=55653474&__gda__=1428250827_b03e08c9a5a4527ad42b18500be639ba" width="200" class="img-responsive img-circle" alt="Fahad Billah" style="margin-left: auto;margin-right: auto;margin-bottom: 30px;padding: 4px;      border: 1px solid #ddd;">
+	<!-- minimal -->
+	<!-- <input type="file" nv-file-select uploader="{FileUploader}" style="display:none;" /> -->
+	<input type="file" id="link" style="display:none;">
+	<div class="col-md-12" ng-mouseenter="toggleDropZone(showDropZone)" ng-mouseleave="toggleDropZone(showDropZone)">
+		<div class="dropzone" ng-show="showDropZone" ng-click="openExplorer()">
+			Click here and upload your profile pic
+		</div>
+		<img src="./images/{{ user_data.profile_pic || defaultPic }}" width="200" class="img-responsive img-circle" alt="Fahad Billah" style="margin-left: auto;margin-right: auto;margin-bottom: 30px;padding: 4px; border: 1px solid #ddd;">
 	</div>
-
 	<div class="col-md-12">
 		<table class="table table-bordered table-hover table-striped table-responsive">
 			<tbody>
@@ -31,15 +50,10 @@
 					<th>Activity Score</th>
 					<td>{{user_data.total_point}}</td>
 				</tr>
-				<tr>
+				<tr ng-if="showReferral">
 					<th>Referral Link</th>
 					<td>
 						<iframe style="width:100%;border:none;" src="api/index.php/user/share_referral"></iframe>
-						<!-- <div share-square="true" share-links="http://localhost/alumni/app/#/survey/{{user_data.referral_link}}" share-title="NSU School Of Business"></div> -->
-
-						<!-- {{user_data.referral_link}} -->
-						<!-- <iframe src="{{referralLink.facebook}}" scrolling="no" frameborder="0" style="border:none; overflow:hidden;height: 19px;width: 60px;" allowtransparency="true"></iframe> -->
-						<!-- <div class="fb-share-button" data-href="http://staging.nsuschoolofbusiness.org/#/survey/{{user_data.referral_link}}" data-layout="button"></div> -->
 					</td>
 				</tr>
 			</tbody>

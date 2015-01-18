@@ -37,9 +37,7 @@
 		<div class="g-plus" data-action="share" data-annotation="none" data-href="<?php echo $site_url.$referral_link; ?>"></div>
 	</div>
 	<div class="links">
-		<a class="twitter-share-button" href="<?php echo $site_url.$referral_link; ?>" data-related="NSU School Of Business" data-count="none">
-			NSU School Of Business
-		</a>
+		<a class="twitter-share-button" href="<?php echo $site_url.$referral_link; ?>" data-related="NSU School Of Business" data-count="none"></a>
 		<script>
 		window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));
 		</script>

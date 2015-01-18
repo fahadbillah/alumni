@@ -21,7 +21,7 @@
  		.post('api/index.php/auth/login', loginData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  		.then(function (res) {
  			if (res.data.success) {
- 				Session.create(res.data.id, res.data.user.id,res.data.user.role);
+ 				Session.create(res.data, res.data.user.id,res.data.user.role);
  			}
  			return res.data;
  		});

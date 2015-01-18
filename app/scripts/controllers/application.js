@@ -28,12 +28,14 @@
  				Session.destroy();
  				$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
  				$scope.setCurrentUser(null);
+ 				$rootScope.$broadcast($scope.currentUser);
  			}else{
  				$scope.isLoginPage = false;
- 				Session.create(data.id,data.user.id,data.user.role);
+ 				Session.create(data,data.user.id,data.user.role);
 
  				$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
  				$scope.setCurrentUser(data.user);
+ 				$rootScope.$broadcast($scope.currentUser);
  			}
  		})
  		.error(function(data, status, headers, config) {

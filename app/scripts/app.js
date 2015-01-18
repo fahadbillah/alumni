@@ -10,24 +10,30 @@
  */
  angular
  .module('alumniApp', [
-   'ngAnimate',
-   'ngCookies',
-   'ngResource',
-   'ngRoute',
-   'ngSanitize',
-   'ngTouch',
-   'td.easySocialShare'
-   ])
+         'ngAnimate',
+         'ngCookies',
+         'ngResource',
+         'ngRoute',
+         'ngSanitize',
+         'ngTouch',
+         'angularFileUpload'
+         ])
  .config(['$routeProvider','$locationProvider','USER_ROLES', function ($routeProvider,$locationProvider,USER_ROLES) {
    // $locationProvider.html5Mode(true).hashPrefix('!');
    $routeProvider
    .when('/', {
      templateUrl: 'views/main.html',
-     controller: 'MainCtrl'
+     controller: 'MainCtrl',
+     data: {
+       authorizedRoles: [USER_ROLES.admin, USER_ROLES.user, USER_ROLES.guest]
+     }
    })
    .when('/about', {
      templateUrl: 'views/about.html',
-     controller: 'AboutCtrl'
+     controller: 'AboutCtrl',
+     data: {
+       authorizedRoles: [USER_ROLES.admin, USER_ROLES.user, USER_ROLES.guest]
+     }
    })
    .when('/survey', {
      templateUrl: 'views/survey.html',

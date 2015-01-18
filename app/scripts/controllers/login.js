@@ -17,7 +17,7 @@
     AuthService.login(credentials).then(function (user) {
       if(user.success){
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-        $scope.setCurrentUser(user.id);
+        $scope.setCurrentUser(user.user);
         $location.path('/profile');
       }else{
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);

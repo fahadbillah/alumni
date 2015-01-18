@@ -23,21 +23,11 @@ class Auth extends CI_Controller {
 			                      'is_logged_in' => true,
 			                      'user_data' => $result['user_data'][0],
 			                      );
-			
 			$this->session->set_userdata($session_data);
 			$return_data['success'] = true;
 			$return_data['message'] = 'User login successfull!';
-			$return_data['id']  = $this->input->cookie('ci_session');
-			$return_data['user'] = $result['user_data'][0];
-			// $return_data['data'] = $result['user_data'][0];
-			// $return_data['success'] = true;
-			// $return_data['message'] = 'User login successfully!';
-			// $return_data['user_data'] = $result['user_data'];
-			// $return_data['redirect_to'] = ($result['user_data'][0]['role'] == true) ? '/admin' : '/profile';
-
-
+			$return_data['user'] = $this->session->userdata('user_data');
 			jsonify($return_data);
-
 		} else {
 			$return_data['success'] = false;
 			$return_data['message'] = 'User login failed!';
@@ -49,12 +39,10 @@ class Auth extends CI_Controller {
 
 	public function check_if_logged_in()
 	{
-		if ($this->session->userdata('is_logged_in') !== null) {
+		if ($this->session->userdata('is_logged_in') !== false) {
 			$returned_data['success'] = true;
 			$returned_data['message'] = 'You are logged in!';
-			$returned_data['id']  = $this->input->cookie('ci_session');
 			$returned_data['user'] = $this->session->userdata('user_data');
-
 			jsonify($returned_data);
 		}else{
 			$returned_data['success'] = false;
@@ -67,7 +55,6 @@ class Auth extends CI_Controller {
 	public function logout()
 	{
 		$this->session->sess_destroy();
-
 		$returned_data = array(
 		                       'success' => true,
 		                       'message' => 'Logout Successfully!'
@@ -75,6 +62,13 @@ class Auth extends CI_Controller {
 		jsonify($returned_data);
 	}
 
+	public function test()
+	{
+
+		vd($this->session->userdata('user_data'));
+
+
+	}
 }
 
 /* End of file auth.php */

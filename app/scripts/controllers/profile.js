@@ -8,40 +8,116 @@
  * Controller of the alumniApp
  */
  angular.module('alumniApp')
- .controller('ProfileCtrl', ['$scope','$http','$location','$routeParams', function ($scope,$http,$location,$routeParams) {
+ .controller('ProfileCtrl', ['$rootScope','$scope','$http','$location','$routeParams','AUTH_EVENTS','AuthService','FileUploader', function ($rootScope,$scope,$http,$location,$routeParams,AUTH_EVENTS,AuthService,FileUploader) {
  	$scope.awesomeThings = [
  	'HTML5 Boilerplate',
  	'AngularJS',
  	'Karma'
  	];
 
- 	$scope.user_data;
+ 	// if (AuthService.isAuthorized(['',''])) {};
 
- 	var user_id = $routeParams.userId;
+ 	// var uploader = $scope.uploader = new FileUploader({
+ 	// 	url: 'upload.php'
+ 	// });
 
- 	$scope.referralLinks = {
- 		'facebook': '',
- 		'twitter': '',
- 		'linkedIn': '',
- 		'email': '',
- 	}
+  //       // FILTERS
 
- 	var makeReferralLink = function(argument) {
- 		$scope.facebook = '//www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fstaging.nsuschoolofbusiness.org%2F%23%2Fsurvey%2F{{$scope.user_data.referral_link}}&amp;layout=button&amp;appId=485258221589254';
- 	}
+  //       uploader.filters.push({
+  //       	name: 'customFilter',
+  //       	fn: function(item /*{File|FileLikeObject}*/, options) {
+  //       		return this.queue.length < 10;
+  //       	}
+  //       });
 
- 	$http.get('api/index.php/user/get_user_info/'+user_id)
- 	.success(function(data) {
- 		console.log(data);
- 		if (data.success === true) {
- 			$scope.user_data = data.user_data;
- 			makeReferralLink();
- 		} else{
+  //       // CALLBACKS
 
- 		};
- 	})
- 	.error(function(data) {
- 		console.log(data);
- 	});
+  //       uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+  //       	console.info('onWhenAddingFileFailed', item, filter, options);
+  //       };
+  //       uploader.onAfterAddingFile = function(fileItem) {
+  //       	console.info('onAfterAddingFile', fileItem);
+  //       };
+  //       uploader.onAfterAddingAll = function(addedFileItems) {
+  //       	console.info('onAfterAddingAll', addedFileItems);
+  //       };
+  //       uploader.onBeforeUploadItem = function(item) {
+  //       	console.info('onBeforeUploadItem', item);
+  //       };
+  //       uploader.onProgressItem = function(fileItem, progress) {
+  //       	console.info('onProgressItem', fileItem, progress);
+  //       };
+  //       uploader.onProgressAll = function(progress) {
+  //       	console.info('onProgressAll', progress);
+  //       };
+  //       uploader.onSuccessItem = function(fileItem, response, status, headers) {
+  //       	console.info('onSuccessItem', fileItem, response, status, headers);
+  //       };
+  //       uploader.onErrorItem = function(fileItem, response, status, headers) {
+  //       	console.info('onErrorItem', fileItem, response, status, headers);
+  //       };
+  //       uploader.onCancelItem = function(fileItem, response, status, headers) {
+  //       	console.info('onCancelItem', fileItem, response, status, headers);
+  //       };
+  //       uploader.onCompleteItem = function(fileItem, response, status, headers) {
+  //       	console.info('onCompleteItem', fileItem, response, status, headers);
+  //       };
+  //       uploader.onCompleteAll = function() {
+  //       	console.info('onCompleteAll');
+  //       };
 
- }]);
+  //       console.info('uploader', uploader);
+
+
+  $scope.user_data;
+
+  var user_id = $routeParams.userId;
+
+  $scope.referralLinks = {
+  	'facebook': '',
+  	'twitter': '',
+  	'linkedIn': '',
+  	'email': '',
+  }
+
+  $scope.defaultPic = 'nsu_logo.png';
+
+  $http.get('api/index.php/user/get_user_info/'+user_id)
+  .success(function(data) {
+  	console.log(data);
+  	if (data.success === true) {
+  		$scope.user_data = data.user_data;
+  	} else{
+
+  	};
+  })
+  .error(function(data) {
+  	console.log(data);
+  });
+
+  $scope.toggleDropZone = function(showDropZone) {
+  	$scope.showDropZone = showDropZone ? false : true;
+  }
+
+  $scope.showDropZone = false;
+
+  $scope.showReferral = false;
+
+  $http.get('api/index.php/referral/show_referral/'+user_id)
+  .success(function(data) {
+  	console.log(data);
+  	if (data.success === true) {
+  		$scope.showReferral = true;
+  	} else{
+  		$scope.showReferral = false;
+  	};
+  })
+  .error(function(data) {
+  	console.log(data);
+  });
+
+  $scope.openExplorer = function() {
+  	document.getElementById('link').click();
+  }
+
+}]);

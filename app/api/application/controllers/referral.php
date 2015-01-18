@@ -17,6 +17,18 @@ class Referral extends CI_Controller {
 		$this->load->view('redirecting_page', $data);
 	}
 
+	public function show_referral($user_id = 0)
+	{
+		$session_data = $this->session->userdata('user_data');
+		$user_id = ((int)$user_id == 0)? $session_data['id'] : $user_id;
+		if ($session_data['id'] == $user_id) {
+			jsonify(array('success' => true));
+		} else {
+			jsonify(array('success' => false));
+		}
+		
+	}
+
 }
 
 /* End of file referral.php */
