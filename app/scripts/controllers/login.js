@@ -11,7 +11,7 @@
  .controller('LoginCtrl', ['$http', '$scope', '$cookies', '$rootScope', '$location', 'USER_ROLES', 'AUTH_EVENTS', 'AuthService', function ($http, $scope, $cookies, $rootScope, $location, USER_ROLES, AUTH_EVENTS, AuthService) {
 
 
-  if (AuthService.isAuthenticated()) {
+  if (AuthService.isAuthorized([USER_ROLES.admin,USER_ROLES.user])) {
     // alert('you are not allowed here')
     $location.path('/home');
     return false;

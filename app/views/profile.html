@@ -18,7 +18,7 @@
 	<!-- <input type="file" nv-file-select uploader="{FileUploader}" style="display:none;" /> -->
 	<input type="file" id="link" style="display:none;">
 	<div class="col-md-12" ng-mouseenter="toggleDropZone(showDropZone)" ng-mouseleave="toggleDropZone(showDropZone)">
-		<div class="dropzone" ng-show="showDropZone" ng-click="openExplorer()">
+		<div ng-if="user_data.id == currentUser.id" class="dropzone" ng-show="showDropZone" ng-click="openExplorer()">
 			Click here and upload your profile pic
 		</div>
 		<img src="./images/{{ user_data.profile_pic || defaultPic }}" width="200" class="img-responsive img-circle" alt="Fahad Billah" style="margin-left: auto;margin-right: auto;margin-bottom: 30px;padding: 4px; border: 1px solid #ddd;">
@@ -40,7 +40,7 @@
 				</tr>
 				<tr>
 					<th>Phone No.</th>
-					<td>{{user_data.phone}}</td>
+					<td> <a href="tel:{{user_data.phone}}">{{user_data.phone}}</a> </td>
 				</tr>
 				<tr>
 					<th>About Me</th>
