@@ -7,11 +7,11 @@
  * # MainCtrl
  * Controller of the alumniApp
  */
-angular.module('alumniApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+ angular.module('alumniApp')
+ .controller('MainCtrl',['$scope', function ($scope) {
+ 	$scope.awesomeThings = [
+ 	'HTML5 Boilerplate',
+ 	'AngularJS',
+ 	'Karma'
+ 	];
+ }]);

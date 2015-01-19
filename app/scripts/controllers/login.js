@@ -11,7 +11,7 @@
  .controller('LoginCtrl', ['$http', '$scope', '$cookies', '$rootScope', '$location', 'USER_ROLES', 'AUTH_EVENTS', 'AuthService', function ($http, $scope, $cookies, $rootScope, $location, USER_ROLES, AUTH_EVENTS, AuthService) {
 
 
-  if (!AuthService.isAuthorized([USER_ROLES.guest])) {
+  if (AuthService.isAuthenticated()) {
     // alert('you are not allowed here')
     $location.path('/home');
     return false;
@@ -30,7 +30,7 @@
         $scope.setCurrentUser(user.user);
         $location.path('/profile');
       }else{
-        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+        $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
       }
     }, function(){
      $rootScope.$broadcast(AUTH_EVENTS.loginFailed);

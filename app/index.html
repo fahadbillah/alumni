@@ -14,7 +14,8 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <!-- <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" /> -->
+  <link rel="stylesheet" href="styles/bootstrap.min.css" />
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
   <!-- endbower -->
   <!-- endbuild -->
@@ -53,11 +54,11 @@
               <li class=""><a ng-href="#/survey">Survey</a></li>
               <li ng-if="!isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/login">Login</a></li>
               <li class="dropdown" ng-if="currentUser">
-                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentUser.first_name}} <span class="caret"></span></a>
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{currentUser.first_name}} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li ng-if="isAuthorized(userRoles.admin)"><a href="#/adminpanel">Admin</a></li>
-                  <li><a href="#/profile">Profile</a></li>
-                  <li><a href="#/logout">Logout</a></li>
+                  <li><a href="#/profile">Profile <i class="fa fa-user pull-right" style="padding-top: 3px;"></i></a></li>
+                  <li><a href="#/logout">Logout <i class="fa fa-sign-out pull-right" style="padding-top: 3px;"></i></a></li>
                 </ul>
               </li>
             </ul>
@@ -66,14 +67,14 @@
       </nav>
 
       <div login-dialog ng-if="!isLoginPage"></div>
-      
+
 
       <div ng-view="" class="col-md-12"></div>
       <div class="clearfix"></div>
       <br>
       <br>
       <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <p><span class="fa fa-copyright"></span> NSU School of Business Department</p>
       </div>
     </div>
 
@@ -135,6 +136,7 @@
     <script src="scripts/services/authinterceptor.js"></script>
     <script src="scripts/directives/logindialog.js"></script>
     <script src="scripts/directives/formautofillfix.js"></script>
+    <script src="scripts/filters/utility.js"></script>
     <!-- endbuild -->
   </body>
   </html>

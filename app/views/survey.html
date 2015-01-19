@@ -40,12 +40,32 @@
 	<div class="form-group">
 		<label for="">Phone</label>
 		<input type="text" class="form-control" name="phone" ng-model="phone" placeholder="Input field" required>
-		<div class="alert alert-danger" ng-show="registration.phone.$dirty && registration.phone.$invalid">
-			<span ng-show="registration.phone.$error.required && registration.phone.$dirty">phone is required.</span>
-		</div>
+		<span ng-show="registration.phone.$error.required && registration.phone.$dirty"  class="label label-danger">phone is required.</span>
 	</div>
 
-	<button type="submit" class="btn btn-primary" ng-disabled="registration.$pristine || registration.$invalid" ng-click="userRegistration()">Submit</button>
+
+	<div class="form-group">
+		<label for="">Occupation</label>
+		<select name="workType" ng-model="workType" class="form-control" required>
+			<option value="">Select Occupation</option>
+			<option ng-repeat="(k, v) in allOccupations | toArray | orderBy:'work_name'" value="{{v.work_type_id}}">{{v.work_name}}</option>
+		</select>
+		<span ng-show="registration.workType.$error.required && registration.workType.$dirty"  class="label label-danger">workType is required.</span>
+	</div>
+
+
+	<div class="form-group">
+		<label for="">Designation</label>
+		<select name="designation" ng-model="designation" class="form-control" required>
+			<option value="">Select Designation</option>
+			<option ng-repeat="(ke, val) in allDesignations | toArray | orderBy:'designation_name'" value="{{val.designation_id}}">{{val.designation_name}}</option>
+		</select>
+		<span ng-show="registration.designation.$error.required && registration.designation.$dirty"  class="label label-danger">designation is required.</span>
+	</div>
+
+	<button type="submit" class="btn btn-primary" ng-disabled="registration.$pristine || registration.$invalid" ng-click="userRegistration()">
+		Submit
+	</button>
 </form>
 
 

@@ -22,8 +22,10 @@
  		.then(function (res) {
  			if (res.data.success) {
  				Session.create(res.data, res.data.user.id,res.data.user.role);
+ 				return res.data;
+ 			}else{
+ 				return {'success': false};
  			}
- 			return res.data;
  		});
  	};
 

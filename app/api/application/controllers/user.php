@@ -5,7 +5,7 @@ class User extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		if($this->session->userdata('is_logged_in') === null){
+		if($this->session->userdata('is_logged_in') === false){
 			$returned_data['success'] = false;
 			$returned_data['message'] = 'You are logged out! Please login again.';
 			$returned_data['redirect_to'] = '/login';

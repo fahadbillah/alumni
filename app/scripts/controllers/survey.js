@@ -8,7 +8,7 @@
    * Controller of the alumniApp
    */
    angular.module('alumniApp')
-   .controller('SurveyCtrl', ['$scope','$http', '$routeParams', '$parse', '$location', function ($scope,$http,$routeParams,$parse,$location) {
+   .controller('SurveyCtrl', ['$rootScope','$scope','$http','$routeParams','$parse','$location','$cookies','Session','AUTH_EVENTS', function ($rootScope,$scope,$http,$routeParams,$parse,$location,$cookies,Session,AUTH_EVENTS) {
     $scope.awesomeThings = [
     'HTML5 Boilerplate',
     'AngularJS',
@@ -62,28 +62,37 @@
           $scope.$apply();
         }
       })
-    }
+    };
 
 
     $scope.userRegistration = function() {
 
      var registrationData = $.param({
-      'csrf_test_name': $scope.csrf_test_name,
+      'csrf_test_name': $cookies['XSRF-TOKEN'],
       'first_name' : registration.first_name.value,
       'last_name' : registration.last_name.value,
       'nsu_id' : registration.nsu_id.value,
       'email' : registration.email.value,
       'phone' : registration.phone.value,
+      'work_type' : registration.workType.value,
+      'designation' : registration.designation.value,
       'referer' : $scope.referralLink === undefined ? 'not available' : $scope.referralLink,
     })
 
-     $http.post('api/index.php/survey/registration',registrationData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
+     $http.post('api/index.php/auth/registration',registrationData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
      .success(function(data) {
       console.log(data);
       if (data.success === false) {
-        
+
       }else{
        $scope.registrationDone = true;
+
+
+       Session.create(data,data.user.id,data.user.role);
+
+
+       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+       $scope.setCurrentUser(data.user);
      }
      alert(data.message);
    })
@@ -165,6 +174,26 @@ $http.get('api/index.php/survey/get_all_questions')
  $scope.last_group_no = parseInt(data.last_group_no);
 })
 .error(function(data, status, headers, config) {
+});
+
+$scope.allOccupations = [];
+$scope.allDesignations = [];
+
+$http.get('api/index.php/survey/get_all_occupations')
+.success(function(data, status, headers, config) {
+ $scope.allOccupations = data.occupations;
+})
+.error(function(data, status, headers, config) {
+  console.log(data);
+});
+
+
+$http.get('api/index.php/survey/get_all_designations')
+.success(function(data, status, headers, config) {
+  $scope.allDesignations = data.designations;
+})
+.error(function(data, status, headers, config) {
+  console.log(data);
 });
 
 $scope.last_group_no = 0;

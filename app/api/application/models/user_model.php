@@ -116,6 +116,40 @@ class User_model extends CI_Model {
 	{
 		return $this->db->select('referral_link')->from('users')->get()->result_array()[0]['referral_link'];
 	}
+
+	public function get_all_occupations()
+	{
+		return $this->db->select('*')->from('work_types')->get()->result_array();
+	}
+	public function get_all_designations()
+	{
+		return $this->db->select('*')->from('designations')->get()->result_array();
+	}
+
+	public function insert_user_work_history($work)
+	{
+		return $this->db->insert('user_work_histories', $work);
+		$result = $this->db->insert('users', $user_data);
+
+		return array(
+		             'success' => $result,
+		             'last_inserted_data' => ($result == true) ? $this->get_user_work_histories(array('id' => $this->db->insert_id())) : '',
+		             );
+	}
+
+	public function get_user_work_histories($id)
+	{
+		$this->db->select('*');
+		$this->db->from('user_work_histories');
+		$this->db->join('work_types', 'work_types.work_type_id = user_work_histories.type');
+		$this->db->join('designations', 'designations.designation_id = user_work_histories.designation');
+		if (isset($id['id'])) {
+			$this->db->where('user_work_histories.user_work_history_id', $id['id']);
+		} else {
+			$this->db->where('user_work_histories.user_id', $id['user_id']);
+		}
+		$result = $this->db->get()->result_array();
+	}
 }
 
 /* End of file user.php */
