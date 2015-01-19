@@ -9,6 +9,7 @@ class User extends CI_Controller {
 			$returned_data['success'] = false;
 			$returned_data['message'] = 'You are logged out! Please login again.';
 			$returned_data['redirect_to'] = '/login';
+			$this->output->set_status_header('401');
 			jsonify($returned_data);
 		}
 		$this->load->model('user_model');

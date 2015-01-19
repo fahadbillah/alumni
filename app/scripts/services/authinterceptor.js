@@ -14,7 +14,7 @@
   }
   ]);
 })
- .factory('AuthInterceptor',[ function ($rootScope, $q, AUTH_EVENTS) {
+ .factory('AuthInterceptor',['$rootScope','$q','$location','AUTH_EVENTS','SESSION','AuthService', function ($rootScope,$q,$location,AUTH_EVENTS,SESSION,AuthService) {
    return {
      responseError: function (response) { 
        $rootScope.$broadcast({
@@ -23,7 +23,18 @@
          419: AUTH_EVENTS.sessionTimeout,
          440: AUTH_EVENTS.sessionTimeout
        }[response.status], response);
-       return $q.reject(response);
-     }
-   };
- }]);
+
+
+       if (response.status === 401) {
+
+        Session.destroy();
+        $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+        $scope.setCurrentUser(null);
+        $location.replace('/login');
+      };
+
+
+      return $q.reject(response);
+    }
+  };
+}]);
