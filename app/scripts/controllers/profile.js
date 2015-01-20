@@ -8,14 +8,14 @@
  * Controller of the alumniApp
  */
  angular.module('alumniApp')
- .controller('ProfileCtrl', ['$rootScope','$scope','$http','$location','$routeParams','USER_ROLES','AUTH_EVENTS','AuthService','FileUploader', function ($rootScope,$scope,$http,$location,$routeParams,USER_ROLES,AUTH_EVENTS,AuthService,FileUploader) {
+ .controller('ProfileCtrl', ['$rootScope','$scope','$http','$location','$routeParams','USER_ROLES','AUTH_EVENTS','Session','AuthService','FileUploader', function ($rootScope,$scope,$http,$location,$routeParams,USER_ROLES,AUTH_EVENTS,Session,AuthService,FileUploader) {
  	$scope.awesomeThings = [
  	'HTML5 Boilerplate',
  	'AngularJS',
  	'Karma'
  	];
 
- 	if (!AuthService.isAuthorized([USER_ROLES.admin, USER_ROLES.user])) {
+ 	if (AuthService.isAuthorized([USER_ROLES.guest])) {
  		// alert('you are not allowed here')
  		$location.path('/login');
  		return false;
@@ -73,6 +73,9 @@
   //       console.info('uploader', uploader);
 
 
+  $scope.sessionUserId;
+
+  
   $scope.user_data;
 
   var user_id = $routeParams.userId;
@@ -84,6 +87,7 @@
   	'email': '',
   }
 
+
   $scope.defaultPic = 'nsu_logo.png';
 
   $http.get('api/index.php/user/get_user_info/'+user_id)
@@ -91,9 +95,17 @@
   	console.log(data);
   	if (data.success === true) {
   		$scope.user_data = data.user_data;
-  	} else{
+      $scope.sessionUserId = $scope.currentUser.id;
 
-  	};
+      
+      $scope.sessionUserId = $scope.currentUser.id;
+      $scope.sessionUserId = $scope.currentUser.id;
+
+      
+
+    } else{
+
+    };
   })
   .error(function(data) {
   	console.log(data);
