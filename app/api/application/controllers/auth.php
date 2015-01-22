@@ -20,9 +20,9 @@ class Auth extends CI_Controller {
 		if ($result['success'] === true) {
 			$result['user_data'][0]['role'] = ($result['user_data'][0]['role'] == 1) ? 'admin' : 'user'; 
 			$session_data = array(
-			                      'is_logged_in' => true,
-			                      'user_data' => $result['user_data'][0],
-			                      );
+				'is_logged_in' => true,
+				'user_data' => $result['user_data'][0],
+				);
 			$this->session->set_userdata($session_data);
 			$return_data['success'] = true;
 			$return_data['message'] = 'User login successfull!';
@@ -40,6 +40,8 @@ class Auth extends CI_Controller {
 	public function registration()
 	{
 		$post_data = get_post();
+		// pr($post_data);
+		// exit();
 		$post_data['password'] = sha1(123);
 		// $post_data['password'] = sha1(generate_random_string(8));
 		$post_data['token'] = generate_random_string(40);
@@ -60,10 +62,16 @@ class Auth extends CI_Controller {
 
 		$post_data['referer'] = ($post_data['referer'] =='not available') ? null : $this->User_model->get_referer_user_id($post_data['referer']);
 
+		$post_data['work_type'] = ($post_data['work_type'] =='not available') ? $post_data['other_work_type'] : $post_data['work_type'];
+
+		$post_data['designation'] = ($post_data['designation'] =='not available') ? $post_data['other_designation'] : $post_data['designation'];
+
 		$work['type'] = $post_data['work_type'];
-		unset($post_data['work_type']);
 		$work['designation'] = $post_data['designation'];
+		unset($post_data['work_type']);
+		unset($post_data['other_work_type']);
 		unset($post_data['designation']);
+		unset($post_data['other_designation']);
 
 		$result = $this->User_model->insert_user($post_data);
 
@@ -73,9 +81,9 @@ class Auth extends CI_Controller {
 
 
 			$session_data = array(
-			                      'is_logged_in' => true,
-			                      'user_data' => $result['last_inserted_data'][0]
-			                      );
+				'is_logged_in' => true,
+				'user_data' => $result['last_inserted_data'][0]
+				);
 			$work['user_id'] =  $result['last_inserted_data'][0]['id'];
 
 			$work_result = $this->User_model->insert_user_work_history($work);
@@ -118,9 +126,9 @@ class Auth extends CI_Controller {
 	{
 		$this->session->sess_destroy();
 		$returned_data = array(
-		                       'success' => true,
-		                       'message' => 'Logout Successfully!'
-		                       );
+			'success' => true,
+			'message' => 'Logout Successfully!'
+			);
 		jsonify($returned_data);
 	}
 

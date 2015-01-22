@@ -27,13 +27,13 @@
 
 
        if (response.status === 401) {
-        Session.destroy();
-        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+        // Session.destroy();
+        // $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
         // $rootScope.currentUser = null;
 
         // var currentUrl = $location.url();
         // if (currentUrl.search('profile') >=0 || currentUrl.search('admin') >=0) {
-          $location.path('/logout');
+          // $location.path('/logout');
         // };
 
       };

@@ -74,17 +74,17 @@
       'nsu_id' : registration.nsu_id.value,
       'email' : registration.email.value,
       'phone' : registration.phone.value,
-      'work_type' : registration.workType.value,
-      'designation' : registration.designation.value,
+      'work_type' : registration.workType.value.toLowerCase() === 'other' ? 'not available' : registration.workType.value,
+      'other_work_type' : registration.otherWorkType === undefined ? 'not available' : registration.otherWorkType.value,
+      'designation' : registration.designation.value.toLowerCase() === 'other' ? 'not available' : registration.designation.value,
+      'other_designation' : registration.otherDesignation === undefined ? 'not available' : registration.otherDesignation.value,
       'referer' : $scope.referralLink === undefined ? 'not available' : $scope.referralLink,
     })
 
      $http.post('api/index.php/auth/registration',registrationData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
      .success(function(data) {
       console.log(data);
-      if (data.success === false) {
-
-      }else{
+      if (data.success === true) {
        $scope.registrationDone = true;
 
 
@@ -93,6 +93,7 @@
 
        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
        $scope.setCurrentUser(data.user);
+     }else{
      }
      alert(data.message);
    })
@@ -215,5 +216,16 @@ function getSessionData() {
     });
 }
 getSessionData()
+
+$scope.showOther = function(value) {
+  if (value === undefined) {
+    return false;
+  };
+  if (value.toLowerCase() == 'other') {
+    return true;
+  }else{
+    return false;
+  }
+}
 
 }]);
