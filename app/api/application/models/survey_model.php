@@ -38,6 +38,11 @@ class Survey_model extends CI_Model {
 		return $this->db->insert('user_answers', $question_answer);
 	}
 
+	public function get_user_answers($user_id)
+	{
+		
+	}
+
 }
 
 /* End of file survey_model.php */

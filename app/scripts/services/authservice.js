@@ -18,7 +18,7 @@
  		var loginData = $.param(credentials);
 
  		return $http
- 		.post('api/index.php/auth/login', loginData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
+ 		.post('api/index.php/Auth/login', loginData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  		.then(function (res) {
  			if (res.data.success) {
  				Session.create(res.data, res.data.user.id,res.data.user.role);

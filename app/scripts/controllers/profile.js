@@ -90,7 +90,7 @@
 
   $scope.defaultPic = 'nsu_logo.png';
 
-  $http.get('api/index.php/user/get_user_info/'+user_id)
+  $http.get('api/index.php/User/get_user_info/'+user_id)
   .success(function(data) {
   	console.log(data);
   	if (data.success === true) {
@@ -119,7 +119,7 @@
 
   $scope.showReferral = false;
 
-  $http.get('api/index.php/referral/show_referral/'+user_id)
+  $http.get('api/index.php/Referral/show_referral/'+user_id)
   .success(function(data) {
   	console.log(data);
   	if (data.success === true) {

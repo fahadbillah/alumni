@@ -109,7 +109,7 @@ class Auth extends CI_Controller {
 
 	public function check_if_logged_in()
 	{
-		if ($this->session->userdata('is_logged_in') !== false) {
+		if ($this->session->userdata('is_logged_in') === true) {
 			$returned_data['success'] = true;
 			$returned_data['message'] = 'You are logged in!';
 			$returned_data['user'] = $this->session->userdata('user_data');
@@ -124,6 +124,7 @@ class Auth extends CI_Controller {
 
 	public function logout()
 	{
+		$this->session->sess_destroy();
 		$this->session->sess_destroy();
 		$returned_data = array(
 			'success' => true,

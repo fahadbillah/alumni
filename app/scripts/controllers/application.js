@@ -21,20 +21,20 @@
 
  	function checkIfLoggedIn() {
  		
- 		$http.get('api/index.php/auth/check_if_logged_in')
+ 		$http.get('api/index.php/Auth/check_if_logged_in')
  		.success(function(data, status, headers, config) {
  			console.log(data);
- 			if (data.success === false) {
- 				Session.destroy();
- 				$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
- 				$scope.setCurrentUser(null);
- 				$rootScope.$broadcast($scope.currentUser);
- 			}else{
+ 			if (data.success === true) {
  				$scope.isLoginPage = false;
  				Session.create(data,data.user.id,data.user.role);
 
  				$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
  				$scope.setCurrentUser(data.user);
+ 				$rootScope.$broadcast($scope.currentUser);
+ 			}else{
+ 				Session.destroy();
+ 				$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+ 				$scope.setCurrentUser(null);
  				$rootScope.$broadcast($scope.currentUser);
  			}
  		})

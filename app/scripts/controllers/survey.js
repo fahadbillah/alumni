@@ -23,7 +23,7 @@
     $scope.csrf_test_name = '';
 
     function getCookie() {
-      $http.get('api/index.php/survey')
+      $http.get('api/index.php/Survey')
       .success(function(data, status, headers, config) {
        console.log(data);
        if (data.csrf_test_name === false) {
@@ -81,7 +81,7 @@
       'referer' : $scope.referralLink === undefined ? 'not available' : $scope.referralLink,
     })
 
-     $http.post('api/index.php/auth/registration',registrationData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
+     $http.post('api/index.php/Auth/registration',registrationData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
      .success(function(data) {
       console.log(data);
       if (data.success === true) {
@@ -130,7 +130,7 @@
           'fieldType': e.type,
         })
 
-        $http.post('api/index.php/survey/insert_answer',answerData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
+        $http.post('api/index.php/Survey/insert_answer',answerData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
         .success(function(data) {
           console.log(data);
           if (data.success === false) {
@@ -168,7 +168,7 @@ var readyForNext = function(readyForNextQuestion) {
 
 $scope.allQuestions = [];
 
-$http.get('api/index.php/survey/get_all_questions')
+$http.get('api/index.php/Survey/get_all_questions')
 .success(function(data, status, headers, config) {
  $scope.allQuestions = data.questions;
  console.log($scope.allQuestions);
@@ -180,7 +180,7 @@ $http.get('api/index.php/survey/get_all_questions')
 $scope.allOccupations = [];
 $scope.allDesignations = [];
 
-$http.get('api/index.php/survey/get_all_occupations')
+$http.get('api/index.php/Survey/get_all_occupations')
 .success(function(data, status, headers, config) {
  $scope.allOccupations = data.occupations;
 })
@@ -189,7 +189,7 @@ $http.get('api/index.php/survey/get_all_occupations')
 });
 
 
-$http.get('api/index.php/survey/get_all_designations')
+$http.get('api/index.php/Survey/get_all_designations')
 .success(function(data, status, headers, config) {
   $scope.allDesignations = data.designations;
 })
@@ -201,7 +201,7 @@ $scope.last_group_no = 0;
 
 function getSessionData() {
 
-  $http.get('api/index.php/user/get_session_data')
+  $http.get('api/index.php/User/get_session_data')
   .success(function(data, status, headers, config) {
     console.log(data);
     if (data.is_logged_in === true) {

@@ -17,7 +17,7 @@
 
 
 
- 	$http.get('api/index.php/auth/logout')
+ 	$http.get('api/index.php/Auth/logout')
  	.success(function(data) {
  		console.log(data);
  		if (data.success === true) {

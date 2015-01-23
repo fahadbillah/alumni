@@ -48,7 +48,7 @@
  // 	$scope.csrf_test_name = '';
 
  // 	function getCookie() {
- // 		$http.get('api/index.php/survey')
+ // 		$http.get('api/index.php/Survey')
  // 		.success(function(data, status, headers, config) {
  // 			console.log(data);
  // 			if (data.csrf_test_name === false) {
@@ -78,7 +78,7 @@
  // 			'password' : $scope.password,
  // 		})
 
- // 		$http.post('api/index.php/auth/login',loginData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
+ // 		$http.post('api/index.php/Auth/login',loginData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  // 		.success(function(data) {
  // 			console.log(data);
  // 			if (data.success === false) {
