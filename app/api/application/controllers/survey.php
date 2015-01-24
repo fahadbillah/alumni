@@ -23,6 +23,37 @@ class Survey extends CI_Controller {
 		jsonify($return_data);
 	}
 
+	public function get_all_user_answers()
+	{
+		$user_id = $this->session->userdata('user_data');
+		if (isset($user_id)) {
+			$user_id = $user_id['id'];
+		} else {
+			$return_data = array(
+			                     'success' => false,
+			                     'message' => 'Please login first!'
+			                     );
+			jsonify($return_data);
+		}
+		$questions = $this->Survey_model->get_all_questions();
+		$answers = $this->Survey_model->get_all_user_answers($user_id);
+
+		$user_question_answers = array();
+
+		foreach ($questions as $key => $value) {
+			foreach ($answers as $k => $v) {
+				if ($value['survey_question_id'] == $v['survey_question_id']) {
+					$user_question_answers[$value['survey_question_id']][] = array(
+					                                                               'survey_question_id' => $value['survey_question_id'],
+					                                                               'survey_answer_id' => $v['survey_answer_id'],
+					                                                               );
+				}
+			}
+		}
+		// pr($user_question_answers);
+		jsonify($user_question_answers);
+	}
+
 	public function insert_answer()
 	{
 

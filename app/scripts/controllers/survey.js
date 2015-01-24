@@ -147,12 +147,12 @@
           console.log(data);
         });
 
-        $scope.userAnswer.push({
-          'fieldName': e.getAttribute("name"),
-          'fieldValue': e.value,
-        })
-      };
-    });
+        // $scope.userAnswer.push({
+        //   'fieldName': e.getAttribute("name"),
+        //   'fieldValue': e.value,
+        // })
+};
+});
 }
 
 var readyForNext = function(readyForNextQuestion) {
@@ -176,6 +176,38 @@ $http.get('api/index.php/survey/get_all_questions')
 })
 .error(function(data, status, headers, config) {
 });
+
+
+$http.get('api/index.php/survey/get_all_user_answers')
+.success(function(data, status, headers, config) {
+ $scope.userAnswer = data;
+})
+.error(function(data, status, headers, config) {
+});
+
+
+$scope.isAnswerdAlready = function(q) {
+  return $scope.userAnswer[q] !== undefined ? true : false;
+  // if($scope.userAnswer[q] !== undefined){
+  //   return true;
+  // }else{
+
+  // }
+  // return true;
+}
+
+$scope.startPoint = function() {
+  angular.forEach($scope.allQuestions,function(e,i) {
+    // angular.forEach($scope.userAnswer, function(el,id) {
+      if($scope.userAnswer[e.survey_question_id] == undefined){
+        $scope.group = parseInt(e.group);
+        return false;
+      }
+    // })
+});
+}
+
+
 
 $scope.allOccupations = [];
 $scope.allDesignations = [];
