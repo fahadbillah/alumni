@@ -146,13 +146,12 @@
           console.log('http error occured!');
           console.log(data);
         });
+      };
+    });
+}
 
-        // $scope.userAnswer.push({
-        //   'fieldName': e.getAttribute("name"),
-        //   'fieldValue': e.value,
-        // })
-};
-});
+$scope.check = function(g) {
+  return g == $scope.group ? true : false;
 }
 
 var readyForNext = function(readyForNextQuestion) {

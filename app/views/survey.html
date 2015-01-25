@@ -85,10 +85,10 @@
 </form>
 
 
-<form name="survey" ng-if="registrationDone" ng-submit="submitSurvey()" ng-bind="{{startPoint()}}" novalidate>
+<form name="survey" ng-if="registrationDone" ng-submit="submitSurvey()" novalidate>
 
 	
-	<div class="form-group" ng-if="value.group == group && !isAnswerdAlready(value)" ng-repeat-start="(key, value) in allQuestions">
+	<div class="form-group" ng-repeat-start="(key, value) in allQuestions">
 		<label for="">{{value.question}}</label>
 		<form-fields data="value"></form-fields>
 	</div>

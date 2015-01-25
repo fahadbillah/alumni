@@ -40,15 +40,23 @@ class Survey extends CI_Controller {
 
 		$user_question_answers = array();
 
+		$survey_answer_id = '';
+		$other_answer = '';
+
 		foreach ($questions as $key => $value) {
+			// echo "questions";
 			foreach ($answers as $k => $v) {
 				if ($value['survey_question_id'] == $v['survey_question_id']) {
-					$user_question_answers[$value['survey_question_id']][] = array(
-					                                                               'survey_question_id' => $value['survey_question_id'],
-					                                                               'survey_answer_id' => $v['survey_answer_id'],
-					                                                               );
+					$survey_answer_id = $v['survey_answer_id'];
+					$other_answer = $v['other_answer'];
 				}
 			}
+			$user_question_answers[$value['survey_question_id']][] = array(
+			                                                               'survey_answer_id' => $survey_answer_id,
+			                                                               'other_answer' => $other_answer,
+			                                                               );
+			$survey_answer_id = '';
+			$other_answer = '';
 		}
 		// pr($user_question_answers);
 		jsonify($user_question_answers);
