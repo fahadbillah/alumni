@@ -77,6 +77,10 @@
        authorizedRoles: [USER_ROLES.admin, USER_ROLES.user]
      }
    })
+   .when('/list', {
+     templateUrl: 'views/list.html',
+     controller: 'ListCtrl'
+   })
    .otherwise({
      redirectTo: '/'
    });

@@ -2,7 +2,7 @@
 <head>
 	<meta property="og:title" content="NSU School Of Business" />
 	<meta property="og:description" content="NSU School Of Business." />
-	<meta property="og:image" content="http://staging.nsuschoolofbusiness.org/images/nsu_logo.png" />
+	<meta property="og:image" content="http://nsubusinessalumni.org/images/nsu_logo.png" />
 	<title>NSU School Of Business</title>
 	<style type="text/css">
 	.links{
@@ -42,5 +42,21 @@
 		window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));
 		</script>
 	</div>
+	<div class="links">
+		<button id="clickButton">Email</button>
+		<input id="email" style="display:none;">
+	</div>
+
+	<script type="text/javascript">
+
+	var b = document.getElementById('clickButton');
+	var f = document.getElementById('email');
+
+	b.addEventListener("click", function(){ 
+
+
+	});
+
+	</script>
 </body>
 </html>

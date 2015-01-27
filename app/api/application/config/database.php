@@ -57,7 +57,7 @@ $db['default']['database'] = 'nsu_sob_alumni';
 // $db['default']['hostname'] = 'localhost';
 // $db['default']['username'] = 'nsuschoo_root';
 // $db['default']['password'] = '^MPmi%RXOa5B';
-// $db['default']['database'] = 'nsuschoo_staging';
+// $db['default']['database'] = 'nsuschoo_alumni';
 
 // $db['default']['hostname'] = '192.168.100.219';
 // $db['default']['username'] = 'adnan';

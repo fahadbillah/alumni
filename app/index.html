@@ -52,6 +52,7 @@
               <li><a ng-href="#/"> <i class="fa fa-home"></i> Home</a></li>
               <li class=""><a ng-href="#/survey">Survey</a></li>
               <li ng-if="!isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/login">Login</a></li>
+              <li ng-if="isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/list">List</a></li>
               <li class="dropdown" ng-if="currentUser">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{currentUser.first_name}} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
@@ -65,7 +66,7 @@
         </div><!-- /.container-fluid -->
       </nav>
 
-      <div login-dialog ng-if="!isLoginPage"></div>
+      <!-- <div login-dialog ng-if="!isLoginPage"></div> -->
 
 
       <div ng-view="" class="col-md-12"></div>
@@ -136,6 +137,7 @@
     <script src="scripts/directives/logindialog.js"></script>
     <script src="scripts/directives/formautofillfix.js"></script>
     <script src="scripts/filters/utility.js"></script>
+    <script src="scripts/controllers/list.js"></script>
     <!-- endbuild -->
   </body>
   </html>

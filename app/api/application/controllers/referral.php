@@ -13,7 +13,7 @@ class Referral extends CI_Controller {
 
 	public function referral_id($referral_id)
 	{
-		$data['site_url'] = 'http://staging.nsuschoolofbusiness.org/#/survey/'.$referral_id;
+		$data['site_url'] = 'http://nsubusinessalumni.org/#/survey/'.$referral_id;
 		$this->load->view('redirecting_page', $data);
 	}
 
@@ -26,7 +26,6 @@ class Referral extends CI_Controller {
 		} else {
 			jsonify(array('success' => false));
 		}
-		
 	}
 
 }

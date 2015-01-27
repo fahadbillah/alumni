@@ -60,6 +60,15 @@ class User extends CI_Controller {
 		$this->load->view('social_share', $result);
 
 	}
+
+	public function get_alumni_list()
+	{
+		$returned_data['list'] = $this->user_model->get_alumni_list();
+		$returned_data['success'] = true;
+		$returned_data['message'] = 'all alumni data loaded';
+
+		jsonify($returned_data);
+	}
 }
 
 /* End of file user.php */

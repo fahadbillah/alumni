@@ -128,8 +128,7 @@ class User_model extends CI_Model {
 
 	public function insert_user_work_history($work)
 	{
-		return $this->db->insert('user_work_histories', $work);
-		$result = $this->db->insert('users', $user_data);
+		$result = $this->db->insert('user_work_histories', $work);
 
 		return array(
 		             'success' => $result,
@@ -141,14 +140,17 @@ class User_model extends CI_Model {
 	{
 		$this->db->select('*');
 		$this->db->from('user_work_histories');
-		$this->db->join('work_types', 'work_types.work_type_id = user_work_histories.type');
-		$this->db->join('designations', 'designations.designation_id = user_work_histories.designation');
 		if (isset($id['id'])) {
-			$this->db->where('user_work_histories.user_work_history_id', $id['id']);
+			$this->db->where('user_work_history_id', $id['id']);
 		} else {
-			$this->db->where('user_work_histories.user_id', $id['user_id']);
+			$this->db->where('user_id', $id['user_id']);
 		}
-		$result = $this->db->get()->result_array();
+		return $this->db->get()->result_array();
+	}
+
+	public function get_alumni_list()
+	{
+		return $this->db->select('user_id,first_name,last_name,nsu_id')->from('users')->get()->result_array();
 	}
 }
 

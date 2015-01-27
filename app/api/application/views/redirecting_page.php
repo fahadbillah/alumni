@@ -2,7 +2,7 @@
 <head>
 	<meta property="og:title" content="NSU School Of Business" />
 	<meta property="og:description" content="NSU School Of Business." />
-	<meta property="og:image" content="http://staging.nsuschoolofbusiness.org/images/nsu_logo.png" />
+	<meta property="og:image" content="http://nsubusinessalumni.org/images/nsu_logo.png" />
 	<title>NSU School Of Business</title>
 </head>
 <body>

@@ -14,6 +14,7 @@
     'AngularJS',
     'Karma'
     ];
+    $scope.buttonClicked = false;
 
     $scope.referralLink = $routeParams.referralLink;
     console.log('referral link '+$scope.referralLink);
@@ -28,25 +29,25 @@
        console.log(data);
        if (data.csrf_test_name === false) {
         getCookie();
-    };
-    $scope.csrf_test_name = data.csrf_test_name;
-})
+      };
+      $scope.csrf_test_name = data.csrf_test_name;
+    })
       .error(function(data, status, headers, config) {
         console.log('error occured!!!')
         console.log(data)
-    });
-  }
+      });
+    }
 
-  getCookie();
+    getCookie();
 
 
-  $scope.group = 1;
+    $scope.group = 1;
 
-  $scope.survey = {};
+    $scope.survey = {};
 
-  $scope.userAnswer  = [];
+    $scope.userAnswer  = [];
 
-  $scope.initFieldModels = function () {
+    $scope.initFieldModels = function () {
       angular.forEach($scope.allQuestions,function(e,i) {
         if(e.group == $scope.group){
           var the_string = '';
@@ -55,17 +56,17 @@
             angular.forEach(e.answers, function(el,id) {
               the_string += '_a_'+el.survey_answer_id;
               var model = $parse(the_string);
-          })
-        }else{
+            })
+          }else{
             var model = $parse(the_string);
+          }
+          $scope.$apply();
         }
-        $scope.$apply();
-    }
-})
-  };
+      })
+    };
 
 
-  $scope.userRegistration = function() {
+    $scope.userRegistration = function() {
 
      var registrationData = $.param({
       'csrf_test_name': $cookies['XSRF-TOKEN'],
@@ -79,7 +80,8 @@
       'designation' : registration.designation.value.toLowerCase() === 'other' ? 'not available' : registration.designation.value,
       'other_designation' : registration.otherDesignation === undefined ? 'not available' : registration.otherDesignation.value,
       'referer' : $scope.referralLink === undefined ? 'not available' : $scope.referralLink,
-  })
+    })
+     $scope.buttonClicked = true;
 
      $http.post('api/index.php/auth/registration',registrationData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
      .success(function(data) {
@@ -93,17 +95,19 @@
 
        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
        $scope.setCurrentUser(data.user);
-   }else{
-   }
-   alert(data.message);
-})
+     }else{
+     }
+     $scope.buttonClicked = false;
+     alert(data.message);
+   })
      .error(function(data) {
       console.log('http error occured!');
       console.log(data);
-  });
- }
+      $scope.buttonClicked = false;
+    });
+   }
 
- $scope.submitSurvey = function() {
+   $scope.submitSurvey = function() {
 
     var formField = document.querySelectorAll('input,textarea,select');
     var readyForNextQuestion = true;
@@ -115,58 +119,65 @@
           alert("Please fill the form first!");
           continueLoop = false;
           return false;
-      };
+        };
 
-      if (e.checked === false && (e.type === 'radio' || e.type === 'checkbox')) {
+        if (e.checked === false && (e.type === 'radio' || e.type === 'checkbox')) {
           $scope.currentAnswerNumber++;
           return false;
-      };
+        };
 
 
-      var answerData = $.param({
+        var answerData = $.param({
           'csrf_test_name': $scope.csrf_test_name,
           'fieldName': e.getAttribute("name"),
           'fieldValue': e.value,
           'fieldType': e.type,
-      })
+        })
 
-      $http.post('api/index.php/survey/insert_answer',answerData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
-      .success(function(data) {
+        $http.post('api/index.php/survey/insert_answer',answerData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
+        .success(function(data) {
           console.log(data);
           if (data.success === false) {
             readyForNextQuestion = false;
-        }else{
+          }else{
             $scope.currentAnswerNumber++;
             $scope.questionPicked = true;
             getAllUserAnswers();
-        }
-        if ($scope.currentAnswerNumber === formField.length) {
-            readyForNext(readyForNextQuestion);
-        };
-    })
-      .error(function(data) {
+          }
+          // if ($scope.currentAnswerNumber === formField.length) {
+          //   readyForNext(readyForNextQuestion);
+          // };
+        })
+        .error(function(data) {
           console.log('http error occured!');
           console.log(data);
-      });
-  };
-});
+        });
+      };
+    });
 }
 
 $scope.questionPicked = true;
 $scope.showQuestionId = 0;
 
 $scope.currentQuestion = function() {
-    var allQuestionsDone = true;
-    angular.forEach($scope.allQuestions,function(e,i) {
-        if ($scope.userAnswer[e.survey_question_id] != undefined && $scope.questionPicked && ($scope.userAnswer[e.survey_question_id][0].survey_answer_id == '' && $scope.userAnswer[e.survey_question_id][0].survey_answer_id == '')) {
-          $scope.showQuestionId = parseInt(e.survey_question_id);
-          $scope.questionPicked = false;
-          var allQuestionsDone = false;
-      };
-      console.log($scope.showQuestionId);
+  var allQuestionsDone = true;
+  angular.forEach($scope.userAnswer, function(e,i) {
+    if((e[0].survey_answer_id == '' || e[0].survey_answer_id == null) && (e[0].other_answer == '' || e[0].other_answer == null)){
+      allQuestionsDone = false;
+    }
   })
-    if (allQuestionsDone) {
-      $location.path('/profile');
+
+  angular.forEach($scope.allQuestions,function(e,i) {
+    if ($scope.userAnswer[e.survey_question_id] != undefined && $scope.questionPicked && (($scope.userAnswer[e.survey_question_id][0].survey_answer_id == '' || $scope.userAnswer[e.survey_question_id][0].survey_answer_id == null) && ($scope.userAnswer[e.survey_question_id][0].other_answer == '' || $scope.userAnswer[e.survey_question_id][0].other_answer == null))) {
+      $scope.showQuestionId = parseInt(e.survey_question_id);
+      $scope.questionPicked = false;
+    };
+    console.log($scope.showQuestionId);
+  })
+  
+  if (allQuestionsDone) {
+    alert("Thanks for completing the survey")
+    $location.path('/profile');
   };
 }
 
@@ -177,12 +188,12 @@ $scope.check = function(g) {
 var readyForNext = function(readyForNextQuestion) {
   if (readyForNextQuestion === false) {
     return false;
-}else{
+  }else{
     $scope.group++;
     if ($scope.last_group_no < $scope.group) {
       $location.path('/profile');
-  };
-}
+    };
+  }
 }
 
 $scope.allQuestions = [];
@@ -190,7 +201,7 @@ $scope.allQuestions = [];
 $http.get('api/index.php/survey/get_all_questions')
 .success(function(data, status, headers, config) {
  $scope.allQuestions = data.questions;
- $scope.currentQuestion();
+ getAllUserAnswers();
  console.log($scope.allQuestions);
  $scope.last_group_no = parseInt(data.last_group_no);
 })
@@ -199,16 +210,15 @@ $http.get('api/index.php/survey/get_all_questions')
 
 
 var getAllUserAnswers = function() {
-    $http.get('api/index.php/survey/get_all_user_answers')
-    .success(function(data, status, headers, config) {
-     $scope.userAnswer = data;
-     $scope.currentQuestion();
+  $http.get('api/index.php/survey/get_all_user_answers')
+  .success(function(data, status, headers, config) {
+   $scope.userAnswer = data;
+   $scope.currentQuestion();
  })
-    .error(function(data, status, headers, config) {
-    });
+  .error(function(data, status, headers, config) {
+  });
 }
 
-getAllUserAnswers();
 
 $scope.isAnswerdAlready = function(q) {
   return $scope.userAnswer[q] !== undefined ? true : false;
@@ -226,7 +236,7 @@ $scope.startPoint = function() {
       if($scope.userAnswer[e.survey_question_id] == undefined){
         $scope.group = parseInt(e.group);
         return false;
-    }
+      }
     // })
 });
 }
@@ -262,26 +272,26 @@ function getSessionData() {
     console.log(data);
     if (data.is_logged_in === true) {
      $scope.registrationDone = true;
- };
+   };
       // this callback will be called asynchronously
       // when the response is available
-  })
+    })
   .error(function(data, status, headers, config) {
       // called asynchronously if an error occurs
       // or server returns response with an error status.
-  });
+    });
 }
 getSessionData()
 
 $scope.showOther = function(value) {
   if (value === undefined) {
     return false;
-};
-if (value.toLowerCase() == 'other') {
+  };
+  if (value.toLowerCase() == 'other') {
     return true;
-}else{
+  }else{
     return false;
-}
+  }
 }
 
 }]);

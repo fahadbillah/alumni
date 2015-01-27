@@ -1,4 +1,4 @@
-<form name="registration" ng-if="!registrationDone" novalidate>
+<form name="registration" ng-show="!registrationDone" novalidate>
 
 	<div class="form-group">
 		<label for="">First Name</label>
@@ -79,7 +79,7 @@
 		<span ng-show="registration.otherDesignation.$error.required && registration.otherDesignation.$dirty"  class="label label-danger">Designation is required.</span>
 	</div>
 
-	<button type="submit" class="btn btn-primary" ng-disabled="registration.$pristine || registration.$invalid" ng-click="userRegistration()">
+	<button type="submit" class="btn btn-primary" ng-disabled="registration.$pristine || registration.$invalid || buttonClicked" ng-click="userRegistration()">
 		Submit
 	</button>
 </form>
@@ -88,12 +88,11 @@
 <form name="survey" ng-if="registrationDone" ng-submit="submitSurvey()" novalidate>
 
 	
-	<div class="form-group" ng-if="showQuestionId == value.survey_question_id" ng-repeat-start="(key, value) in allQuestions">
+	<div class="form-group" ng-if="showQuestionId == value.survey_question_id" ng-repeat="(key, value) in allQuestions">
 		<label for="">{{value.question}}</label>
 		<form-fields data="value"></form-fields>
 	</div>
 
-	<hr ng-if="value.group == group" ng-repeat-end>
 
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
