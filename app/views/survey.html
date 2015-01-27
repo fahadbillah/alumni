@@ -88,7 +88,7 @@
 <form name="survey" ng-if="registrationDone" ng-submit="submitSurvey()" novalidate>
 
 	
-	<div class="form-group" ng-repeat-start="(key, value) in allQuestions">
+	<div class="form-group" ng-if="showQuestionId == value.survey_question_id" ng-repeat-start="(key, value) in allQuestions">
 		<label for="">{{value.question}}</label>
 		<form-fields data="value"></form-fields>
 	</div>

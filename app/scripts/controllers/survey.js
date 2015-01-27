@@ -137,6 +137,8 @@
             readyForNextQuestion = false;
           }else{
             $scope.currentAnswerNumber++;
+            $scope.questionSelected = false;
+            getAllUserAnswers();
           }
           if ($scope.currentAnswerNumber === formField.length) {
             readyForNext(readyForNextQuestion);
@@ -149,6 +151,19 @@
       };
     });
 }
+
+$scope.questionSelected = false;
+$scope.showQuestionId = 0;
+
+var selectQuestion = function() {
+  angular.forEach($scope.allQuestions,function(e,i) {
+    if ($scope.userAnswer[e.survey_question_id] !== undefined && !$scope.questionSelected && ($scope.userAnswer[e.survey_question_id][0].survey_answer_id == '' && $scope.userAnswer[e.survey_question_id][0].other_answer == '')) {
+      $scope.showQuestionId = e.survey_question_id;
+      $scope.questionSelected = true;
+    };
+  })
+}
+
 
 $scope.check = function(g) {
   return g == $scope.group ? true : false;
@@ -176,14 +191,17 @@ $http.get('api/index.php/survey/get_all_questions')
 .error(function(data, status, headers, config) {
 });
 
+function getAllUserAnswers() {
+  $http.get('api/index.php/survey/get_all_user_answers')
+  .success(function(data, status, headers, config) {
+   $scope.userAnswer = data;
+   selectQuestion();
+ })
+  .error(function(data, status, headers, config) {
+  });
+}
 
-$http.get('api/index.php/survey/get_all_user_answers')
-.success(function(data, status, headers, config) {
- $scope.userAnswer = data;
-})
-.error(function(data, status, headers, config) {
-});
-
+getAllUserAnswers();
 
 $scope.isAnswerdAlready = function(q) {
   return $scope.userAnswer[q] !== undefined ? true : false;
