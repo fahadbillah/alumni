@@ -54,7 +54,7 @@ class User extends CI_Controller {
 	{
 		$session_data = $this->session->userdata('user_data');
 		$user_id = $session_data['id'];
-		$result['site_url'] = 'http://staging.nsuschoolofbusiness.org/api/index.php/referral/referral_id/';
+		$result['site_url'] = 'http://nsubusinessalumni.org/api/index.php/referral/referral_id/';
 		$result['referral_link'] = $this->user_model->get_referral_link($user_id);
 
 		$this->load->view('social_share', $result);

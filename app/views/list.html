@@ -1,0 +1,23 @@
+<style type="text/css">
+tr{
+	cursor: pointer;
+}
+
+</style>
+
+<table class="table table-striped table-hover table-bordered">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Name</th>
+			<th>ID</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="(key, value) in allAlumni" ng-click="goToProfile({{value.user_id}})">
+			<td>{{key + 1}}</td>
+			<td>{{value.first_name}} {{value.last_name}}</td>
+			<td> {{value.nsu_id}} </td>
+		</tr>
+	</tbody>
+</table>

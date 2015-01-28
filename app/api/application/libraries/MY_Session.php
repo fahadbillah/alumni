@@ -23,7 +23,7 @@ class My_Session extends CI_Session {
     {
         $CI =& get_instance();
 
-        if ( ! $CI->input->is_ajax_request())
+        if (false)
         {
             parent::sess_update();
         }

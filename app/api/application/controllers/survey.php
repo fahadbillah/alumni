@@ -134,7 +134,7 @@ class Survey extends CI_Controller {
 
 	public function referral($referral_id)
 	{
-		$site_url = 'http://staging.nsuschoolofbusiness.org/#/survey/'.$referral_id;
+		$site_url = 'http://nsubusinessalumni.org/#/survey/'.$referral_id;
 		redirect($site_url, 'refresh');
 	}
 

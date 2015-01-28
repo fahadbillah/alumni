@@ -42,7 +42,7 @@ class Auth extends CI_Controller {
 		$post_data = get_post();
 		// pr($post_data);
 		// exit();
-		$password = '123';
+		$password = generate_random_string(8);
 		$post_data['password'] = sha1($password);
 		// $post_data['password'] = sha1(generate_random_string(8));
 		$post_data['token'] = generate_random_string(40);
@@ -173,33 +173,37 @@ class Auth extends CI_Controller {
 
 	public function test()
 	{
+		vd($_SERVER);
 
-		$config = Array(
-		                'protocol' => 'smtp',
-		                'smtp_host' => 'mail.nsubusinessalumni.org',
-		                'smtp_port' => 26,
-		                'smtp_timeout' =>'7',
-		                'charset' => 'utf-8',
-		                'newline' => "\r\n",
-		                'smtp_user' => 'no-reply@nsubusinessalumni.org', 
-		                'smtp_pass' => '.@ZJRn~yo6TC', 
-		                'mailtype' => 'html',
-		                'validation' => TRUE,
-		                'wordwrap' => TRUE
-		                );
+		vd($this->input->is_ajax_request());
+		
 
-		$this->load->library('email',$config);
+		// $config = Array(
+		//                 'protocol' => 'smtp',
+		//                 'smtp_host' => 'mail.nsubusinessalumni.org',
+		//                 'smtp_port' => 26,
+		//                 'smtp_timeout' =>'7',
+		//                 'charset' => 'utf-8',
+		//                 'newline' => "\r\n",
+		//                 'smtp_user' => 'no-reply@nsubusinessalumni.org', 
+		//                 'smtp_pass' => '.@ZJRn~yo6TC', 
+		//                 'mailtype' => 'html',
+		//                 'validation' => TRUE,
+		//                 'wordwrap' => TRUE
+		//                 );
 
-		$this->email->from('no-reply@nsubusinessalumni.org', 'NO-REPLY');
-		$this->email->to('fahadbillah@yahoo.com');
-			// $this->email->cc('another@example.com');
-			// $this->email->bcc('and@another.com');
+		// $this->load->library('email',$config);
 
-		$html = 'Password: <strong>PASSWORD</strong>';
-		$this->email->subject('Login informaiton for www.nsubusinessalumni.org');
-		$this->email->message($html);
+		// $this->email->from('no-reply@nsubusinessalumni.org', 'NO-REPLY');
+		// $this->email->to('fahadbillah@yahoo.com');
+		// 	// $this->email->cc('another@example.com');
+		// 	// $this->email->bcc('and@another.com');
 
-		$this->email->send();
+		// $html = 'Password: <strong>PASSWORD</strong>';
+		// $this->email->subject('Login informaiton for www.nsubusinessalumni.org');
+		// $this->email->message($html);
+
+		// $this->email->send();
 	}
 }
 

@@ -21,6 +21,16 @@
  		return false;
  	};
 
+  $scope.check = function() {
+   $http.get('api/index.php/auth/test')
+   .success(function(data, status, headers, config){
+    console.log(data);
+  })
+   .error(function(data, status, headers, config) {
+    console.log(data);
+  });
+ }
+
  	// var uploader = $scope.uploader = new FileUploader({
  	// 	url: 'upload.php'
  	// });
