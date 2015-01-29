@@ -133,10 +133,11 @@
           'fieldValue': e.value,
           'fieldType': e.type,
         })
-
+        $scope.buttonClicked = true;
         $http.post('api/index.php/survey/insert_answer',answerData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
         .success(function(data) {
           console.log(data);
+          $scope.buttonClicked = false;
           if (data.success === false) {
             readyForNextQuestion = false;
           }else{
@@ -151,6 +152,7 @@
         .error(function(data) {
           console.log('http error occured!');
           console.log(data);
+          $scope.buttonClicked = false;
         });
       };
     });

@@ -43,7 +43,8 @@
 		</script>
 	</div>
 	<div class="links">
-		<button id="clickButton">Email</button>
+		<button id="clickButton" value="email">Email</button>
+		<!-- <img src="<?php echo base_url() ?>images/email.png" alt="email" style="width: 20px;"> -->
 		<input id="email" style="display:none;">
 	</div>
 
@@ -53,8 +54,32 @@
 	var f = document.getElementById('email');
 
 	b.addEventListener("click", function(){ 
+		console.log('wow');
+		if (this.innerText === 'Email') {
+			this.innerText = 'Send';
+			f.style.display = '';
+		} else{
+			this.innerText = 'Email';
+			var email = f.value;
+			f.style.display = 'none';
 
-
+			var xmlhttp;
+			if (window.XMLHttpRequest){
+				xmlhttp=new XMLHttpRequest();
+			}
+			else{
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.onreadystatechange=function()
+			{
+				if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					alert("Referral Link send successfully!")
+				}
+			}
+			xmlhttp.open("GET","<?php echo base_url()?>index.php/referral/send_referral_email/"+encodeURIComponent(email),true);
+			xmlhttp.send();
+		};
 	});
 
 	</script>

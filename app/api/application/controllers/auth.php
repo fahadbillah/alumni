@@ -116,7 +116,7 @@ class Auth extends CI_Controller {
 
 			$this->load->library('email',$config);
 
-			$this->email->from('no-reply@nsubusinessalumni.org', 'NO-REPLY');
+			$this->email->from('no-reply@nsubusinessalumni.org', 'NSU Business Alumni');
 			$this->email->to($post_data['email']);
 			// $this->email->cc('another@example.com');
 			// $this->email->bcc('and@another.com');
