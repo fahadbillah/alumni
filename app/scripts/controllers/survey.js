@@ -68,94 +68,103 @@
 
     $scope.userRegistration = function() {
 
-     var registrationData = $.param({
-      'csrf_test_name': $cookies['XSRF-TOKEN'],
-      'first_name' : registration.first_name.value,
-      'last_name' : registration.last_name.value,
-      'nsu_id' : registration.nsu_id.value,
-      'email' : registration.email.value,
-      'phone' : registration.phone.value,
+    /*
+,
       'work_type' : registration.workType.value.toLowerCase() === 'other' ? 'not available' : registration.workType.value,
       'other_work_type' : registration.otherWorkType === undefined ? 'not available' : registration.otherWorkType.value,
       'designation' : registration.designation.value.toLowerCase() === 'other' ? 'not available' : registration.designation.value,
-      'other_designation' : registration.otherDesignation === undefined ? 'not available' : registration.otherDesignation.value,
-      'referer' : $scope.referralLink === undefined ? 'not available' : $scope.referralLink,
-    })
-     $scope.buttonClicked = true;
+      'other_designation' : registration.otherDesignation === undefined ? 'not available' : registration.otherDesignation.value
+      */
 
-     $http.post('api/index.php/auth/registration',registrationData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
-     .success(function(data) {
-      console.log(data);
-      if (data.success === true) {
-       $scope.registrationDone = true;
+      
+      var registrationData = $.param({
+        'csrf_test_name': $cookies['XSRF-TOKEN'],
+        'first_name' : registration.first_name.value,
+        'last_name' : registration.last_name.value,
+        'nsu_id' : registration.nsu_id.value,
+        'email' : registration.email.value,
+        'phone' : registration.phone.value,
+        'referer' : $scope.referralLink === undefined ? 'not available' : $scope.referralLink,
+      })
 
+      $scope.buttonClicked = true;
 
-       Session.create(data,data.user.id,data.user.role);
-
-
-       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-       $scope.setCurrentUser(data.user);
-     }else{
-     }
-     $scope.buttonClicked = false;
-     alert(data.message);
-   })
-     .error(function(data) {
-      console.log('http error occured!');
-      console.log(data);
-      $scope.buttonClicked = false;
-    });
-   }
-
-   $scope.submitSurvey = function() {
-
-    var formField = document.querySelectorAll('input,textarea,select');
-    var readyForNextQuestion = true;
-    var continueLoop = true;
-    $scope.currentAnswerNumber = 0;
-    angular.forEach(formField,function(e, i){
-      if (continueLoop) {
-        if (e.value.trim() === '') {
-          alert("Please fill the form first!");
-          continueLoop = false;
-          return false;
-        };
-
-        if (e.checked === false && (e.type === 'radio' || e.type === 'checkbox')) {
-          $scope.currentAnswerNumber++;
-          return false;
-        };
+      $http.post('api/index.php/auth/registration',registrationData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
+      .success(function(data) {
+        console.log(data);
+        if (data.success === true) {
+         $scope.registrationDone = true;
 
 
-        var answerData = $.param({
-          'csrf_test_name': $scope.csrf_test_name,
-          'fieldName': e.getAttribute("name"),
-          'fieldValue': e.value,
-          'fieldType': e.type,
-        })
-        $scope.buttonClicked = true;
-        $http.post('api/index.php/survey/insert_answer',answerData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
-        .success(function(data) {
-          console.log(data);
-          $scope.buttonClicked = false;
-          if (data.success === false) {
-            readyForNextQuestion = false;
-          }else{
+         Session.create(data,data.user.id,data.user.role);
+
+
+         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+         $scope.setCurrentUser(data.user);
+
+         $location.path('/nsuAlumniSurvey');
+
+       }else{
+       }
+       $scope.buttonClicked = false;
+       alert(data.message);
+     })
+      .error(function(data) {
+        console.log('http error occured!');
+        console.log(data);
+        $scope.buttonClicked = false;
+      });
+    }
+
+    $scope.submitSurvey = function() {
+
+      var formField = document.querySelectorAll('input,textarea,select');
+      var readyForNextQuestion = true;
+      var continueLoop = true;
+      $scope.currentAnswerNumber = 0;
+      angular.forEach(formField,function(e, i){
+        if (continueLoop) {
+          if (e.value.trim() === '') {
+            alert("Please fill the form first!");
+            continueLoop = false;
+            return false;
+          };
+
+          if (e.checked === false && (e.type === 'radio' || e.type === 'checkbox')) {
             $scope.currentAnswerNumber++;
-            $scope.questionPicked = true;
-            getAllUserAnswers();
-          }
+            return false;
+          };
+
+
+          var answerData = $.param({
+            'csrf_test_name': $scope.csrf_test_name,
+            'fieldName': e.getAttribute("name"),
+            'fieldValue': e.value,
+            'fieldType': e.type,
+          })
+          $scope.buttonClicked = true;
+          $http.post('api/index.php/survey/insert_answer',answerData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
+          .success(function(data) {
+            console.log(data);
+            $scope.buttonClicked = false;
+            if (data.success === false) {
+              readyForNextQuestion = false;
+            }else{
+              $scope.currentAnswerNumber++;
+              $scope.questionPicked = true;
+              getAllUserAnswers();
+            }
           // if ($scope.currentAnswerNumber === formField.length) {
           //   readyForNext(readyForNextQuestion);
           // };
         })
-        .error(function(data) {
-          console.log('http error occured!');
-          console.log(data);
-          $scope.buttonClicked = false;
-        });
-      };
-    });
+          .error(function(data) {
+            console.log('http error occured!');
+            console.log(data);
+            $scope.buttonClicked = false;
+          });
+        };
+      });
 }
 
 $scope.questionPicked = true;

@@ -75,3 +75,28 @@ body {
     border-bottom: 0;
   }
 }
+
+
+/*@media (min-width: 991px) {
+  .navbar-default {
+    color: rgb(26, 36, 47) !important;
+    background-color: #ffffff !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar-collapse.collapse.in {
+    width: 100px !important;
+    margin-right: 14px !important;
+    text-align: center !important;
+    margin-top: -17px !important;
+    position: absolute !important;
+    right: 0px !important;
+    top: 65px !important;
+    z-index: 100 !important;
+    color: #ffffff !important;
+    background-color: rgb(26, 36, 47) !important;
+  }
+  }*/
+
+

@@ -10,14 +10,14 @@
  */
  angular
  .module('alumniApp', [
-         'ngAnimate',
-         'ngCookies',
-         'ngResource',
-         'ngRoute',
-         'ngSanitize',
-         'ngTouch',
-         'angularFileUpload'
-         ])
+   'ngAnimate',
+   'ngCookies',
+   'ngResource',
+   'ngRoute',
+   'ngSanitize',
+   'ngTouch',
+   'angularFileUpload'
+   ])
  .config(['$routeProvider','$locationProvider','USER_ROLES', function ($routeProvider,$locationProvider,USER_ROLES) {
    // $locationProvider.html5Mode(true).hashPrefix('!');
    $routeProvider
@@ -80,6 +80,13 @@
    .when('/list', {
      templateUrl: 'views/list.html',
      controller: 'ListCtrl'
+   })
+   .when('/nsuAlumniSurvey', {
+     templateUrl: 'views/nsualumnisurvey.html',
+     controller: 'NsualumnisurveyCtrl',
+     data: {
+       authorizedRoles: [USER_ROLES.admin, USER_ROLES.user, USER_ROLES.guest]
+     }
    })
    .otherwise({
      redirectTo: '/'

@@ -51,6 +51,11 @@ class Survey_model extends CI_Model {
 		return $this->db->insert('user_answers', $question_answer);
 	}
 
+	public function insert_batch_answer($data)
+	{
+		return $this->db->insert_batch('user_survey_answers', $data);
+	}
+
 }
 
 /* End of file survey_model.php */
