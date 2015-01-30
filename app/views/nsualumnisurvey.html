@@ -215,17 +215,9 @@ h3,legend{
 			</p>
 		</div>
 	</div>
-	<div class="form-group">
-		<button type="submit" class="btn btn-primary btn-block">Submit</button>
-	</div>
-</form>
 
 
-<form name="LAG2" class="form-horizontal" role="form">
-	<div class="form-group">
-		<legend>SECTION B: Life after Graduation</legend>
-	</div>
-	
+
 	<div class="form-group">
 		<label for="">If you will have more than one job on 12 January 2015, how many jobs will you have in total?</label>
 		<br>
@@ -301,6 +293,18 @@ h3,legend{
 			No, not related
 		</label>
 	</div>
+
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary btn-block">Submit</button>
+	</div>
+</form>
+
+
+<form name="LAG2" class="form-horizontal" role="form">
+	<div class="form-group">
+		<legend>SECTION B: Life after Graduation</legend>
+	</div>
+	
 
 	<div class="form-group">
 		<label>
@@ -459,6 +463,272 @@ h3,legend{
 				</tr>
 			</tbody>
 		</table>
+	</div>
+
+	<div class="form-group">
+		<label>
+			How did you first find out about the job?
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="jobSource">
+			Your university/college Careers Service
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="jobSource">
+			Other university/college source (e.g. lecturer, website)
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="jobSource">
+			Media (e.g. newspaper/magazine advertisement)
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="jobSource">
+			Personal contacts, including family and friends
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="jobSource">
+			Social media/professional networking sites
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="jobSource">
+			Already worked there (including on an internship/placement)
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="jobSource">
+			Employer's website
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="jobSource">
+			Recruitment agency/website
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="jobSource">
+			Speculative application
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="jobSource">
+			Other
+		</label>
+		<input type="text" class="form-control">
+	</div>
+
+	<div class="form-group">
+		<label>
+			How well did North South University prepare you for your current career or for the           activities mentioned in question 11?
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="nsuPrep">
+			Very well
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="nsuPrep">
+			More than adequately
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="nsuPrep">
+			Adequately
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="nsuPrep">
+			Less than adequately
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="nsuPrep">
+			Very poorly
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="nsuPrep">
+			Not applicable 
+		</label>
+	</div>
+
+
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary btn-block">Submit</button>
+	</div>
+</form>
+
+<form name="educationalExp" class="form-horizontal" role="form">
+	<div class="form-group">
+		<legend>
+			SECTION C: Your overall education experience
+		</legend>
+	</div>
+
+	<div class="form-group">
+		<label>
+			How many years after you finished undergrad did you start your graduate or professional education?
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="yearGap">
+			Immediately (simultaneously or the following fall or spring or summer?)
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="yearGap">
+			1 year later
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="yearGap">
+			2 to 3 years later
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="yearGap">
+			4 to 6 years later
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="yearGap">
+			7 to 10 years later
+		</label>
+		<br>
+		<label>
+			<input type="radio" name="yearGap">
+			11 or more years later
+		</label>
+	</div>
+
+	<div class="form-group">
+		<label>
+			For question 2 and 4 please fill up the tables with a tick if the situation doesn’t apply to you or and rate each category between 1-5, if it does; where 1-5 mean are as follows,
+		</label>
+		<br>
+		<ol>
+			<li>
+				Very well
+			</li>
+			<li>
+				Well
+			</li>
+			<li>
+				Not very well
+			</li>
+			<li>
+				Not at all
+			</li>
+			<li>
+				Can’t tell
+			</li>
+		</ol>
+	</div>
+
+	<div class="form-group">
+		<label>
+			How well have your courses prepared you for each of your following after-graduation activities?
+		</label>
+		<table class="table table-striped table-hover table-condensed">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Rating ( between 1-5)</th>
+					<th>Does not apply</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						Further Studies
+					</td>
+					<td>
+						<input type="number" max="5" class="form-control" ng-model="">
+					</td>
+					<td>
+						<input type="checkbox" name="" ng-model="">
+					</td>
+				</tr>
+				<tr>
+					<td>Employment</td>
+					<td>
+						<input type="number" max="5" class="form-control" ng-model="">
+					</td>
+					<td>
+						<input type="checkbox" name="" ng-model="">
+					</td>
+				</tr>
+				<tr>
+					<td>Being Self-employed/Freelance</td>
+					<td>
+						<input type="number" max="5" class="form-control" ng-model="">
+					</td>
+					<td>
+						<input type="checkbox" name="" ng-model="">
+					</td>
+				</tr>
+				<tr>
+					<td>Introducing new ideas in work</td>
+					<td>
+						<input type="number" max="5" class="form-control" ng-model="">
+					</td>
+					<td>
+						<input type="checkbox" name="" ng-model="">
+					</td>
+				</tr>
+				<tr>
+					<td>Develop career‐ or work‐related knowledge and skills</td>
+					<td>
+						<input type="number" max="5" class="form-control" ng-model="">
+					</td>
+					<td>
+						<input type="checkbox" name="" ng-model="">
+					</td>
+				</tr>
+				<tr>
+					<td>Acquire new skills and knowledge on your own</td>
+					<td>
+						<input type="number" max="5" class="form-control" ng-model="">
+					</td>
+					<td>
+						<input type="checkbox" name="" ng-model="">
+					</td>
+				</tr>
+				<tr>
+					<td>Write clearly and effectively </td>
+					<td>
+						<input  type="number" max="5" class="form-control" ng-model="">
+					</td>
+					<td>
+						<input type="checkbox" name="" ng-model="">
+					</td>
+				</tr>
+				<tr>
+					<td>Think analytically and logically</td>
+					<td>
+						<input type="number" max="5" class="form-control" ng-model="">
+					</td>
+					<td>
+						<input type="checkbox" name="" ng-model="">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="form-group">
+	</div>
+
+	<div class="form-group">
+	</div>
+
+	<div class="form-group">
 	</div>
 
 

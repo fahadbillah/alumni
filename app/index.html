@@ -43,20 +43,20 @@
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header" style="height: 120px;">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="margin-top: 43px;margin-bottom: 43px;">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/" style="height: 120px;padding: 0px;"><img src="images/logo.png" style="margin-top: 1px;margin-left: 1px;width: 236px;background-color: #fff;border-radius: 4px;"></a>
+            <a class="navbar-brand" href="#/" style="padding:0px;background-color: #fff;border-radius: 4px;border: 1px solid #2c3e50;"><img src="images/logo.png" style="width:60px;"></a>
             <!-- <a class="navbar-brand" href="#/">NSU-BA</a> -->
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right" style="margin-top: 30px;margin-bottom: 30px;">
+            <ul class="nav navbar-nav navbar-right">
               <li><a ng-href="#/"> <i class="fa fa-home"></i> Home</a></li>
               <li class=""><a ng-href="#/survey">Survey</a></li>
               <li ng-if="!isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/login">Login</a></li>
