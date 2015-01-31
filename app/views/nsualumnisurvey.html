@@ -903,7 +903,7 @@ h3,legend{
 	</div>
 </form>
 
-<form name="comment" class="form-horizontal" role="form" ng-if="true">
+<form name="commentForm" class="form-horizontal" role="form" ng-if="true" ng-submit="commentSubmit()" ng-if="!commentComplete">
 	<div class="form-group">
 		<legend>SECTION D: Comments/Recommendations</legend>
 	</div>
@@ -913,7 +913,7 @@ h3,legend{
 			Do you think there is more that North South University should offer a student for his/her betterment apart from curricular and extracurricular activities? If yes, please mention below.
 		</label>
 		<textarea class="form-control" ng-model="comment.q1" name="q1" required></textarea>
-		<span class="label label-danger" ng-if="comment.q1.$error.required && comment.q1.$dirty"></span>
+		<span class="label label-danger" ng-if="commentForm.q1.$error.required && commentForm.q1.$dirty"></span>
 	</div>
 
 	<div class="form-group">
@@ -921,16 +921,16 @@ h3,legend{
 			What would you recommend for North South University to improve its quality, not just in terms of education or extracurricular activities but as an institutionthat would bring the excellence in every student?
 		</label>
 		<textarea class="form-control" ng-model="comment.q2" name="q2" required></textarea>
-		<span class="label label-danger" ng-if="comment.q2.$error.required && comment.q2.$dirty"></span>
+		<span class="label label-danger" ng-if="commentForm.q2.$error.required && commentForm.q2.$dirty"></span>
 	</div>
 
 	<div class="form-group">
 		<label>Comments or any other Recommendations</label>
 		<textarea class="form-control" ng-model="comment.q3" name="q3" required></textarea>
-		<span class="label label-danger" ng-if="comment.q3.$error.required && comment.q3.$dirty"></span>
+		<span class="label label-danger" ng-if="commentForm.q3.$error.required && commentForm.q3.$dirty"></span>
 	</div>
 
 	<div class="form-group">
-		<button type="submit" class="btn btn-primary btn-block" ng-disabled="comment.$pristine || comment.$invalid">Submit</button>
+		<button type="submit" class="btn btn-primary btn-block" ng-disabled="commentForm.$pristine || commentForm.$invalid">Submit</button>
 	</div>
 </form>

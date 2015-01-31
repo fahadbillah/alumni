@@ -229,9 +229,40 @@
 
 
  	$scope.comment = {
+ 		'commentComplete' : false,
  		'q1' : '',
  		'q2' : '',
  		'q3' : '',
+ 	}
+
+
+ 	$scope.commentSubmit = function() {
+ 		$scope.comment.commentComplete = true;
+ 		console.log($scope.comment);
+
+
+ 		var comment = $.param({
+ 			'csrf_test_name': $cookies['XSRF-TOKEN'],
+ 			'comment' : $scope.comment
+ 		})
+
+ 		$scope.buttonClicked = true;
+
+
+ 		$http.post('api/index.php/survey/after_graduation_info_part_2',comment, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
+ 		.success(function(data) {
+ 			console.log(data);
+ 			if (data.success === true) {
+ 			}else{
+ 			}
+ 			$scope.buttonClicked = false;
+ 		})
+ 		.error(function(data) {
+ 			$scope.comment.commentComplete = false;
+ 			console.log('http error occured!');
+ 			console.log(data);
+ 			$scope.buttonClicked = false;
+ 		});
  	}
 
  }]);
