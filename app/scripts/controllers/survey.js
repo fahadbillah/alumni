@@ -187,8 +187,8 @@ $scope.currentQuestion = function() {
   })
   
   if (allQuestionsDone) {
-    alert("Thanks for completing the survey")
-    $location.path('/profile');
+    alert("Thanks for completing signup")
+    $location.path('/nsuAlumniSurvey');
   };
 }
 
@@ -202,7 +202,7 @@ var readyForNext = function(readyForNextQuestion) {
   }else{
     $scope.group++;
     if ($scope.last_group_no < $scope.group) {
-      $location.path('/profile');
+      $location.path('/nsuAlumniSurvey');
     };
   }
 }

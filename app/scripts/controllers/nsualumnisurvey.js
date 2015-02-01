@@ -34,7 +34,7 @@
  	$scope.personalInfoSubmit = function() {
  		console.log($scope.personalInfo)
 
- 		$scope.personalInfo.completed = true;
+ 		$scope.personalInfo.personalInfoCompleted = true;
  		var personalInfo = $.param({
  			'csrf_test_name': $cookies['XSRF-TOKEN'],
  			'personalInfo' : $scope.personalInfo
@@ -52,7 +52,7 @@
  			$scope.buttonClicked = false;
  		})
  		.error(function(data) {
- 			$scope.personalInfo.completed = false;
+ 			$scope.personalInfo.personalInfoCompleted = false;
  			console.log('http error occured!');
  			console.log(data);
  			$scope.buttonClicked = false;
@@ -229,7 +229,7 @@
 
 
  	$scope.comment = {
- 		'commentComplete' : false,
+ 		'commentCompleted' : false,
  		'q1' : '',
  		'q2' : '',
  		'q3' : '',
@@ -237,7 +237,7 @@
 
 
  	$scope.commentSubmit = function() {
- 		$scope.comment.commentComplete = true;
+ 		$scope.comment.commentCompleted = true;
  		console.log($scope.comment);
 
 
@@ -258,11 +258,44 @@
  			$scope.buttonClicked = false;
  		})
  		.error(function(data) {
- 			$scope.comment.commentComplete = false;
+ 			$scope.comment.commentCompleted = false;
  			console.log('http error occured!');
  			console.log(data);
  			$scope.buttonClicked = false;
  		});
  	}
 
- }]);
+ 	// var openNextForm = function() {
+
+ 	// 	$scope.personalInfo.personalInfoCompleted = true;
+ 	// 	$scope.afterGraduationInfo.afterGraduationInfoCompleted = true;
+ 	// 	$scope.LAG2.LAG2Completed = true;
+ 	// 	$scope.eExp.eExpCompleted = true;
+ 	// 	$scope.comment.commentCompleted = true;
+
+ 	// 	$http.get('api/index.php/survey/next_form')
+ 	// 	.success(function(data, status, headers, config) {
+ 	// 		console.log(data);
+ 	// 		switch(data.next){
+ 	// 			case 'personal':
+ 	// 			$scope.personalInfo.personalInfoCompleted = false;
+ 	// 			break;
+ 	// 			case 'after_graduation_part_1':
+ 	// 			$scope.afterGraduationInfo.afterGraduationInfoCompleted = false;
+ 	// 			break;
+ 	// 			case 'after_graduation_part_2':
+ 	// 			$scope.LAG2.LAG2Completed = false;
+ 	// 			break;
+ 	// 			case 'educational_experience':
+ 	// 			$scope.eExp.eExpCompleted = false;
+ 	// 			break;
+ 	// 			case 'comment':
+ 	// 			$scope.comment.commentCompleted = false;
+ 	// 			break;
+ 	// 		}
+
+ 	// 	}
+ 	// }
+ 		// openNextForm();
+
+ 	}]);

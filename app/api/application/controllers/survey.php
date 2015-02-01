@@ -25,16 +25,8 @@ class Survey extends CI_Controller {
 
 	public function get_all_user_answers()
 	{
-		$user_id = $this->session->userdata('user_data');
-		if (isset($user_id)) {
-			$user_id = $user_id['id'];
-		} else {
-			$return_data = array(
-			                     'success' => false,
-			                     'message' => 'Please login first!'
-			                     );
-			jsonify($return_data);
-		}
+		$user_id = $this->get_user_id_from_session();
+		
 		$questions = $this->Survey_model->get_all_questions();
 		$answers = $this->Survey_model->get_all_user_answers($user_id);
 
@@ -52,9 +44,9 @@ class Survey extends CI_Controller {
 				}
 			}
 			$user_question_answers[$value['survey_question_id']][] = array(
-			                                                               'survey_answer_id' => $survey_answer_id,
-			                                                               'other_answer' => $other_answer,
-			                                                               );
+				'survey_answer_id' => $survey_answer_id,
+				'other_answer' => $other_answer,
+				);
 			$survey_answer_id = '';
 			$other_answer = '';
 		}
@@ -64,17 +56,7 @@ class Survey extends CI_Controller {
 
 	public function insert_answer()
 	{
-
-		$user_id = $this->session->userdata('user_data');
-		if (isset($user_id)) {
-			$user_id = $this->session->userdata('user_data')['id'];
-		} else {
-			$return_data = array(
-			                     'success' => false,
-			                     'message' => 'Please login first!'
-			                     );
-			jsonify($return_data);
-		}
+		$user_id = $this->get_user_id_from_session();
 
 		$post_data = get_post();
 		$post_data['user_id'] = $user_id;
@@ -101,33 +83,33 @@ class Survey extends CI_Controller {
 		}
 
 		$question_answer = array(
-		                         'user_id' => $user_id,
-		                         'survey_question_id' => $survey_question_id ,
-		                         'survey_answer_id' => $survey_answer_id,
-		                         'other_answer' => $other_answer,
-		                         );
+			'user_id' => $user_id,
+			'survey_question_id' => $survey_question_id ,
+			'survey_answer_id' => $survey_answer_id,
+			'other_answer' => $other_answer,
+			);
 
 
 		$result = $this->Survey_model->insert_answer($question_answer);
 
 		if ($result) {	
 			$return_data = array(
-			                     'success' => true,
-			                     'message' => 'Answer submitted successfully!',
-			                     'return_data' => array(
-			                                            'result' => $result,
-			                                            'question_answer' => $question_answer,
-			                                            )
-			                     );
+				'success' => true,
+				'message' => 'Answer submitted successfully!',
+				'return_data' => array(
+					'result' => $result,
+					'question_answer' => $question_answer,
+					)
+				);
 		} else {
 			$return_data = array(
-			                     'success' => false,
-			                     'message' => 'Answer submit failed!',
-			                     'return_data' => array(
-			                                            'result' => $result,
-			                                            'question_answer' => $question_answer,
-			                                            )
-			                     );
+				'success' => false,
+				'message' => 'Answer submit failed!',
+				'return_data' => array(
+					'result' => $result,
+					'question_answer' => $question_answer,
+					)
+				);
 		}
 		jsonify($return_data);
 	}
@@ -177,17 +159,7 @@ class Survey extends CI_Controller {
 		$post_data = get_post();
 		$prepared_data = [];
 
-		$user_id = $this->session->userdata('user_data');
-		if (isset($user_id)) {
-			$user_id = $this->session->userdata('user_data')['id'];
-		} else {
-			$return_data = array(
-			                     'success' => false,
-			                     'message' => 'Please login first!'
-			                     );
-			jsonify($return_data);
-		}
-
+		$user_id = $this->get_user_id_from_session();
 		
 		foreach ($post_data as $key => $value) {
 
@@ -225,17 +197,7 @@ class Survey extends CI_Controller {
 		$post_data = get_post();
 		$prepared_data = [];
 
-		$user_id = $this->session->userdata('user_data');
-		if (isset($user_id)) {
-			$user_id = $this->session->userdata('user_data')['id'];
-		} else {
-			$return_data = array(
-			                     'success' => false,
-			                     'message' => 'Please login first!'
-			                     );
-			jsonify($return_data);
-		}
-
+		$user_id = $this->get_user_id_from_session();
 		
 		foreach ($post_data as $key => $value) {
 
@@ -272,18 +234,8 @@ class Survey extends CI_Controller {
 		$post_data = get_post();
 		$prepared_data = [];
 
-		$user_id = $this->session->userdata('user_data');
-		if (isset($user_id)) {
-			$user_id = $this->session->userdata('user_data')['id'];
-		} else {
-			$return_data = array(
-			                     'success' => false,
-			                     'message' => 'Please login first!'
-			                     );
-			jsonify($return_data);
-		}
+		$user_id = $this->get_user_id_from_session();
 
-		
 		foreach ($post_data as $key => $value) {
 
 			$string = substr($key, stripos($key, '[')+1);
@@ -313,12 +265,92 @@ class Survey extends CI_Controller {
 		
 	}
 
+	public function next_form()
+	{
+		$user_id = $this->get_user_id_from_session();
+
+		$result = $this->Survey_model->check_next_form_to_be_filled($user_id);
+
+		switch ($result) {
+			case 'personal':
+				# code...
+			break;
+			case 'personal':
+				# code...
+			break;
+			case 'personal':
+				# code...
+			break;
+			case 'personal':
+				# code...
+			break;
+			case 'personal':
+				# code...
+			break;
+			
+			default:
+				# code...
+			break;
+		}
+	}
+
+	public function get_user_id_from_session()
+	{
+		$user_id = $this->session->userdata('user_data');
+		if (isset($user_id)) {
+			$user_id = $this->session->userdata('user_data')['id'];
+		} else {
+			$return_data = array(
+				'success' => false,
+				'message' => 'Please login first!'
+				);
+			jsonify($return_data);
+		}
+		return $user_id;
+	}
+
 	public function test()
 	{
-		$string  = 'personalInfo[ugNsuOrOther]';
-		$string = substr($string, stripos($string, '[')+1);
-		$string = substr($string, 0, stripos($string, ']'));
-		echo $string;
+		$all_forms = ['personalInfoCompleted','afterGraduationInfoCompleted','LAG2Completed','eExpCompleted','commentCompleted'];
+		$result = 
+		$this->db->select('question_name');
+		$this->db->from('user_survey_answers');
+		$this->db->where_in($all_forms);
+		$this->db->where('user_id',$this->get_user_id_from_session());
+		$q = $this->db->get();
+		$result = $q->result_array();
+		pr($result);
+
+		$personal = false;
+		$after_graduation_part_1 = false;
+		$after_graduation_part_2 = false;
+		$educational_experience = false;
+		$comment = false;
+
+		foreach ($result as $key => $value) {
+
+
+			if ($value['question_name'] == 'personalInfoCompleted') {
+				$personal = true;
+			}
+
+			if ($value['question_name'] == 'afterGraduationInfoCompleted') {
+				$after_graduation_part_1 = true;
+			}
+
+			if ($value['question_name'] == 'LAG2Completed') {
+				$after_graduation_part_2 = true;
+			}
+
+			if ($value['question_name'] == 'eExpCompleted') {
+				$educational_experience = true;
+			}
+
+			if ($value['question_name'] == 'commentCompleted') {
+				$comment = true;
+			}
+
+		}
 	}
 }
 

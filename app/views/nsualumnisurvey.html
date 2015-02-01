@@ -34,8 +34,8 @@ h3,legend{
 
 	<div class="form-group">
 		<label for="">Title of undergraduate degree</label>
-		<input type="text" class="form-control" ng-model="personalInfo.ugTitle" name="ugTitle" required>
-		<span ng-if="personal.ugTitle.$error.required && personal.ugTitle.$dirty" class="label label-danger">Required</span>
+		<input type="text" class="form-control" ng-model="personalInfo.ugTitle" name="ugTitle">
+		<!-- <span ng-if="personal.ugTitle.$error.required && personal.ugTitle.$dirty" class="label label-danger">Required</span> -->
 		<label>
 			<input type="radio" ng-model="personalInfo.ugNsuOrOther" value="nsu" name="ugNsuOrOther">
 			NSU
@@ -44,14 +44,14 @@ h3,legend{
 			<input type="radio" ng-model="personalInfo.ugNsuOrOther" value="other" name="ugNsuOrOther">
 			Other
 		</label>
-		<span ng-if="personal.ugNsuOrOther.$error.required && personal.ugNsuOrOther.$dirty" class="label label-danger">Required</span>
+		<!-- <span ng-if="personal.ugNsuOrOther.$error.required && personal.ugNsuOrOther.$dirty" class="label label-danger">Required</span> -->
 	</div>
 
 
 	<div class="form-group">
 		<label for="">Title of graduate degree</label>
-		<input type="text" class="form-control" ng-model="personalInfo.gTitle" name="gTitle" required>
-		<span ng-if="personal.gTitle.$error.required && personal.gTitle.$dirty" class="label label-danger">Required</span>
+		<input type="text" class="form-control" ng-model="personalInfo.gTitle" name="gTitle">
+		<!-- <span ng-if="personal.gTitle.$error.required && personal.gTitle.$dirty" class="label label-danger">Required</span> -->
 		<label>
 			<input type="radio" ng-model="personalInfo.gNsuOrOther" value="nsu" name="gNsuOrOther">
 			NSU
@@ -60,7 +60,7 @@ h3,legend{
 			<input type="radio" ng-model="personalInfo.gNsuOrOther" value="other" name="gNsuOrOther">
 			Other
 		</label>
-		<span ng-if="personal.gNsuOrOther.$error.required && personal.gNsuOrOther.$dirty" class="label label-danger">Required</span>
+		<!-- <span ng-if="personal.gNsuOrOther.$error.required && personal.gNsuOrOther.$dirty" class="label label-danger">Required</span> -->
 
 		<!-- <span>{{personal.$pristine}}</span><br> -->
 	</div>
