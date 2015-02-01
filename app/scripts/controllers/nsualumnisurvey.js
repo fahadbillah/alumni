@@ -19,8 +19,8 @@
 
  	$scope.personalInfo = {
  		'personalInfoCompleted' : false,
- 		'name' : 'Fahad Billah',
- 		'nsuId' : '0930527542',
+ 		'name' : '',
+ 		'nsuId' : '',
  		'country' : '',
  		'address' : '',
  		'ugTitle' : '',
@@ -30,9 +30,12 @@
  		'methodOfContact':''
  	}
 
+ 	console.log($rootScope.currentUser);
 
  	$scope.personalInfoSubmit = function() {
  		console.log($scope.personalInfo)
+ 		$scope.personalInfo.name = $scope.currentUser.first_name+' '+$scope.currentUser.last_name;
+ 		$scope.personalInfo.nsuId = $scope.currentUser.nsu_id;
 
  		$scope.personalInfo.personalInfoCompleted = true;
  		var personalInfo = $.param({
@@ -45,6 +48,7 @@
  		$http.post('api/index.php/survey/personalInfo',personalInfo, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  		.success(function(data) {
  			console.log(data);
+ 			$scope.afterGraduationInfo.afterGraduationInfoCompleted = false;
  			if (data.success === true) {
  			}else{
  			}
@@ -94,6 +98,7 @@
  		$http.post('api/index.php/survey/after_graduation_info',afterGraduationInfo, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  		.success(function(data) {
  			console.log(data);
+ 			$scope.LAG2.LAG2Completed = false;
  			if (data.success === true) {
  			}else{
  			}
@@ -135,6 +140,7 @@
  		'jobDecisionA6' : false,
  		'jobDecisionA7' : false,
  		'jobDecisionA8' : false,
+ 		'jobDecisionA9' : '',
  		'jobSource' : '',
  		'jobSourceOther' : '',
  		'nsuPrep' : '',
@@ -156,6 +162,7 @@
  		$http.post('api/index.php/survey/after_graduation_info_part_2',LAG2, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  		.success(function(data) {
  			console.log(data);
+ 			$scope.eExp.eExpCompleted = false;
  			if (data.success === true) {
  			}else{
  			}
@@ -214,6 +221,7 @@
  		$http.post('api/index.php/survey/after_graduation_info_part_2',eExp, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  		.success(function(data) {
  			console.log(data);
+ 			$scope.comment.commentCompleted = false;
  			if (data.success === true) {
  			}else{
  			}
@@ -252,6 +260,8 @@
  		$http.post('api/index.php/survey/after_graduation_info_part_2',comment, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  		.success(function(data) {
  			console.log(data);
+ 			alert("Thanks!");
+ 			$location.path('/profile');
  			if (data.success === true) {
  			}else{
  			}
@@ -265,37 +275,40 @@
  		});
  	}
 
- 	// var openNextForm = function() {
+ 	var openNextForm = function() {
 
- 	// 	$scope.personalInfo.personalInfoCompleted = true;
- 	// 	$scope.afterGraduationInfo.afterGraduationInfoCompleted = true;
- 	// 	$scope.LAG2.LAG2Completed = true;
- 	// 	$scope.eExp.eExpCompleted = true;
- 	// 	$scope.comment.commentCompleted = true;
+ 		$scope.personalInfo.personalInfoCompleted = true;
+ 		$scope.afterGraduationInfo.afterGraduationInfoCompleted = true;
+ 		$scope.LAG2.LAG2Completed = true;
+ 		$scope.eExp.eExpCompleted = true;
+ 		$scope.comment.commentCompleted = true;
 
- 	// 	$http.get('api/index.php/survey/next_form')
- 	// 	.success(function(data, status, headers, config) {
- 	// 		console.log(data);
- 	// 		switch(data.next){
- 	// 			case 'personal':
- 	// 			$scope.personalInfo.personalInfoCompleted = false;
- 	// 			break;
- 	// 			case 'after_graduation_part_1':
- 	// 			$scope.afterGraduationInfo.afterGraduationInfoCompleted = false;
- 	// 			break;
- 	// 			case 'after_graduation_part_2':
- 	// 			$scope.LAG2.LAG2Completed = false;
- 	// 			break;
- 	// 			case 'educational_experience':
- 	// 			$scope.eExp.eExpCompleted = false;
- 	// 			break;
- 	// 			case 'comment':
- 	// 			$scope.comment.commentCompleted = false;
- 	// 			break;
- 	// 		}
+ 		$http.get('api/index.php/survey/next_form')
+ 		.success(function(data, status, headers, config) {
+ 			console.log(data);
+ 			switch(data){
+ 				case 'personal':
+ 				$scope.personalInfo.personalInfoCompleted = false;
+ 				break;
+ 				case 'after_graduation_part_1':
+ 				$scope.afterGraduationInfo.afterGraduationInfoCompleted = false;
+ 				break;
+ 				case 'after_graduation_part_2':
+ 				$scope.LAG2.LAG2Completed = false;
+ 				break;
+ 				case 'educational_experience':
+ 				$scope.eExp.eExpCompleted = false;
+ 				break;
+ 				case 'comment':
+ 				$scope.comment.commentCompleted = false;
+ 				break;
+ 				case 'all_completed':
+ 				alert("Thanks! You completed your survey.");
+ 				$location.path('/profile');	
+ 				break;
+ 			}	
+ 		})
+ 	}
+ 	openNextForm();
 
- 	// 	}
- 	// }
- 		// openNextForm();
-
- 	}]);
+ }]);

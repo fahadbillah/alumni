@@ -12,12 +12,12 @@ h3,legend{
 
 	<div class="form-group">
 		<label for="">Name : </label>
-		<strong>{{personalInfo.name}}</strong>
+		<strong>{{currentUser.first_name}} {{currentUser.last_name}}</strong>
 	</div>
 
 	<div class="form-group">
 		<label for="">NSU ID : </label>
-		<strong>{{personalInfo.nsuId}}</strong>
+		<strong>{{currentUser.nsu_id}}</strong>
 	</div>
 
 	<div class="form-group">
@@ -459,6 +459,12 @@ h3,legend{
 					</td>
 					<td>
 						<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA8" value="In order to earn a living/pay off debts" name="jobDecision"></label>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						Other
+						<input type="text" class="form-control" ng-model="LAG2.jobDecisionA9" name="jobDecisionTxt">
 					</td>
 				</tr>
 			</tbody>
@@ -903,7 +909,7 @@ h3,legend{
 	</div>
 </form>
 
-<form name="commentForm" class="form-horizontal" role="form" ng-if="true" ng-submit="commentSubmit()" ng-if="!commentComplete">
+<form name="commentForm" class="form-horizontal" role="form" ng-submit="commentSubmit()" ng-if="!comment.commentCompleted">
 	<div class="form-group">
 		<legend>SECTION D: Comments/Recommendations</legend>
 	</div>

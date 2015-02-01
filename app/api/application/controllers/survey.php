@@ -44,9 +44,9 @@ class Survey extends CI_Controller {
 				}
 			}
 			$user_question_answers[$value['survey_question_id']][] = array(
-				'survey_answer_id' => $survey_answer_id,
-				'other_answer' => $other_answer,
-				);
+			                                                               'survey_answer_id' => $survey_answer_id,
+			                                                               'other_answer' => $other_answer,
+			                                                               );
 			$survey_answer_id = '';
 			$other_answer = '';
 		}
@@ -83,33 +83,33 @@ class Survey extends CI_Controller {
 		}
 
 		$question_answer = array(
-			'user_id' => $user_id,
-			'survey_question_id' => $survey_question_id ,
-			'survey_answer_id' => $survey_answer_id,
-			'other_answer' => $other_answer,
-			);
+		                         'user_id' => $user_id,
+		                         'survey_question_id' => $survey_question_id ,
+		                         'survey_answer_id' => $survey_answer_id,
+		                         'other_answer' => $other_answer,
+		                         );
 
 
 		$result = $this->Survey_model->insert_answer($question_answer);
 
 		if ($result) {	
 			$return_data = array(
-				'success' => true,
-				'message' => 'Answer submitted successfully!',
-				'return_data' => array(
-					'result' => $result,
-					'question_answer' => $question_answer,
-					)
-				);
+			                     'success' => true,
+			                     'message' => 'Answer submitted successfully!',
+			                     'return_data' => array(
+			                                            'result' => $result,
+			                                            'question_answer' => $question_answer,
+			                                            )
+			                     );
 		} else {
 			$return_data = array(
-				'success' => false,
-				'message' => 'Answer submit failed!',
-				'return_data' => array(
-					'result' => $result,
-					'question_answer' => $question_answer,
-					)
-				);
+			                     'success' => false,
+			                     'message' => 'Answer submit failed!',
+			                     'return_data' => array(
+			                                            'result' => $result,
+			                                            'question_answer' => $question_answer,
+			                                            )
+			                     );
 		}
 		jsonify($return_data);
 	}
@@ -267,31 +267,74 @@ class Survey extends CI_Controller {
 
 	public function next_form()
 	{
-		$user_id = $this->get_user_id_from_session();
+		$all_forms = ['personalInfoCompleted','afterGraduationInfoCompleted','LAG2Completed','eExpCompleted','commentCompleted'];
+		$this->db->select('question_name');
+		$this->db->from('user_survey_answers');
+		$this->db->where_in($all_forms);
+		$this->db->where('user_id',$this->get_user_id_from_session());
+		$q = $this->db->get();
+		$result = $q->result_array();
 
-		$result = $this->Survey_model->check_next_form_to_be_filled($user_id);
+		$personal = true;
+		$after_graduation_part_1 = true;
+		$after_graduation_part_2 = true;
+		$educational_experience = true;
+		$comment = true;
 
-		switch ($result) {
-			case 'personal':
-				# code...
-			break;
-			case 'personal':
-				# code...
-			break;
-			case 'personal':
-				# code...
-			break;
-			case 'personal':
-				# code...
-			break;
-			case 'personal':
-				# code...
-			break;
-			
-			default:
-				# code...
-			break;
+		// vd(in_array('personalInfoCompleted', $result));
+		// vd(in_array('afterGraduationInfoCompleted', $result));
+		// vd(in_array('LAG2Completed', $result));
+		// vd(in_array('eExpCompleted', $result));
+		// vd(in_array('commentCompleted', $result));
+
+		foreach ($result as $key => $value) {
+
+
+			if ($value['question_name'] == 'personalInfoCompleted') {
+				$personal = false;
+			}
+
+			if ($value['question_name'] == 'afterGraduationInfoCompleted') {
+				$after_graduation_part_1 = false;
+			}
+
+			if ($value['question_name'] == 'LAG2Completed') {
+				$after_graduation_part_2 = false;
+			}
+
+			if ($value['question_name'] == 'eExpCompleted') {
+				$educational_experience = false;
+			}
+
+			if ($value['question_name'] == 'commentCompleted') {
+				$comment = false;
+			}
+
 		}
+
+		if ($personal) {
+			echo "personal";
+			exit();
+		}
+		if ($after_graduation_part_1) {
+			echo "after_graduation_part_1";
+			exit();
+		}
+		if ($after_graduation_part_2) {
+			echo "after_graduation_part_2";
+			exit();
+		}
+		if ($educational_experience) {
+			echo "educational_experience";
+			exit();
+		}
+		if ($comment) {
+			echo "comment";
+			exit();
+		}
+
+		echo "all_completed";
+		exit();
 	}
 
 	public function get_user_id_from_session()
@@ -301,9 +344,9 @@ class Survey extends CI_Controller {
 			$user_id = $this->session->userdata('user_data')['id'];
 		} else {
 			$return_data = array(
-				'success' => false,
-				'message' => 'Please login first!'
-				);
+			                     'success' => false,
+			                     'message' => 'Please login first!'
+			                     );
 			jsonify($return_data);
 		}
 		return $user_id;
@@ -312,7 +355,6 @@ class Survey extends CI_Controller {
 	public function test()
 	{
 		$all_forms = ['personalInfoCompleted','afterGraduationInfoCompleted','LAG2Completed','eExpCompleted','commentCompleted'];
-		$result = 
 		$this->db->select('question_name');
 		$this->db->from('user_survey_answers');
 		$this->db->where_in($all_forms);
@@ -321,35 +363,62 @@ class Survey extends CI_Controller {
 		$result = $q->result_array();
 		pr($result);
 
-		$personal = false;
-		$after_graduation_part_1 = false;
-		$after_graduation_part_2 = false;
-		$educational_experience = false;
-		$comment = false;
+		$personal = true;
+		$after_graduation_part_1 = true;
+		$after_graduation_part_2 = true;
+		$educational_experience = true;
+		$comment = true;
+
+		vd(in_array('personalInfoCompleted', $result));
+		vd(in_array('afterGraduationInfoCompleted', $result));
+		vd(in_array('LAG2Completed', $result));
+		vd(in_array('eExpCompleted', $result));
+		vd(in_array('commentCompleted', $result));
 
 		foreach ($result as $key => $value) {
 
 
 			if ($value['question_name'] == 'personalInfoCompleted') {
-				$personal = true;
+				$personal = false;
 			}
 
 			if ($value['question_name'] == 'afterGraduationInfoCompleted') {
-				$after_graduation_part_1 = true;
+				$after_graduation_part_1 = false;
 			}
 
 			if ($value['question_name'] == 'LAG2Completed') {
-				$after_graduation_part_2 = true;
+				$after_graduation_part_2 = false;
 			}
 
 			if ($value['question_name'] == 'eExpCompleted') {
-				$educational_experience = true;
+				$educational_experience = false;
 			}
 
 			if ($value['question_name'] == 'commentCompleted') {
-				$comment = true;
+				$comment = false;
 			}
 
+		}
+
+		if ($personal) {
+			echo "personal";
+			exit();
+		}
+		if ($after_graduation_part_1) {
+			echo "after_graduation_part_1";
+			exit();
+		}
+		if ($after_graduation_part_2) {
+			echo "after_graduation_part_2";
+			exit();
+		}
+		if ($educational_experience) {
+			echo "educational_experience";
+			exit();
+		}
+		if ($comment) {
+			echo "comment";
+			exit();
 		}
 	}
 }

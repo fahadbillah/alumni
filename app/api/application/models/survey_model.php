@@ -58,31 +58,31 @@ class Survey_model extends CI_Model {
 
 	public function check_next_form_to_be_filled($user_id)
 	{
-		$all_forms = ['personalInfoCompleted','afterGraduationInfoCompleted','LAG2Completed','eExpCompleted','commentCompleted'];
-		foreach ($all_forms as $key => $value) {
-			$result = $this->db->select('question_name')->from('user_survey_answers')->where('user_id')->where_in($all_forms)->get()->result_array();
+		// $all_forms = ['personalInfoCompleted','afterGraduationInfoCompleted','LAG2Completed','eExpCompleted','commentCompleted'];
+		// foreach ($all_forms as $key => $value) {
+		// 	$result = $this->db->select('question_name')->from('user_survey_answers')->where('user_id')->where_in($all_forms)->get()->result_array();
 
-			if (!in_array('personalInfoCompleted', $result)) {
-				return 'personal';
-			}
+		// 	if (!in_array('personalInfoCompleted', $result)) {
+		// 		return 'personal';
+		// 	}
 
-			if (in_array('afterGraduationInfoCompleted', $result)) {
-				return 'after_graduation_part_1';
-			}
-			
-			if (in_array('LAG2Completed', $result)) {
-				return 'after_graduation_part_2';
-			}
-			
-			if (in_array('eExpCompleted', $result)) {
-				return 'comment';
-			}
-			
-			if (in_array('commentCompleted', $result)) {
-				return 'comment';
-			}
+		// 	if (!in_array('afterGraduationInfoCompleted', $result)) {
+		// 		return 'after_graduation_part_1';
+		// 	}
+		
+		// 	if (!in_array('LAG2Completed', $result)) {
+		// 		return 'after_graduation_part_2';
+		// 	}
+		
+		// 	if (!in_array('eExpCompleted', $result)) {
+		// 		return 'comment';
+		// 	}
+		
+		// 	if (!in_array('commentCompleted', $result)) {
+		// 		return 'comment';
+		// 	}
 
-		}
+		// }
 	}
 
 }

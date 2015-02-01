@@ -24,13 +24,12 @@
     $scope.csrf_test_name = '';
 
     function getCookie() {
-      $http.get('api/index.php/survey')
+      $http.get('api/index.php/auth/check_if_logged_in')
       .success(function(data, status, headers, config) {
        console.log(data);
-       if (data.csrf_test_name === false) {
-        getCookie();
+       if (data.success === true) {
+        $location.path('/nsuAlumniSurvey');
       };
-      $scope.csrf_test_name = data.csrf_test_name;
     })
       .error(function(data, status, headers, config) {
         console.log('error occured!!!')
@@ -137,7 +136,7 @@
 
 
           var answerData = $.param({
-            'csrf_test_name': $scope.csrf_test_name,
+            'csrf_test_name': $cookies['XSRF-TOKEN'],
             'fieldName': e.getAttribute("name"),
             'fieldValue': e.value,
             'fieldType': e.type,
