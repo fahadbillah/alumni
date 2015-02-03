@@ -9,7 +9,14 @@ class Auth extends CI_Controller {
 
 	public function index()
 	{
-		jsonify(array('success' => true, 'csrf_test_name' => ($this->input->cookie('XSRF-TOKEN') !== null)?$this->input->cookie('XSRF-TOKEN'): false));
+		$visitor['visitor_ip'] = $this->input->ip_address();
+
+		$this->db->insert('visitors', $visitor);
+		$visitor_count = $this->db->insert_id();
+
+		jsonify(array('success' => true,
+			'visitor_count' => $visitor_count,
+			'csrf_test_name' => ($this->input->cookie('XSRF-TOKEN') !== null)?$this->input->cookie('XSRF-TOKEN'): false));
 	}
 
 	public function login()
@@ -148,6 +155,13 @@ class Auth extends CI_Controller {
 
 	public function check_if_logged_in()
 	{
+
+		$visitor['visitor_ip'] = $this->input->ip_address();
+
+		$this->db->insert('visitors', $visitor);
+		$returned_data['visitor_count'] = $this->db->insert_id();
+
+
 		if ($this->session->userdata('is_logged_in') !== false) {
 			$returned_data['success'] = true;
 			$returned_data['message'] = 'You are logged in!';
@@ -173,9 +187,7 @@ class Auth extends CI_Controller {
 
 	public function test()
 	{
-		vd($_SERVER);
-
-		vd($this->input->is_ajax_request());
+		
 		
 
 		// $config = Array(
