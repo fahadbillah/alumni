@@ -10,14 +10,14 @@
  */
  angular
  .module('alumniApp', [
-   'ngAnimate',
-   'ngCookies',
-   'ngResource',
-   'ngRoute',
-   'ngSanitize',
-   'ngTouch',
-   'angularFileUpload'
-   ])
+         'ngAnimate',
+         'ngCookies',
+         'ngResource',
+         'ngRoute',
+         'ngSanitize',
+         'ngTouch',
+         'angularFileUpload'
+         ])
  .config(['$routeProvider','$locationProvider','USER_ROLES', function ($routeProvider,$locationProvider,USER_ROLES) {
    // $locationProvider.html5Mode(true).hashPrefix('!');
    $routeProvider
@@ -77,10 +77,6 @@
        authorizedRoles: [USER_ROLES.admin, USER_ROLES.user]
      }
    })
-   .when('/list', {
-     templateUrl: 'views/list.html',
-     controller: 'ListCtrl'
-   })
    .when('/nsuAlumniSurvey', {
      templateUrl: 'views/nsualumnisurvey.html',
      controller: 'NsualumnisurveyCtrl',
@@ -91,7 +87,15 @@
    .otherwise({
      redirectTo: '/'
    });
- }])
+
+   /*
+
+   .when('/list', {
+     templateUrl: 'views/list.html',
+     controller: 'ListCtrl'
+   })
+*/
+}])
 .run(['$rootScope', '$http', '$cookies', 'AUTH_EVENTS', 'AuthService', function ($rootScope, $http, $cookies, AUTH_EVENTS, AuthService) {
   $rootScope.$on('$routeChangeStart ', function (event, next) {
     var authorizedRoles = next.data.authorizedRoles;

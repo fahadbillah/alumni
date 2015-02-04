@@ -20,9 +20,9 @@ class Auth extends CI_Controller {
 		if ($result['success'] === true) {
 			$result['user_data'][0]['role'] = ($result['user_data'][0]['role'] == 1) ? 'admin' : 'user'; 
 			$session_data = array(
-				'is_logged_in' => true,
-				'user_data' => $result['user_data'][0],
-				);
+			                      'is_logged_in' => true,
+			                      'user_data' => $result['user_data'][0],
+			                      );
 			$this->session->set_userdata($session_data);
 			$return_data['success'] = true;
 			$return_data['message'] = 'User login successfull!';
@@ -83,9 +83,9 @@ class Auth extends CI_Controller {
 
 
 			$session_data = array(
-				'is_logged_in' => true,
-				'user_data' => $result['last_inserted_data'][0]
-				);
+			                      'is_logged_in' => true,
+			                      'user_data' => $result['last_inserted_data'][0]
+			                      );
 			// $work['user_id'] =  $result['last_inserted_data'][0]['id'];
 
 			// $work_result = $this->User_model->insert_user_work_history($work);
@@ -101,18 +101,18 @@ class Auth extends CI_Controller {
 			
 
 			$config = Array(
-				'protocol' => 'smtp',
-				'smtp_host' => 'mail.nsubusinessalumni.org',
-				'smtp_port' => 26,
-				'smtp_timeout' =>'7',
-				'charset' => 'utf-8',
-				'newline' => "\r\n",
-				'smtp_user' => 'no-reply@nsubusinessalumni.org', 
-				'smtp_pass' => '.@ZJRn~yo6TC', 
-				'mailtype' => 'html',
-				'validation' => TRUE,
-				'wordwrap' => TRUE
-				);
+			                'protocol' => 'smtp',
+			                'smtp_host' => 'mail.nsubusinessalumni.org',
+			                'smtp_port' => 26,
+			                'smtp_timeout' =>'7',
+			                'charset' => 'utf-8',
+			                'newline' => "\r\n",
+			                'smtp_user' => 'no-reply@nsubusinessalumni.org', 
+			                'smtp_pass' => '.@ZJRn~yo6TC', 
+			                'mailtype' => 'html',
+			                'validation' => TRUE,
+			                'wordwrap' => TRUE
+			                );
 
 			$this->load->library('email',$config);
 
@@ -165,14 +165,17 @@ class Auth extends CI_Controller {
 	{
 		$this->session->sess_destroy();
 		$returned_data = array(
-			'success' => true,
-			'message' => 'Logout Successfully!'
-			);
+		                       'success' => true,
+		                       'message' => 'Logout Successfully!'
+		                       );
 		jsonify($returned_data);
 	}
 
 	public function test()
 	{
+		$this->load->model('User_model');
+		vd($this->User_model->get_referer_user_id('zTQb56zcMP'));
+		exit();
 		vd($_SERVER);
 
 		vd($this->input->is_ajax_request());
@@ -204,6 +207,11 @@ class Auth extends CI_Controller {
 		// $this->email->message($html);
 
 		// $this->email->send();
+	}
+
+	public function sink()
+	{
+		$this->load->view('sink');
 	}
 }
 

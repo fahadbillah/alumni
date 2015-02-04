@@ -14,6 +14,42 @@
     'AngularJS',
     'Karma'
     ];
+
+    var openNextForm = function() {
+
+      // $scope.personalInfo.personalInfoCompleted = true;
+      // $scope.afterGraduationInfo.afterGraduationInfoCompleted = true;
+      // $scope.LAG2.LAG2Completed = true;
+      // $scope.eExp.eExpCompleted = true;
+      // $scope.comment.commentCompleted = true;
+
+      $http.get('api/index.php/survey/next_form')
+      .success(function(data, status, headers, config) {
+        console.log(data);
+        switch(data){
+          case 'personal':
+          console.log('personalInfoCompleted');
+          break;
+          case 'after_graduation_part_1':
+          console.log('afterGraduationInfoCompleted');
+          break;
+          case 'after_graduation_part_2':
+          console.log('LAG2Completed');
+          break;
+          case 'educational_experience':
+          console.log('eExpCompleted');
+          break;
+          case 'comment':
+          console.log('commentCompleted');
+          break;
+          case 'all_completed':
+          alert("Thanks! You completed your survey.");
+          $location.path('/profile'); 
+          break;
+        } 
+      })
+    }
+    openNextForm();
     $scope.buttonClicked = false;
 
     $scope.referralLink = $routeParams.referralLink;
@@ -223,7 +259,7 @@ var getAllUserAnswers = function() {
   $http.get('api/index.php/survey/get_all_user_answers')
   .success(function(data, status, headers, config) {
    $scope.userAnswer = data;
-   $scope.currentQuestion();
+   // $scope.currentQuestion();
  })
   .error(function(data, status, headers, config) {
   });

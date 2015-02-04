@@ -22,7 +22,7 @@
 		<div ng-if="user_data.id == currentUser.id" class="dropzone" ng-show="showDropZone" ng-click="openExplorer()">
 			Click here and upload your profile pic
 		</div>
-		<img src="./images/{{ defaultPic }}" width="200" class="img-responsive img-circle" alt="Fahad Billah" style="margin-left: auto;margin-right: auto;margin-bottom: 30px;padding: 4px; border: 1px solid #ddd;">
+		<img src="./images/{{ defaultPic }}" width="200" class="img-responsive img-circle" alt="{{ user_data.first_name }} {{ user_data.last_name }}" style="margin-left: auto;margin-right: auto;margin-bottom: 30px;padding: 4px; border: 1px solid #ddd;">
 		<!-- <img src="./images/{{ user_data.profile_pic || defaultPic }}" width="200" class="img-responsive img-circle" alt="Fahad Billah" style="margin-left: auto;margin-right: auto;margin-bottom: 30px;padding: 4px; border: 1px solid #ddd;"> -->
 	</div>
 	<div class="col-md-12">

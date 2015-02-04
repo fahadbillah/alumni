@@ -60,7 +60,7 @@
               <li><a ng-href="#/"> <i class="fa fa-home"></i> Home</a></li>
               <li class=""><a ng-href="#/survey">Survey</a></li>
               <li ng-if="!isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/login">Login</a></li>
-              <li ng-if="isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/list">List</a></li>
+              <!-- <li ng-if="isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/list">List</a></li> -->
               <li class="dropdown" ng-if="currentUser">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{currentUser.first_name}} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">

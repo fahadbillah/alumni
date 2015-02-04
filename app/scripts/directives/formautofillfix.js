@@ -10,7 +10,7 @@
  .directive('formAutofillFix',['$timeout', function ($timeout) {
  	return function (scope, element, attrs) {
  		element.prop('method', 'post');
- 		if (attrs.ngSubmit) {
+ 		if (!!attrs.ngSubmit) {
  			$timeout(function () {
  				element
  				.unbind('submit')

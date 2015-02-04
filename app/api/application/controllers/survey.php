@@ -340,7 +340,7 @@ class Survey extends CI_Controller {
 	public function get_user_id_from_session()
 	{
 		$user_id = $this->session->userdata('user_data');
-		if (isset($user_id)) {
+		if ($user_id != '') {
 			$user_id = $this->session->userdata('user_data')['id'];
 		} else {
 			$return_data = array(
@@ -354,6 +354,8 @@ class Survey extends CI_Controller {
 
 	public function test()
 	{
+
+		exit();
 		$all_forms = ['personalInfoCompleted','afterGraduationInfoCompleted','LAG2Completed','eExpCompleted','commentCompleted'];
 		$this->db->select('question_name');
 		$this->db->from('user_survey_answers');

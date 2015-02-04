@@ -114,7 +114,11 @@ class User_model extends CI_Model {
 
 	public function get_referral_link($user_id)
 	{
-		return $this->db->select('referral_link')->from('users')->get()->result_array()[0]['referral_link'];
+		$this->db->select('referral_link');	
+		$this->db->from('users');
+		$this->db->where('user_id', $user_id);
+		$q = $this->db->get();
+		return $q->result_array()[0]['referral_link'];
 	}
 
 	public function get_all_occupations()
