@@ -13,6 +13,7 @@
  	$scope.userRoles = USER_ROLES;
  	$scope.isAuthorized = AuthService.isAuthorized;
 
+ 	$scope.visitorCount = 0;
 
  	$scope.setCurrentUser = function (user) {
  		$scope.currentUser = user;
@@ -24,6 +25,7 @@
  		$http.get('api/index.php/auth/check_if_logged_in')
  		.success(function(data, status, headers, config) {
  			console.log(data);
+ 			$scope.visitorCount = data.visitor_count;
  			if (data.success === false) {
  				Session.destroy();
  				$rootScope.$broadcast(AUTH_EVENTS.loginFailed);

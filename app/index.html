@@ -27,7 +27,7 @@
   }
   </style>
 </head>
-<body ng-controller="ApplicationCtrl" class="container" ng-cloak>
+<body ng-controller="ApplicationCtrl" ng-cloak style="background-image: url('images/light_wool.png');">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
@@ -38,54 +38,55 @@
           <a class="" href="#/"><img class="img-responsive" src="images/logo.png" style="width: 298px;margin: auto;"></a>
         </nav>
       </nav> -->
+      <div class="col-md-10 col-md-offset-1">
+
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#/" style="padding:0px;background-color: #fff;border-radius: 4px;border: 1px solid #2c3e50;"><img src="images/logo.png" style="width:60px;"></a>
+              <!-- <a class="navbar-brand" href="#/">NSU-BA</a> -->
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a ng-href="#/"> <i class="fa fa-home"></i> Home</a></li>
+                <li class=""><a ng-href="#/survey">Survey</a></li>
+                <li ng-if="!isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/login">Login</a></li>
+                <!-- <li ng-if="isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/list">List</a></li> -->
+                <li class="dropdown" ng-if="currentUser">
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{currentUser.first_name}} <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li ng-if="isAuthorized(userRoles.admin)"><a href="#/adminpanel">Admin</a></li>
+                    <li><a href="#/profile">Profile <i class="fa fa-user pull-right" style="padding-top: 3px;"></i></a></li>
+                    <li><a href="#/logout">Logout <i class="fa fa-sign-out pull-right" style="padding-top: 3px;"></i></a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+
+        <!-- <div login-dialog ng-if="!isLoginPage"></div> -->
 
 
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#/" style="padding:0px;background-color: #fff;border-radius: 4px;border: 1px solid #2c3e50;"><img src="images/logo.png" style="width:60px;"></a>
-            <!-- <a class="navbar-brand" href="#/">NSU-BA</a> -->
-          </div>
-
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-              <li><a ng-href="#/"> <i class="fa fa-home"></i> Home</a></li>
-              <li class=""><a ng-href="#/survey">Survey</a></li>
-              <li ng-if="!isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/login">Login</a></li>
-              <!-- <li ng-if="isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/list">List</a></li> -->
-              <li class="dropdown" ng-if="currentUser">
-                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{currentUser.first_name}} <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li ng-if="isAuthorized(userRoles.admin)"><a href="#/adminpanel">Admin</a></li>
-                  <li><a href="#/profile">Profile <i class="fa fa-user pull-right" style="padding-top: 3px;"></i></a></li>
-                  <li><a href="#/logout">Logout <i class="fa fa-sign-out pull-right" style="padding-top: 3px;"></i></a></li>
-                </ul>
-              </li>
-            </ul>
-          </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-      </nav>
-
-      <!-- <div login-dialog ng-if="!isLoginPage"></div> -->
-
-
-      <div ng-view="" class="col-md-12"></div>
-      <div class="clearfix"></div>
-      <br>
-      <br>
-      <div class="footer">
-        <p><span class="fa fa-copyright"></span> NSU School of Business</p>
+        <div ng-view=""></div>
+        <div class="clearfix"></div>
+        <br>
+        <br>
+        <div class="footer">
+          <p><span class="fa fa-copyright"></span> NSU School of Business <span style="float: right;">Page Hit : {{visitorCount}}</span></p>
+        </div>
       </div>
-    </div>
 
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
