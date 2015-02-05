@@ -205,27 +205,27 @@
 $scope.questionPicked = true;
 $scope.showQuestionId = 0;
 
-$scope.currentQuestion = function() {
-  var allQuestionsDone = true;
-  angular.forEach($scope.userAnswer, function(e,i) {
-    if((e[0].survey_answer_id == '' || e[0].survey_answer_id == null) && (e[0].other_answer == '' || e[0].other_answer == null)){
-      allQuestionsDone = false;
-    }
-  })
+// $scope.currentQuestion = function() {
+//   var allQuestionsDone = true;
+//   angular.forEach($scope.userAnswer, function(e,i) {
+//     if((e[0].survey_answer_id == '' || e[0].survey_answer_id == null) && (e[0].other_answer == '' || e[0].other_answer == null)){
+//       allQuestionsDone = false;
+//     }
+//   })
 
-  angular.forEach($scope.allQuestions,function(e,i) {
-    if ($scope.userAnswer[e.survey_question_id] != undefined && $scope.questionPicked && (($scope.userAnswer[e.survey_question_id][0].survey_answer_id == '' || $scope.userAnswer[e.survey_question_id][0].survey_answer_id == null) && ($scope.userAnswer[e.survey_question_id][0].other_answer == '' || $scope.userAnswer[e.survey_question_id][0].other_answer == null))) {
-      $scope.showQuestionId = parseInt(e.survey_question_id);
-      $scope.questionPicked = false;
-    };
-    console.log($scope.showQuestionId);
-  })
-  
-  if (allQuestionsDone) {
-    alert("Thanks for completing signup")
-    $location.path('/nsuAlumniSurvey');
-  };
-}
+//   angular.forEach($scope.allQuestions,function(e,i) {
+//     if ($scope.userAnswer[e.survey_question_id] != undefined && $scope.questionPicked && (($scope.userAnswer[e.survey_question_id][0].survey_answer_id == '' || $scope.userAnswer[e.survey_question_id][0].survey_answer_id == null) && ($scope.userAnswer[e.survey_question_id][0].other_answer == '' || $scope.userAnswer[e.survey_question_id][0].other_answer == null))) {
+//       $scope.showQuestionId = parseInt(e.survey_question_id);
+//       $scope.questionPicked = false;
+//     };
+//     console.log($scope.showQuestionId);
+//   })
+
+//   if (allQuestionsDone) {
+//     alert("Thanks for completing signup")
+//     $location.path('/nsuAlumniSurvey');
+//   };
+// }
 
 $scope.check = function(g) {
   return g == $scope.group ? true : false;
