@@ -26,7 +26,7 @@ class User extends CI_Controller {
 		$user_id = ((int)$user_id == 0)? $session_data['id'] : $user_id;
 
 		$user_data = $this->user_model->select_a_user_from_user_table_by_user_id($user_id);
-
+		$user_data[0]['total_point'] = $this->user_point($user_id);
 		$returned_data = array(
 		                       'success' => (count($user_data) == 0)? false:true,
 		                       'message' => 'User info loaded successfully!',
@@ -68,6 +68,47 @@ class User extends CI_Controller {
 		$returned_data['message'] = 'all alumni data loaded';
 
 		jsonify($returned_data);
+	}
+
+	public function user_point($user_id)
+	{
+		$referral_count = $this->user_model->get_referral_count($user_id);
+		$result = $this->user_model->get_all_referral($user_id);
+
+		
+		$count_by_date = 0;
+		$a_date = '';
+		$returned_data['bonus_point'] = 0;
+		foreach ($result as $key => $value) {
+			$date = explode(' ', $value['create_date']);
+
+			if ($date[0] != $a_date) {
+				$count_by_date = 1;
+				$a_date = $date[0];
+			}else{
+				$count_by_date++;
+			}
+
+			if ($count_by_date >= 10) {
+				$returned_data['bonus_point'] += 100;
+				$count_by_date = 0;
+			}
+		}
+		$returned_data['referral_point'] = $referral_count * 10;
+		$returned_data['total'] = $returned_data['referral_point'] + $returned_data['bonus_point'];
+		return $returned_data['total'];
+	}
+
+	public function top_referer()
+	{
+		$result = $this->user_model->get_alumni_list();
+
+		foreach ($result as $key => $value) {
+			$result[$key]['total_point'] = $this->user_point($value['user_id']);
+		}
+
+
+		jsonify($result);
 	}
 }
 

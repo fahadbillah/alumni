@@ -46,14 +46,10 @@ class User_model extends CI_Model {
 		$q = $this->db->get();
 		$user_data = $q->result_array();
 
-		if (count($user_data) > 0) {
-			$user_data[0]['total_point'] = $this->get_user_point($user_id);
-		}
 		return $user_data;
-
 	}
 
-	public function get_user_point($user_id)
+	public function get_referral_count($user_id)
 	{
 		$this->db->where('referer', $user_id);
 		$this->db->from('users');
@@ -155,6 +151,15 @@ class User_model extends CI_Model {
 	public function get_alumni_list()
 	{
 		return $this->db->select('user_id,first_name,last_name,nsu_id')->from('users')->get()->result_array();
+	}
+
+	public function get_all_referral($user_id)
+	{
+		$this->db->select('create_date');
+		$this->db->from('users');
+		$this->db->where('referer', $user_id);
+		$q = $this->db->get();
+		return $q->result_array();
 	}
 }
 

@@ -12,7 +12,8 @@
     "angular-route": "^1.3.0",
     "angular-sanitize": "^1.3.0",
     "angular-touch": "^1.3.0",
-    "angular-file-upload": "*"
+    "angular-file-upload": "*",
+    "animate.css": "*"
     },
     "devDependencies": {
       "angular-mocks": "~1.3.0",
