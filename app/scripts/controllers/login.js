@@ -16,6 +16,12 @@
     $location.path('/home');
     return false;
   };
+  $scope.recoveryEmail = '';
+
+  $scope.showForgetPassword = false;
+  $scope.toggleForm = function() {
+    $scope.showForgetPassword = $scope.showForgetPassword == false ? true : false;
+  }
 
   $scope.buttonClicked = false;
 
@@ -42,4 +48,19 @@
      $scope.buttonClicked = false;
    });
   };
+
+  $scope.resendPassword = function() {
+    var userData = $.param({
+      'csrf_test_name': $cookies['XSRF-TOKEN'],
+      'email' : recovery.email.value
+    });
+    $http.post('api/index.php/auth/resend_password',userData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
+    .success(function(data) {
+      console.log(data);
+    })
+    .error(function(data) {
+      console.log(data);
+    });
+
+  }
 }]);

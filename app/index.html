@@ -60,11 +60,16 @@
                 <li><a ng-href="#/"> <i class="fa fa-home"></i> Home</a></li>
                 <li class=""><a ng-href="#/survey">Survey</a></li>
                 <li ng-if="!isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/login">Login</a></li>
-                <!-- <li ng-if="isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/list">List</a></li> -->
+                <li class="dropdown" ng-if="isAuthorized(userRoles.admin)">
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Admin <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a ng-href="#/list">List</a></li>
+                    <li><a href="#/adminpanel">Admin</a></li>
+                  </ul>
+                </li>
                 <li class="dropdown" ng-if="currentUser">
                   <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{currentUser.first_name}} <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li ng-if="isAuthorized(userRoles.admin)"><a href="#/adminpanel">Admin</a></li>
                     <li><a href="#/profile">Profile <i class="fa fa-user pull-right" style="padding-top: 3px;"></i></a></li>
                     <li><a href="#/logout">Logout <i class="fa fa-sign-out pull-right" style="padding-top: 3px;"></i></a></li>
                   </ul>
@@ -77,7 +82,7 @@
         <!-- <div login-dialog ng-if="!isLoginPage"></div> -->
 
 
-        <div ng-view=""></div>
+        <div class="container" ng-view=""></div>
         <div class="clearfix"></div>
         <br>
         <br>

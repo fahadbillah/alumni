@@ -20,9 +20,9 @@ class Auth extends CI_Controller {
 		if ($result['success'] === true) {
 			$result['user_data'][0]['role'] = ($result['user_data'][0]['role'] == 1) ? 'admin' : 'user'; 
 			$session_data = array(
-			                      'is_logged_in' => true,
-			                      'user_data' => $result['user_data'][0],
-			                      );
+				'is_logged_in' => true,
+				'user_data' => $result['user_data'][0],
+				);
 			$this->session->set_userdata($session_data);
 			$return_data['success'] = true;
 			$return_data['message'] = 'User login successfull!';
@@ -83,9 +83,9 @@ class Auth extends CI_Controller {
 
 
 			$session_data = array(
-			                      'is_logged_in' => true,
-			                      'user_data' => $result['last_inserted_data'][0]
-			                      );
+				'is_logged_in' => true,
+				'user_data' => $result['last_inserted_data'][0]
+				);
 			// $work['user_id'] =  $result['last_inserted_data'][0]['id'];
 
 			// $work_result = $this->User_model->insert_user_work_history($work);
@@ -101,18 +101,18 @@ class Auth extends CI_Controller {
 			
 
 			$config = Array(
-			                'protocol' => 'smtp',
-			                'smtp_host' => 'mail.nsubusinessalumni.org',
-			                'smtp_port' => 26,
-			                'smtp_timeout' =>'7',
-			                'charset' => 'utf-8',
-			                'newline' => "\r\n",
-			                'smtp_user' => 'no-reply@nsubusinessalumni.org', 
-			                'smtp_pass' => '.@ZJRn~yo6TC', 
-			                'mailtype' => 'html',
-			                'validation' => TRUE,
-			                'wordwrap' => TRUE
-			                );
+				'protocol' => 'smtp',
+				'smtp_host' => 'mail.nsubusinessalumni.org',
+				'smtp_port' => 26,
+				'smtp_timeout' =>'7',
+				'charset' => 'utf-8',
+				'newline' => "\r\n",
+				'smtp_user' => 'no-reply@nsubusinessalumni.org', 
+				'smtp_pass' => '.@ZJRn~yo6TC', 
+				'mailtype' => 'html',
+				'validation' => TRUE,
+				'wordwrap' => TRUE
+				);
 
 			$this->load->library('email',$config);
 
@@ -172,9 +172,9 @@ class Auth extends CI_Controller {
 	{
 		$this->session->sess_destroy();
 		$returned_data = array(
-		                       'success' => true,
-		                       'message' => 'Logout Successfully!'
-		                       );
+			'success' => true,
+			'message' => 'Logout Successfully!'
+			);
 		jsonify($returned_data);
 	}
 
@@ -218,6 +218,66 @@ class Auth extends CI_Controller {
 	public function sink()
 	{
 		$this->load->view('sink');
+	}
+
+	public function resend_password()
+	{
+		$post_data = get_post();
+		$this->db->select('email,nsu_id');
+		$this->db->from('users');
+		$this->db->where('email', $post_data['email']);
+		$q = $this->db->get();
+		$result = $q->result_array();
+
+		if (count($result)>1) {
+
+			$password = generate_random_string(8);
+			// $post_data['password'] = sha1($password);
+
+			$config = Array(
+				'protocol' => 'smtp',
+				'smtp_host' => 'mail.nsubusinessalumni.org',
+				'smtp_port' => 26,
+				'smtp_timeout' =>'7',
+				'charset' => 'utf-8',
+				'newline' => "\r\n",
+				'smtp_user' => 'no-reply@nsubusinessalumni.org', 
+				'smtp_pass' => '.@ZJRn~yo6TC', 
+				'mailtype' => 'html',
+				'validation' => TRUE,
+				'wordwrap' => TRUE
+				);
+
+			$this->load->library('email',$config);
+
+			$this->email->from('no-reply@nsubusinessalumni.org', 'NSU Business Alumni');
+			$this->email->to($post_data['email']);
+			// $this->email->cc('another@example.com');
+			// $this->email->bcc('and@another.com');
+			$html = '';
+			$html .= 'NSU ID: <strong>'.$result[0]['nsu_id'].'</strong><br>';
+			$html .= 'Password: <strong>'.$password.'</strong><br>';
+			$html .= 'URL: <a href="http://nsubusinessalumni.org/#/login">NSU Business Alumni</a><br>';
+			$this->email->subject('Login informaiton for www.nsubusinessalumni.org');
+			$this->email->message($html);
+
+			// $this->email->send();
+			$returned_data = array(
+				'success' => true,
+				'message' => 'Email resend to your email! Please check spam if not found in inbox.'
+				);
+			$returned_data['hhhh'] = $html;
+
+			$returned_data['email'] = $this->email->print_debugger();
+			jsonify($returned_data);
+		} else {
+			$returned_data = array(
+				'success' => false,
+				'message' => 'Email not found!'
+				);
+			jsonify($returned_data);
+		}
+		
 	}
 }
 
