@@ -24,7 +24,7 @@
 			<span class="label label-danger" ng-if="loginForm.password.$error.required && loginForm.password.$dirty">Password Required</span>
 		</div>
 		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$pristine || loginForm.$invalid || buttonClicked">Submit</button>
-		&nbsp;&nbsp;&nbsp;&nbsp; <a ng-click="toggleForm()" href="">Forget Password</a>
+		<!-- &nbsp;&nbsp;&nbsp;&nbsp; <a ng-click="toggleForm()" href="">Forget Password</a> -->
 	</form>
 
 	<form name="recovery" ng-if="showForgetPassword" role="form" ng-submit="resendPassword()" novalidate>

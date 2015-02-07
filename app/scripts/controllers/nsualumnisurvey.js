@@ -141,6 +141,7 @@
  		'jobDecisionA7' : false,
  		'jobDecisionA8' : false,
  		'jobDecisionA9' : '',
+ 		'jobDecisionA10' : false,
  		'jobSource' : '',
  		'jobSourceOther' : '',
  		'nsuPrep' : '',
