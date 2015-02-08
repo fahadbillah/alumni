@@ -279,6 +279,22 @@ class Auth extends CI_Controller {
 		}
 		
 	}
+
+	public function feedback()
+	{
+		$feedback = get_post();
+		$this->load->model('user_model');
+		if ($this->user_model->insert_feedback($feedback)) {
+			$returned_data['success'] = 'true';
+			$returned_data['message'] = 'Thanks for your help.';
+		} else {
+			$returned_data['success'] = 'false';
+			$returned_data['message'] = 'Failed to submit data.';
+		}
+		
+
+		jsonify($returned_data);
+	}
 }
 
 /* End of file auth.php */

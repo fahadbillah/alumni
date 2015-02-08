@@ -91,6 +91,22 @@
        authorizedRoles: [USER_ROLES.admin, USER_ROLES.user, USER_ROLES.guest]
      }
    })
+   .when('/contactus', {
+     templateUrl: 'views/contactus.html',
+     controller: 'ContactusCtrl'
+   })
+   .when('/aboutus', {
+     templateUrl: 'views/aboutus.html',
+     controller: 'AboutusCtrl'
+   })
+   .when('/feedback', {
+     templateUrl: 'views/feedback.html',
+     controller: 'FeedbackCtrl'
+   })
+   .when('/noticeboard', {
+     templateUrl: 'views/noticeboard.html',
+     controller: 'NoticeboardCtrl'
+   })
    .otherwise({
      redirectTo: '/'
    });

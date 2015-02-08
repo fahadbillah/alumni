@@ -106,3 +106,12 @@ body {
     -o-animation: fadeIn 0.5s;
     animation: fadeIn 0.5s;
   }
+
+  .feedback{
+    position: fixed;
+    left: 0;
+    width: 300px;
+    z-index: 10000;
+    background: #A6A6A6;
+    padding: 10px;
+  }
