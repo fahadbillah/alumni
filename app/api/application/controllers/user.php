@@ -104,10 +104,12 @@ class User extends CI_Controller {
 		$result = $this->user_model->get_alumni_list();
 
 		foreach ($result as $key => $value) {
+			$points[] = $this->user_point($value['user_id']);
 			$result[$key]['total_point'] = $this->user_point($value['user_id']);
 		}
 
 
+		jsonify($points);
 		jsonify($result);
 	}
 }
