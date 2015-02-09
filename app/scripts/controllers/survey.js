@@ -176,7 +176,7 @@
             'fieldName': e.getAttribute("name"),
             'fieldValue': e.value,
             'fieldType': e.type,
-          })
+          });
           $scope.buttonClicked = true;
           $http.post('api/index.php/survey/insert_answer',answerData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
           .success(function(data) {
@@ -189,10 +189,7 @@
               $scope.questionPicked = true;
               getAllUserAnswers();
             }
-          // if ($scope.currentAnswerNumber === formField.length) {
-          //   readyForNext(readyForNextQuestion);
-          // };
-        })
+          })
           .error(function(data) {
             console.log('http error occured!');
             console.log(data);
