@@ -22,4 +22,13 @@
  		});
  		return result;
  	};
- }]);;
+ }])
+ .filter("formatToDate",[ function(){
+ 	return function(date) {
+ 		var formattedDate = new Date(date.replace(/-/g,"/"));
+
+ 		var allMonths = ['January','February','March','April','May','June','July','August','September','October','November','December']; 
+
+ 		return formattedDate.getDate()+'-'+ allMonths[formattedDate.getMonth()].substring(0,3) +'-'+formattedDate.getFullYear();
+ 	};
+ }]);

@@ -12,7 +12,6 @@
  	var authService = {};
 
  	authService.login = function (credentials) {
- 		console.log(credentials);
  		credentials.csrf_test_name = $cookies['XSRF-TOKEN'];
 
  		var loginData = $.param(credentials);

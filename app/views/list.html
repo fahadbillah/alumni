@@ -4,6 +4,9 @@ tr{
 }
 
 </style>
+<h3>Top 10 Alumni</h3>
+<block-plugins></block-plugins>
+
 <h3>Total Alumni: {{allAlumni.length}}</h3>
 
 <table class="table table-striped table-hover table-bordered">
@@ -12,6 +15,7 @@ tr{
 			<th></th>
 			<th>Name</th>
 			<th>ID</th>
+			<th>Join Date</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,6 +23,7 @@ tr{
 			<td>{{key + 1}}</td>
 			<td>{{value.first_name}} {{value.last_name}}</td>
 			<td> {{value.nsu_id}} </td>
+			<td> {{value.create_date | formatToDate}} </td>
 		</tr>
 	</tbody>
 </table>

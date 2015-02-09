@@ -150,7 +150,7 @@ class User_model extends CI_Model {
 
 	public function get_alumni_list()
 	{
-		return $this->db->select('user_id,first_name,last_name,nsu_id')->from('users')->get()->result_array();
+		return $this->db->select('user_id,first_name,last_name,nsu_id,create_date')->from('users')->get()->result_array();
 	}
 
 	public function get_all_referral($user_id)

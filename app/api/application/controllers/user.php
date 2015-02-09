@@ -28,10 +28,10 @@ class User extends CI_Controller {
 		$user_data = $this->user_model->select_a_user_from_user_table_by_user_id($user_id);
 		$user_data[0]['total_point'] = $this->user_point($user_id);
 		$returned_data = array(
-		                       'success' => (count($user_data) == 0)? false:true,
-		                       'message' => 'User info loaded successfully!',
-		                       'user_data' => $user_data[0],
-		                       );
+			'success' => (count($user_data) == 0)? false:true,
+			'message' => 'User info loaded successfully!',
+			'user_data' => $user_data[0],
+			);
 		jsonify($returned_data);
 	}
 
@@ -39,13 +39,13 @@ class User extends CI_Controller {
 	{
 		if ($this->session->userdata('is_logged_in') === true) {
 			$session_data = array(
-			                      'is_logged_in' => true,
-			                      'user_data' => $this->session->userdata('user_data'),
-			                      );
+				'is_logged_in' => true,
+				'user_data' => $this->session->userdata('user_data'),
+				);
 		}else{
 			$session_data = array(
-			                      'is_logged_in' => false,
-			                      );
+				'is_logged_in' => false,
+				);
 		}
 		jsonify($session_data);
 	}
@@ -104,12 +104,12 @@ class User extends CI_Controller {
 		$result = $this->user_model->get_alumni_list();
 
 		foreach ($result as $key => $value) {
-			$points[] = $this->user_point($value['user_id']);
+			// $points[] = $this->user_point($value['user_id']);
 			$result[$key]['total_point'] = $this->user_point($value['user_id']);
 		}
 
 
-		jsonify($points);
+		// jsonify($points);
 		jsonify($result);
 	}
 }
