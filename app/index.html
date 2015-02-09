@@ -53,15 +53,15 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
                 <li><a ng-href="#/"> <i class="fa fa-home"></i> Home</a></li>
-                <li class=""><a ng-href="#/aboutus">About Us</a></li>
-                <li class=""><a ng-href="#/contactus">Contact Us</a></li>
+                <!-- <li class=""><a ng-href="#/aboutus">About Us</a></li> -->
+                <!-- <li class=""><a ng-href="#/contactus">Contact Us</a></li> -->
                 <li class=""><a ng-href="#/survey">Survey</a></li>
                 <li ng-if="!isAuthorized([userRoles.admin,userRoles.user])"><a ng-href="#/login">Login</a></li>
                 <li class="dropdown" ng-if="isAuthorized(userRoles.admin)">
                   <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Admin <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li><a ng-href="#/list">List</a></li>
-                    <li><a ng-href="#/feedback">Feedback</a></li>
+                    <!-- <li><a ng-href="#/feedback">Feedback</a></li> -->
                     <li><a href="#/adminpanel">Admin</a></li>
                   </ul>
                 </li>
@@ -77,13 +77,13 @@
           </div><!-- /.container-fluid -->
         </nav>
 
-        <button class="btn btn-info" ng-click="toggleFeedback()" style="position: fixed;left: 0;margin-top:10px;">F<br>E<br>E<br>D<br>B<br>A<br>C<br>K</button>
+        <button class="btn btn-info" ng-click="toggleFeedback()" style="position: fixed;left: 0;margin-top:10px;">L<br>E<br>T<br><br>U<br>S<br><br>K<br>N<br>O<br>W</button>
 
-        <div class="feedback animated" ng-click="expression" ng-class="{fadeInLeft: showFeedbackForm == true,fadeOutLeft: showFeedbackForm == false}">
-          <button class="btn btn-info" ng-click="toggleFeedback()" style="position: absolute;right: -43px;">F<br>E<br>E<br>D<br>B<br>A<br>C<br>K</button>
+        <div class="feedback animated" ng-click="expression" ng-class="{fadeInLeft: showFeedbackForm === true,fadeOutLeft: showFeedbackForm === false,hidden: showFeedbackForm ===''}" style=''>
+          <button class="btn btn-info" ng-click="toggleFeedback()" style="position: absolute;right: -43px;">L<br>E<br>T<br><br>U<br>S<br><br>K<br>N<br>O<br>W</button>
           <form name="letUsKnow" role="form" ng-submit="feedbackSubmit()">
             <legend>LET US KNOW</legend>
-            <span class="label" ng-class="{label-success:returnedData.success == true,label-danger:returnedData.success == false}">{{returnedData.message}}</span>
+            <span class="label" ng-class="{'label-success': !!returnedData.success == true,'label-danger': !!returnedData.success == false}">{{returnedData.message}}</span>
             <div class="form-group">
               <label for="">Name</label>
               <input type="text" class="form-control" name="name" ng-model="feedback.name" placeholder="Name" required>

@@ -72,16 +72,17 @@
  			'message' : $scope.feedback.message
  		});
  		$scope.clicked = true;
+ 		var original = $scope.feedback;
 
  		$http.post('api/index.php/auth/feedback',feedback, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  		.success(function(data) {
  			$scope.returnedData = data;
  			console.log(data);
+ 			$scope.clicked = false;
 
- 			var original = $scope.feedback;
 
- 			$scope.feedback= angular.copy(original)
- 			$scope.feedbackForm.$setPristine()
+ 			$scope.feedback = angular.copy(original)
+ 			$scope.letUsKnow.$setPristine()
 
  			if (data.success === false) {
  			}else{
@@ -92,7 +93,6 @@
  					'message' : ''
  				};
  			}
- 			$scope.clicked = false;
  		})
  		.error(function(data) {
  			console.log('http error occured!');
