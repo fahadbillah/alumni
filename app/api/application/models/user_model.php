@@ -166,6 +166,16 @@ class User_model extends CI_Model {
 	{
 		return $this->db->insert('feedbacks', $data);
 	}
+
+	public function get_all_feedbacks($limit,$offset)
+	{
+		return $this->db->get('feedbacks', $limit, $offset)->result_array();
+	}
+
+	public function get_table_rows_count($table_name)
+	{
+		return $this->db->count_all($table_name);
+	}
 }
 
 /* End of file user.php */

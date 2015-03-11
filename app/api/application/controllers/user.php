@@ -112,7 +112,15 @@ class User extends CI_Controller {
 		// jsonify($points);
 		jsonify($result);
 	}
+
+	public function get_all_feedbacks($limit = 10,$offset = 0)
+	{
+		$result['filtered'] = $this->user_model->get_all_feedbacks($limit,$offset);
+		$result['all_count'] = $this->user_model->get_table_rows_count('feedbacks');
+
+		jsonify($result);
+	}
 }
 
-/* End of file user.php */
+/* offset of file user.php */
 /* Location: ./application/controllers/user.php */
