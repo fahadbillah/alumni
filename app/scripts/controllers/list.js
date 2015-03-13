@@ -16,10 +16,10 @@
  	];
 
 
- 	// if (!AuthService.isAuthorized([USER_ROLES.admin,USER_ROLES.user])) {
- 	// 	$location.path('/login');
- 	// 	return false;
- 	// }
+ 	if (!AuthService.isAuthorized([USER_ROLES.admin])) {
+ 		$location.path('/login');
+ 		return false;
+ 	}
 
  	$scope.allAlumni = [];
 

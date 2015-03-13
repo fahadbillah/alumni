@@ -1,4 +1,11 @@
-<h3>All Feedbacks</h3>
+<h3>All Feedbacks 
+	<select ng-model="limit" ng-change="getFeedback()" class="form-control pull-right" style="width:100px;">
+		<option>5</option>
+		<option>10</option>
+		<option>20</option>
+		<option value="{{allFeedbackCount}}">All</option>
+	</select>
+</h3>
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>

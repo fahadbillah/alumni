@@ -330,12 +330,12 @@ class CI_Session {
 		$sessid .= $this->CI->input->ip_address();
 
 		$this->userdata = array(
-							'session_id'	=> md5(uniqid($sessid, TRUE)),
-							'ip_address'	=> $this->CI->input->ip_address(),
-							'user_agent'	=> substr($this->CI->input->user_agent(), 0, 120),
-							'last_activity'	=> $this->now,
-							'user_data'		=> ''
-							);
+			'session_id'	=> md5(uniqid($sessid, TRUE)),
+			'ip_address'	=> $this->CI->input->ip_address(),
+			'user_agent'	=> substr($this->CI->input->user_agent(), 0, 120),
+			'last_activity'	=> $this->now,
+			'user_data'		=> ''
+			);
 
 
 		// Save the data to the DB if needed
@@ -359,6 +359,7 @@ class CI_Session {
 	function sess_update()
 	{
 		// We only update the session every five minutes by default
+		// if (($this->userdata['last_activity'] + $this->sess_time_to_update) >= $this->now || $this->CI->input->is_ajax_request())
 		if (($this->userdata['last_activity'] + $this->sess_time_to_update) >= $this->now)
 		{
 			return;
@@ -423,13 +424,13 @@ class CI_Session {
 
 		// Kill the cookie
 		setcookie(
-					$this->sess_cookie_name,
-					addslashes(serialize(array())),
-					($this->now - 31500000),
-					$this->cookie_path,
-					$this->cookie_domain,
-					0
-				);
+			$this->sess_cookie_name,
+			addslashes(serialize(array())),
+			($this->now - 31500000),
+			$this->cookie_path,
+			$this->cookie_domain,
+			0
+			);
 
 		// Kill session data
 		$this->userdata = array();
@@ -685,7 +686,7 @@ class CI_Session {
 			$this->cookie_path,
 			$this->cookie_domain,
 			$this->cookie_secure
-		);
+			);
 	}
 
 	// --------------------------------------------------------------------

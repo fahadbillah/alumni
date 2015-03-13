@@ -107,6 +107,10 @@
      templateUrl: 'views/noticeboard.html',
      controller: 'NoticeboardCtrl'
    })
+   .when('/quicksurvey/:surveyId', {
+     templateUrl: 'views/quicksurvey.html',
+     controller: 'QuicksurveyCtrl'
+   })
    .otherwise({
      redirectTo: '/'
    });
