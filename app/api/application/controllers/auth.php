@@ -223,16 +223,20 @@ class Auth extends CI_Controller {
 	public function resend_password()
 	{
 		$post_data = get_post();
-		$this->db->select('email,nsu_id');
+		$this->db->select('nsu_id,email');
 		$this->db->from('users');
-		$this->db->where('email', $post_data['email']);
+		$this->db->where('nsu_id', $post_data['nsu_id']);
 		$q = $this->db->get();
 		$result = $q->result_array();
 
-		if (count($result)>1) {
+		// vd(count($result));
+		// exit();
+		if (count($result)>0) {
 
 			$password = generate_random_string(8);
-			// $post_data['password'] = sha1($password);
+			$data['password'] = sha1($password);
+			$condition['nsu_id'] = $post_data['nsu_id'];
+			$this->db->update('users', $data, $condition);
 
 			$config = Array(
 				'protocol' => 'smtp',
@@ -251,7 +255,7 @@ class Auth extends CI_Controller {
 			$this->load->library('email',$config);
 
 			$this->email->from('no-reply@nsubusinessalumni.org', 'NSU Business Alumni');
-			$this->email->to($post_data['email']);
+			$this->email->to($result[0]['email']);
 			// $this->email->cc('another@example.com');
 			// $this->email->bcc('and@another.com');
 			$html = '';
@@ -261,14 +265,20 @@ class Auth extends CI_Controller {
 			$this->email->subject('Login informaiton for www.nsubusinessalumni.org');
 			$this->email->message($html);
 
-			// $this->email->send();
-			$returned_data = array(
-				'success' => true,
-				'message' => 'Email resend to your email! Please check spam if not found in inbox.'
-				);
-			$returned_data['hhhh'] = $html;
+			if ($this->email->send()) {
 
-			$returned_data['email'] = $this->email->print_debugger();
+				$returned_data = array(
+					'success' => true,
+					'message' => 'Email resend to your email! Please check spam if not found in inbox.'
+					);
+			}else{
+				$returned_data = array(
+					'success' => false,
+					'message' => 'Email send failed!'
+					);
+			}
+
+			// $returned_data['email'] = $this->email->print_debugger();
 			jsonify($returned_data);
 		} else {
 			$returned_data = array(

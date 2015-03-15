@@ -49,16 +49,48 @@
    });
   };
 
+  $scope.result = {
+    success: false,
+    failed: false,
+    message: ''
+  }; 
+
   $scope.resendPassword = function() {
+    $scope.buttonClicked = true;
+
+    $scope.result = {
+      success: false,
+      failed: false,
+      message: ''
+    }; 
     var userData = $.param({
       'csrf_test_name': $cookies['XSRF-TOKEN'],
-      'email' : recovery.email.value
+      'nsu_id' : recovery.nsuId.value
     });
     $http.post('api/index.php/auth/resend_password',userData, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
     .success(function(data) {
       console.log(data);
+      $scope.buttonClicked = false;
+
+      if(data.success){
+
+        $scope.result = {
+          success: true,
+          message: data.message
+        }; 
+      }else{
+
+        $scope.result = {
+          failed: true,
+          message: data.message
+        }; 
+      }
+      recovery.nsuId.value = '';
+      // $scope.recovery.success = data.success;
+      // $scope.recovery.message = data.message;
     })
     .error(function(data) {
+      $scope.buttonClicked = false;
       console.log(data);
     });
 

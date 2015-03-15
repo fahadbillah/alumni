@@ -32,25 +32,32 @@
 			<span class="label label-danger" ng-if="loginForm.password.$error.required && loginForm.password.$dirty">Password Required</span>
 		</div>
 		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$pristine || loginForm.$invalid || buttonClicked">Submit</button>
-		<!-- &nbsp;&nbsp;&nbsp;&nbsp; <a ng-click="toggleForm()" href="">Forget Password</a> -->
+		&nbsp;&nbsp;&nbsp;&nbsp; <a ng-click="toggleForm()" href="">Forget Password</a>
 	</form>
 
 	<form name="recovery" ng-if="showForgetPassword" role="form" ng-submit="resendPassword()" novalidate>
 		<div class="form-group">
+			<div class="alert alert-danger" ng-if="result.failed">
+				<strong>{{result.message}}</strong>
+			</div>
+			<div class="alert alert-success" ng-if="result.success">
+				<strong>{{result.message}}</strong>
+			</div>
 			<legend>Forget Password</legend>
 		</div>
 
 		<div class="form-group">
-			<label>Email</label>
-			<input type="email" name="email" class="form-control" ng-model="recoveryEmail" placeholder="Your email" required>
-			<span class="label label-danger" ng-if="recovery.email.$error.required && recovery.email.$dirty">Email required.</span>
-			<span ng-if="recovery.email.$error.email && recovery.email.$dirty" class="label label-danger">Invalid email address.</span>
+			<label>NSU ID</label>
+			<input type="number" name="nsuId" class="form-control" ng-model="recoveryEmail" placeholder="Your NSU ID" required>
+			<span class="label label-danger" ng-if="recovery.nsuId.$error.required && recovery.email.$dirty">NSU ID required.</span>
+			<span ng-if="recovery.nsuId.$error.email && recovery.nsuId.$dirty" class="label label-danger">Invalid NSU ID.</span>
 		</div>
 
 
 		<div class="form-group">
-			<button type="submit" class="btn btn-primary" ng-disabled="recovery.$pristine || recovery.$invalid">Submit</button>
+			<button type="submit" class="btn btn-primary" ng-disabled="recovery.$pristine || recovery.$invalid || buttonClicked">Submit</button>
 			&nbsp;&nbsp;&nbsp;&nbsp;<a ng-click="toggleForm()" href="">Login</a>
 		</div>
 	</form>
+
 </div>

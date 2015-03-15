@@ -82,10 +82,12 @@
           </div><!-- /.container-fluid -->
         </nav>
 
-        <button class="btn btn-info" ng-click="toggleFeedback()" style="position: fixed;left: 0;margin-top:10px;">L<br>E<br>T<br><br>U<br>S<br><br>K<br>N<br>O<br>W</button>
+        <button class="btn visible-md-block visible-lg-block" ng-click="toggleFeedback()" style="position: fixed;left: 0;margin-top:10px; background:#5cb85c;">L<br>E<br>T<br><br>U<br>S<br><br>K<br>N<br>O<br>W</button>
+        <button class="btn btn-success btn-sm visible-xs-block visible-sm-block" ng-click="toggleFeedback()" style="position: fixed;left: 0;margin-top:10px; background:#5cb85c;"><i class="glyphicon glyphicon-envelope"></i></button>
 
-        <div class="feedback animated" ng-click="expression" ng-class="{fadeInLeft: showFeedbackForm === true,fadeOutLeft: showFeedbackForm === false,hidden: showFeedbackForm ===''}" style=''>
-          <button class="btn btn-info" ng-click="toggleFeedback()" style="position: absolute;right: -43px;">L<br>E<br>T<br><br>U<br>S<br><br>K<br>N<br>O<br>W</button>
+        <div class="feedback animated" ng-click="expression" ng-class="{fadeInLeft: showFeedbackForm === true,fadeOutLeft: showFeedbackForm === false,hidden: showFeedbackForm ===''}" style='background:#5cb85c;'>
+          <button class="btn btn-success visible-md-block visible-lg-block" ng-click="toggleFeedback()" style="position: absolute;right: -43px; background:#5cb85c;">L<br>E<br>T<br><br>U<br>S<br><br>K<br>N<br>O<br>W</button>
+          <button class="btn btn-success btn-sm visible-xs-block visible-sm-block" ng-click="toggleFeedback()" style="position: absolute;right: -30px; background:#5cb85c;"><i class="glyphicon glyphicon-envelope"></i></button>
           <form name="letUsKnow" role="form" ng-submit="feedbackSubmit()">
             <legend>LET US KNOW</legend>
             <span class="label" ng-class="{'label-success': !!returnedData.success == true,'label-danger': !!returnedData.success == false}">{{returnedData.message}}</span>
