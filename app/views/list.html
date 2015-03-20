@@ -3,23 +3,30 @@ tr{
 	cursor: pointer;
 }
 
+.list td{
+	line-height: 3 !important;
+}
+
+
+
 </style>
 <h3>Top 10 Alumni</h3>
 <block-plugins></block-plugins>
 
 <h3>Total Alumni: {{allAlumni.length}}
 
-	<select ng-model="limit" ng-change="getAlumni()" class="form-control pull-right" style="width:100px;">
-		<option>10</option>
-		<option>20</option>
-		<option>50</option>
+	<select ng-model="limit" ng-change="getAlumni(0)" class="form-control pull-right" style="width:100px;">
+		<option>100</option>
+		<option>200</option>
+		<option>500</option>
 		<option value="{{allAlumniCount}}">All</option>
 	</select>
 </h3>
 
-<table class="table table-striped table-hover table-bordered">
+<table class="table table-striped table-hover table-bordered list">
 	<thead>
 		<tr>
+			<th></th>
 			<th></th>
 			<th>Name</th>
 			<th>ID</th>
@@ -29,12 +36,13 @@ tr{
 	<tbody>
 		<tr ng-repeat="(key, value) in allAlumni" ng-click="goToProfile({{value.user_id}})">
 			<td> {{key + offset + 1}} </td>
-			<td>{{value.first_name}} {{value.last_name}}</td>
+			<td> <img src="api/uploads/profile_pictures/thumbnails/{{value.profile_pic || 'default.png'}}" class="img-responsive img-circle" alt="{{value.first_name}} {{value.last_name}}" style="width: 50px; display:inline;"> </td>
+			<td> {{value.first_name}} {{value.last_name}}</td>
 			<td> {{value.nsu_id}} </td>
 			<td> {{value.create_date | formatToDate}} </td>
 		</tr>
 		<tr>
-			<td colspan="4" align="center">
+			<td colspan="5" align="center">
 				<ul class="pagination pagination-small">
 					<li ng-repeat="i in getArrayToNumber() track by $index"><a href="" ng-click="getAlumni({{limit * $index}})">{{$index + 1}}</a></li>
 					<!-- <li><a href="#">&laquo;</a></li>

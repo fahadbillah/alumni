@@ -16,7 +16,8 @@
    'ngRoute',
    'ngSanitize',
    'ngTouch',
-   'angularFileUpload'
+   'angularFileUpload',
+   'textAngular'
    ])
  .config(['$routeProvider','$locationProvider','USER_ROLES', function ($routeProvider,$locationProvider,USER_ROLES) {
    // $locationProvider.html5Mode(true).hashPrefix('!');
@@ -101,7 +102,10 @@
    })
    .when('/feedback', {
      templateUrl: 'views/feedback.html',
-     controller: 'FeedbackCtrl'
+     controller: 'FeedbackCtrl',
+     data: {
+       authorizedRoles: [USER_ROLES.admin]
+     }
    })
    .when('/noticeboard', {
      templateUrl: 'views/noticeboard.html',
@@ -111,10 +115,20 @@
      templateUrl: 'views/quicksurvey.html',
      controller: 'QuicksurveyCtrl'
    })
+   .when('/broadcastMessage/:messageId', {
+     templateUrl: 'views/broadcastmessage.html',
+     controller: 'BroadcastmessageCtrl',
+     data: {
+      authorizedRoles: [USER_ROLES.admin]
+    }
+  })
    .when('/broadcastMessage', {
      templateUrl: 'views/broadcastmessage.html',
-     controller: 'BroadcastmessageCtrl'
-   })
+     controller: 'BroadcastmessageCtrl',
+     data: {
+      authorizedRoles: [USER_ROLES.admin]
+    }
+  })
    .otherwise({
      redirectTo: '/'
    });

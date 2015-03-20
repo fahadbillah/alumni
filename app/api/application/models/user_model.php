@@ -150,7 +150,7 @@ class User_model extends CI_Model {
 
 	public function get_alumni_list($limit,$offset)
 	{
-		$this->db->select('user_id,first_name,last_name,nsu_id,create_date');
+		$this->db->select('user_id,first_name,last_name,nsu_id,profile_pic,create_date');
 		$this->db->from('users');
 		$this->db->limit($limit,$offset);
 		$q = $this->db->get();

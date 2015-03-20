@@ -169,9 +169,10 @@ class User extends CI_Controller {
 			$config['source_image']	= './uploads/profile_pictures/'.$this->upload->data()['file_name'];
 			$config['new_image']	= './uploads/profile_pictures/thumbnails/'.$this->upload->data()['file_name'];
 			$config['create_thumb'] = TRUE;
+			$config['thumb_marker'] = '';
 			$config['maintain_ratio'] = TRUE;
-			$config['width']	= 100;
-			$config['height']	= 100;
+			$config['width']	= 50;
+			$config['height']	= 50;
 
 			$this->load->library('image_lib', $config); 
 
@@ -180,6 +181,63 @@ class User extends CI_Controller {
 			$data = array('success' => true,'upload_data' => $this->upload->data());
 			echo json_encode($data);
 		}
+	}
+
+	public function admin_message_save()
+	{
+		$post_data = get_post();
+		$this->load->dbforge();
+
+		$fields = array(
+			'admin_message_id' => array(
+				'type' => 'INT',
+				'constraint' => 5, 
+				'unsigned' => TRUE,
+				'auto_increment' => TRUE
+				),
+			'subject' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '100',
+				),
+			'html_message' => array(
+				'type' =>'TEXT',
+				),
+			'create_date' => array(
+				'type' => 'TIMESTAMP',
+				),
+			);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('admin_message_id', TRUE);
+		$this->dbforge->create_table('admin_message', TRUE);
+
+		$object = array('subject' => $post_data['subject'], 'html_message' =>$post_data['message'] );
+		if (trim($post_data['message_id'] === '')) {
+			$this->db->insert('admin_message', $object);
+			$last_message = $this->db->insert_id();
+
+			$returned_data = array(
+				'success' => true,
+				'message' => 'Message Saved',
+				'redirect_to' => $last_message
+				);
+		} else {
+			$this->db->where('admin_message_id', $post_data['message_id']);
+			$this->db->update('admin_message', $object);
+
+			$returned_data = array(
+				'success' => true,
+				'message' => 'Message Saved',
+				);
+		}
+
+		jsonify($returned_data);
+	}
+
+	public function get_admin_message($message_id)
+	{
+		$this->db->where('admin_message_id', $message_id);
+		$q = $this->db->get('admin_message');
+		jsonify($q->result_array());
 	}
 }
 
