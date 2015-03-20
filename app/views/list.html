@@ -7,7 +7,15 @@ tr{
 <h3>Top 10 Alumni</h3>
 <block-plugins></block-plugins>
 
-<h3>Total Alumni: {{allAlumni.length}}</h3>
+<h3>Total Alumni: {{allAlumni.length}}
+
+	<select ng-model="limit" ng-change="getAlumni()" class="form-control pull-right" style="width:100px;">
+		<option>10</option>
+		<option>20</option>
+		<option>50</option>
+		<option value="{{allAlumniCount}}">All</option>
+	</select>
+</h3>
 
 <table class="table table-striped table-hover table-bordered">
 	<thead>
@@ -20,10 +28,24 @@ tr{
 	</thead>
 	<tbody>
 		<tr ng-repeat="(key, value) in allAlumni" ng-click="goToProfile({{value.user_id}})">
-			<td>{{key + 1}}</td>
+			<td> {{key + offset + 1}} </td>
 			<td>{{value.first_name}} {{value.last_name}}</td>
 			<td> {{value.nsu_id}} </td>
 			<td> {{value.create_date | formatToDate}} </td>
+		</tr>
+		<tr>
+			<td colspan="4" align="center">
+				<ul class="pagination pagination-small">
+					<li ng-repeat="i in getArrayToNumber() track by $index"><a href="" ng-click="getAlumni({{limit * $index}})">{{$index + 1}}</a></li>
+					<!-- <li><a href="#">&laquo;</a></li>
+					<li><a href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#">&raquo;</a></li>
+				--></ul>
+			</td>
 		</tr>
 	</tbody>
 </table>

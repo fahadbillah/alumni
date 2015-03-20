@@ -148,9 +148,19 @@ class User_model extends CI_Model {
 		return $this->db->get()->result_array();
 	}
 
-	public function get_alumni_list()
+	public function get_alumni_list($limit,$offset)
 	{
-		return $this->db->select('user_id,first_name,last_name,nsu_id,create_date')->from('users')->get()->result_array();
+		$this->db->select('user_id,first_name,last_name,nsu_id,create_date');
+		$this->db->from('users');
+		$this->db->limit($limit,$offset);
+		$q = $this->db->get();
+		return $q->result_array();
+		// return $this->db->select('user_id,first_name,last_name,nsu_id,create_date')->from('users')->get()->result_array();
+	}
+
+	public function get_total_alumni_count()
+	{
+		return $this->db->count_all('users');
 	}
 
 	public function get_all_referral($user_id)

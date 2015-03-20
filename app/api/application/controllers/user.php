@@ -61,9 +61,12 @@ class User extends CI_Controller {
 
 	}
 
-	public function get_alumni_list()
+	public function get_alumni_list($limit = 10,$offset = 0)
 	{
-		$returned_data['list'] = $this->user_model->get_alumni_list();
+		// vd($limit);
+		// vd($offset);
+		$returned_data['list'] = $this->user_model->get_alumni_list($limit,$offset);
+		$returned_data['total_count'] = $this->user_model->get_total_alumni_count();
 		$returned_data['success'] = true;
 		$returned_data['message'] = 'all alumni data loaded';
 
@@ -101,7 +104,8 @@ class User extends CI_Controller {
 
 	public function top_referer()
 	{
-		$result = $this->user_model->get_alumni_list();
+
+		$result = $this->user_model->get_alumni_list($this->db->count_all('users'),0);
 
 		foreach ($result as $key => $value) {
 			// $points[] = $this->user_point($value['user_id']);
@@ -119,6 +123,63 @@ class User extends CI_Controller {
 		$result['all_count'] = $this->user_model->get_table_rows_count('feedbacks');
 
 		jsonify($result);
+	}
+
+	public function upload_profile_picture()
+	{
+		// echo "wow";
+
+
+		if (!is_dir('./uploads/profile_pictures')) {
+			if(mkdir('./uploads/profile_pictures', 0755, true) !== true){
+				jsonify(array(
+					'success' => false, 
+					'message' => array(
+						'title' => 'Cannot create profile_pictures folder in server!', 
+						'body' => '', 
+						),
+					'action' => array(
+						'actionName' => 'server_fail', 
+						),
+					));
+				exit();
+			}
+		}
+
+
+		$config['upload_path'] = './uploads/profile_pictures';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size']  = '1000';
+		$config['max_width']  = '1024';
+		$config['max_height']  = '768';
+		$config['encrypt_name']  = true;
+
+		$this->load->library('upload', $config);
+
+		if ( ! $this->upload->do_upload('upload')){
+			$error = array('success' => false,'error' => $this->upload->display_errors());
+			echo json_encode($error);
+		}
+		else{
+			$user = array('profile_pic' => $this->upload->data()['file_name']);
+			$this->db->where('user_id', $this->session->all_userdata()['user_data']['id']);
+			$this->db->update('users', $user);
+
+			$config['image_library'] = 'gd2';
+			$config['source_image']	= './uploads/profile_pictures/'.$this->upload->data()['file_name'];
+			$config['new_image']	= './uploads/profile_pictures/thumbnails/'.$this->upload->data()['file_name'];
+			$config['create_thumb'] = TRUE;
+			$config['maintain_ratio'] = TRUE;
+			$config['width']	= 100;
+			$config['height']	= 100;
+
+			$this->load->library('image_lib', $config); 
+
+			$this->image_lib->resize();
+
+			$data = array('success' => true,'upload_data' => $this->upload->data());
+			echo json_encode($data);
+		}
 	}
 }
 

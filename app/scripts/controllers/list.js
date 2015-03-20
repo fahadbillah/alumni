@@ -23,17 +23,37 @@
 
  	$scope.allAlumni = [];
 
- 	$http.get('api/index.php/user/get_alumni_list')
- 	.success(function(data) {
- 		console.log(data);
- 		$scope.allAlumni = data.list;
- 	})
- 	.error(function(data, status, headers, config) {
- 		console.log(data);
- 	});
+ 	$scope.limit = 100;
+ 	$scope.offset = 0;
+
+ 	$scope.getAlumni = function(offset) {
+ 		$scope.offset = offset;
+ 		$http.get('api/index.php/user/get_alumni_list/'+$scope.limit+'/'+offset)
+ 		.success(function(data) {
+ 			console.log(data);
+ 			$scope.allAlumniCount = data.total_count;
+ 			$scope.allAlumni = data.list;
+ 		})
+ 		.error(function(data, status, headers, config) {
+ 			console.log(data);
+ 		});
+
+ 	}
+ 	$scope.getAlumni($scope.offset);
 
 
  	$scope.goToProfile = function(userId) {
  		$location.path('/profile/'+userId);
+ 	}
+
+ 	$scope.getArrayToNumber = function() {
+ 		if ($scope.allAlumniCount === undefined) {
+ 			return false;
+ 		};
+ 		if ($scope.allAlumniCount % $scope.limit == 0) {
+ 			return new Array(Math.floor($scope.allAlumniCount/$scope.limit));   
+ 		} else{
+ 			return new Array(Math.floor($scope.allAlumniCount/$scope.limit)+1);   
+ 		};
  	}
  }]);

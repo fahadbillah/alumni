@@ -111,6 +111,10 @@
      templateUrl: 'views/quicksurvey.html',
      controller: 'QuicksurveyCtrl'
    })
+   .when('/broadcastMessage', {
+     templateUrl: 'views/broadcastmessage.html',
+     controller: 'BroadcastmessageCtrl'
+   })
    .otherwise({
      redirectTo: '/'
    });

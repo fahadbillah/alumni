@@ -15,16 +15,21 @@
 </style>
 <div class="">
 	<!-- minimal -->
-	<!-- <input type="file" nv-file-select uploader="{FileUploader}" style="display:none;" /> -->
-	<input type="file" id="link" style="display:none;">
-	<!-- <div class="col-md-12" ng-mouseenter="toggleDropZone(showDropZone)" ng-mouseleave="toggleDropZone(showDropZone)"> -->
-	<div class="col-md-12">
-		<div ng-if="user_data.id == currentUser.id" class="dropzone" ng-show="showDropZone" ng-click="openExplorer()">
-			Click here and upload your profile pic
+	<input type="file" id="link" nv-file-select uploader="uploader" style="display:none;" />
+	<!-- <input type="file" id="link" style="display:none;"> -->
+	<div class="col-md-12" ng-mouseenter="toggleDropZone(showDropZone)" ng-mouseleave="toggleDropZone(showDropZone)">
+		<div class="col-md-12">
+			<div ng-if="user_data.id == currentUser.id" class="dropzone" ng-show="showDropZone" ng-click="openExplorer()">
+				Click here and upload your profile pic
+			</div>
+			<img src="api/uploads/profile_pictures/{{ user_data.profile_pic || defaultPic }}" width="200" class="img-responsive img-circle" alt="{{ user_data.first_name }} {{ user_data.last_name }}" style="margin-left: auto;margin-right: auto;margin-bottom: 30px;padding: 4px; border: 1px solid #ddd;">
+			<!-- <img src="./images/{{ user_data.profile_pic || defaultPic }}" width="200" class="img-responsive img-circle" alt="Fahad Billah" style="margin-left: auto;margin-right: auto;margin-bottom: 30px;padding: 4px; border: 1px solid #ddd;"> -->
 		</div>
-		<img src="./images/{{ defaultPic }}" width="200" class="img-responsive img-circle" alt="{{ user_data.first_name }} {{ user_data.last_name }}" style="margin-left: auto;margin-right: auto;margin-bottom: 30px;padding: 4px; border: 1px solid #ddd;">
-		<!-- <img src="./images/{{ user_data.profile_pic || defaultPic }}" width="200" class="img-responsive img-circle" alt="Fahad Billah" style="margin-left: auto;margin-right: auto;margin-bottom: 30px;padding: 4px; border: 1px solid #ddd;"> -->
 	</div>
+	<div class="col-md-12" style="text-align: center;">
+		<button ng-disabled="disableButton" ng-repeat="item in uploader.queue" type="button" class="btn btn-info" ng-click="item.upload()">Upload</button>
+	</div>
+	<br>
 	<div class="col-md-12">
 		<table class="table table-bordered table-hover table-striped table-responsive">
 			<tbody>
