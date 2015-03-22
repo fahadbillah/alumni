@@ -13,7 +13,7 @@ tr{
 <h3>Top 10 Alumni</h3>
 <block-plugins></block-plugins>
 
-<h3>Total Alumni: {{allAlumni.length}}
+<h3>Total Alumni: {{allAlumniCount}}
 
 	<select ng-model="limit" ng-change="getAlumni(0)" class="form-control pull-right" style="width:100px;">
 		<option>100</option>
@@ -45,14 +45,7 @@ tr{
 			<td colspan="5" align="center">
 				<ul class="pagination pagination-small">
 					<li ng-repeat="i in getArrayToNumber() track by $index"><a href="" ng-click="getAlumni({{limit * $index}})">{{$index + 1}}</a></li>
-					<!-- <li><a href="#">&laquo;</a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#">&raquo;</a></li>
-				--></ul>
+				</ul>
 			</td>
 		</tr>
 	</tbody>
