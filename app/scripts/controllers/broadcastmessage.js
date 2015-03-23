@@ -15,6 +15,11 @@
  	'Karma'
  	];
 
+ 	// if (!AuthService.isAuthorized([USER_ROLES.admin])) {
+ 	// 	$location.path('/login');
+ 	// 	return false;
+ 	// }
+
  	if ($routeParams.messageId == undefined) {
 
  		$scope.messageId = 'New Message';
@@ -66,7 +71,7 @@
  			if (data.redirect_to !== undefined) {
  				$location.path('/broadcastMessage/'+data.redirect_to)
  			}
-
+ 			getBroadcastList();
  		})
  		.error(function(data) {
  			console.log(data);
@@ -74,10 +79,6 @@
  	}
 
 
- 	if (!AuthService.isAuthorized([USER_ROLES.admin])) {
- 		$location.path('/login');
- 		return false;
- 	}
 
  	$scope.allAlumni = [];
 
@@ -161,6 +162,7 @@
  					'user_id' : e.user_id,
  					'name' : e.first_name +' '+ e.last_name,
  					'nsu_id' : e.nsu_id,
+ 					'profile_pic' : e.profile_pic,
  					'message_sent' : 'not_sent',
  				}
  				return false;
@@ -178,7 +180,7 @@
  		if (allChecked) {
  			angular.forEach($scope.allAlumni, function(e,i) {
  				$scope.messageGroup.push(parseInt(e.user_id))
- 				$scope.messageGroupDetails.push(getAlumniById(id));
+ 				$scope.messageGroupDetails.push(getAlumniById(e.user_id));
  			})
  		}
  		console.log($scope.messageGroup);
@@ -189,16 +191,67 @@
  		$location.path('/broadcastMessage/'+id)
  	}
 
- 	$scope.getBroadcastList = function() {
+ 	var getBroadcastList = function() {
+ 		if (!$routeParams.messageId) {
+ 			return false;
+ 		};
 
- 		$http.get('api/index.php/user/get_all_broadcast_user_list')
+
+ 		$http.get('api/index.php/user/get_all_broadcast_user_list/'+$routeParams.messageId)
  		.success(function(data) {
  			console.log(data);
- 			$scope.messageGroupDetails = data;
+ 			$scope.messageGroup = data.list;
+ 			var temp = [];
+ 			angular.forEach(data.details,function(e,i) {
+ 				temp.push({
+ 					'user_id' : e.user_id,
+ 					'name' : e.first_name +' '+ e.last_name,
+ 					'nsu_id' : e.nsu_id,
+ 					'profile_pic' : e.profile_pic,
+ 					'message_sent' : 'not_sent',
+ 				})
+ 			})
+ 			$scope.messageGroupDetails = temp;
  		})
  		.error(function(data, status, headers, config) {
  			console.log(data);
  		});
  	}
+
+ 	getBroadcastList();
+
+ 	$scope.checkExists = function(id) {
+ 		var checked = false;
+ 		angular.forEach($scope.messageGroup, function(e,i) {
+ 			if (e == id) {
+ 				checked = true;
+ 			};
+ 		})
+
+ 		return $scope.checkExists == true ? true : checked;
+ 	}
+
+
+ 	$scope.sendMessage = function() {
+ 		if (!$routeParams.messageId) {
+ 			return false;
+ 		}
+
+ 		$http.get('api/index.php/user/broadcast/'+$routeParams.messageId)
+ 		.success(function(data) {
+ 			console.log(data);
+ 			alert('All email sent!');
+ 		})
+ 		.error(function(data, status, headers, config) {
+ 			console.log(data);
+ 		});
+
+ 		checkSentStatus($routeParams.messageId);
+ 	}
+
+ 	var checkSentStatus = function(id) {
+ 		getBroadcastList();
+ 		window.setTimeout(checkSentStatus, 10);
+ 	} 
 
  }]);
