@@ -62,7 +62,7 @@
  		$http.post('api/index.php/user/admin_message_save',message, {headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
  		.success(function(data) {
  			console.log(data);
-
+ 			alert(data.message)
  			if (data.redirect_to !== undefined) {
  				$location.path('/broadcastMessage/'+data.redirect_to)
  			}
@@ -131,20 +131,42 @@
  	}
 
  	$scope.messageGroup = [];
+ 	$scope.messageGroupDetails = [];
 
  	$scope.toggleGroupMember = function(id) {
  		var insert = true;
  		angular.forEach($scope.messageGroup, function(e,i) {
  			if (e === id){
  				$scope.messageGroup.splice(i, 1);
+ 				$scope.messageGroupDetails.splice(i, 1);
  				insert = false;
  				return false;
  			}
  		})
  		if(insert){
  			$scope.messageGroup.push(id)
+
+
+ 			$scope.messageGroupDetails.push(getAlumniById(id));
  		} 
  		console.log($scope.messageGroup);
+ 		console.log($scope.messageGroupDetails);
+ 	}
+
+ 	var getAlumniById = function (id) {
+ 		var user;
+ 		angular.forEach($scope.allAlumni,function(e,i) {
+ 			if (e.user_id == id) {
+ 				user = {
+ 					'user_id' : e.user_id,
+ 					'name' : e.first_name +' '+ e.last_name,
+ 					'nsu_id' : e.nsu_id,
+ 					'message_sent' : 'not_sent',
+ 				}
+ 				return false;
+ 			};
+ 		});
+ 		return user;
  	}
 
  	$scope.allChecked = false;
@@ -152,16 +174,31 @@
  	$scope.toggleAllMemberSelect = function(allChecked) {
  		console.log(allChecked);
  		$scope.messageGroup = [];
+ 		$scope.messageGroupDetails = [];
  		if (allChecked) {
  			angular.forEach($scope.allAlumni, function(e,i) {
  				$scope.messageGroup.push(parseInt(e.user_id))
+ 				$scope.messageGroupDetails.push(getAlumniById(id));
  			})
  		}
  		console.log($scope.messageGroup);
+ 		console.log($scope.messageGroupDetails);
  	}
 
  	$scope.goToMessageDetails  = function(id) {
  		$location.path('/broadcastMessage/'+id)
+ 	}
+
+ 	$scope.getBroadcastList = function() {
+
+ 		$http.get('api/index.php/user/get_all_broadcast_user_list')
+ 		.success(function(data) {
+ 			console.log(data);
+ 			$scope.messageGroupDetails = data;
+ 		})
+ 		.error(function(data, status, headers, config) {
+ 			console.log(data);
+ 		});
  	}
 
  }]);

@@ -185,40 +185,63 @@ class User extends CI_Controller {
 
 	public function update_recepient_list($data)
 	{
-		if ($data['message_id'] == '' || $data['message_id'] == undefined) {
+		if ($data['message_id'] == '') {
 			return false;
 		}
+		$current_all_recepients = array();
+		$this->db->select('user_id');
+		$this->db->where('admin_message_id', $data['message_id']);
+		$q = $this->db->get('broadcast_message');
+		foreach ($q->result_array() as $key => $value) {
+			array_push($current_all_recepients, $value['user_id']);
+		}
+
+		$new_recepients = $data['recepients'];
 
 		foreach ($data['recepients'] as $key => $value) {
-			$this->db->select('user_id');
-			$this->db->from('broadcast_message');
-			$this->db->where('user_id', $data['message_id']);
+			$this->db->where('user_id', $value);
+			$this->db->where('admin_message_id', $data['message_id']);
+			if($this->db->count_all_results('broadcast_message') == 0){
+				$object = array(
+				                'user_id' => $value,
+				                'admin_message_id' => $data['message_id'],
+				                'message_sent' => 'not_sent',
+				                );
+				$this->db->insert('broadcast_message', $object);
+				unset($new_recepients[$key]);
+			}else{
 
+			}
+		}
+
+		$delete = array_diff ( $current_all_recepients, $new_recepients);
+
+		if (count($delete)>0) {
+			$this->db->where_in('user_id', $delete);
+			$this->db->delete('broadcast_message');
 		}
 	}
 
 	public function admin_message_save()
 	{
 		$post_data = get_post();
-		// vd($post_data);
 		// pr(json_decode($post_data['recepients']));
-		// exit();
 
-		$this->load->dbforge();
-
-		$this->create_admin_message_table();
-		$this->broadcast_list();
-
-
-		if (count($post_data['recepients'])>0) {
-			$this->update_recepient_list($post_data);
+		if ($this->db->table_exists('admin_message') || $this->db->table_exists('broadcast_message')) {
+			$this->load->dbforge();
+			$this->create_admin_message_table();
+			$this->broadcast_list();
 		}
+
+		$post_data['recepients'] = json_decode($post_data['recepients']);
+		$this->update_recepient_list($post_data);
+
 
 
 		$object = array('subject' => $post_data['subject'], 'html_message' =>$post_data['message'] );
 
 		if (trim($post_data['message_id'] === '')) {
-			
+
 			$last_message = $this->user_model->insert_admin_message($object); 
 
 			$returned_data = array(
@@ -277,7 +300,7 @@ class User extends CI_Controller {
 		$this->dbforge->create_table('admin_message', TRUE);
 
 
-		
+
 		$fields = array(
 		                'admin_message_id' => array(
 		                                            'type' => 'INT',
@@ -326,6 +349,11 @@ class User extends CI_Controller {
 $this->dbforge->add_field($fields);
 $this->dbforge->add_key('broadcast_message_id', TRUE);
 $this->dbforge->create_table('broadcast_message', TRUE);
+}
+
+public function get_all_broadcast_user_list()
+{
+
 }
 }
 

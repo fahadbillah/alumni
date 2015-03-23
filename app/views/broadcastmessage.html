@@ -54,6 +54,27 @@ tr{
 </div>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="!!id">
+	<h3>Selected Alumnies</h3>
+
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>NSU ID</th>
+				<th>Name</th>
+				<th>Sent Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(key, value) in messageGroupDetails">
+				<td> {{value.nsu_id}} </td>
+				<td> {{value.name}} </td>
+				<td> {{ value.message_sent == 'not_sent' ? 'Not Sent' : 'Sent' }} </td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="!!id">
 
 	<h3>Select Alumnies
 
