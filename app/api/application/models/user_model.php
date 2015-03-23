@@ -15,32 +15,32 @@ class User_model extends CI_Model {
 		$result = $this->db->insert('users', $user_data);
 
 		return array(
-			'success' => $result,
-			'last_inserted_data' => ($result)? $this->select_a_user_from_user_table_by_user_id($this->db->insert_id()) : "",
-			);
+		             'success' => $result,
+		             'last_inserted_data' => ($result)? $this->select_a_user_from_user_table_by_user_id($this->db->insert_id()) : "",
+		             );
 	}
 
 	public function select_a_user_from_user_table_by_user_id($user_id)
 	{
 		$this->db->select('
-			user_id as id,
-			first_name,
-			last_name,
-			email,
-			nsu_id,
-			about_me,
-			phone,
-			dob,
-			create_date,
-			update_date,
-			facebook_link,
-			twitter_link,
-			linkedin_link,
-			referral_link,
-			profile_pic,
-			admin as role,
-			referer
-			');
+		                  user_id as id,
+		                  first_name,
+		                  last_name,
+		                  email,
+		                  nsu_id,
+		                  about_me,
+		                  phone,
+		                  dob,
+		                  create_date,
+		                  update_date,
+		                  facebook_link,
+		                  twitter_link,
+		                  linkedin_link,
+		                  referral_link,
+		                  profile_pic,
+		                  admin as role,
+		                  referer
+		                  ');
 		$this->db->from('users');
 		$this->db->where('user_id', $user_id);
 		$q = $this->db->get();
@@ -72,24 +72,24 @@ class User_model extends CI_Model {
 	public function login_check($login_data)
 	{
 		$this->db->select('
-			user_id as id,
-			first_name,
-			last_name,
-			email,
-			nsu_id,
-			about_me,
-			phone,
-			dob,
-			create_date,
-			update_date,
-			facebook_link,
-			twitter_link,
-			linkedin_link,
-			referral_link,
-			profile_pic,
-			admin as role,
-			referer
-			');
+		                  user_id as id,
+		                  first_name,
+		                  last_name,
+		                  email,
+		                  nsu_id,
+		                  about_me,
+		                  phone,
+		                  dob,
+		                  create_date,
+		                  update_date,
+		                  facebook_link,
+		                  twitter_link,
+		                  linkedin_link,
+		                  referral_link,
+		                  profile_pic,
+		                  admin as role,
+		                  referer
+		                  ');
 		$this->db->from('users');
 		$this->db->where('nsu_id', (int) $login_data['nsu_id']);
 		$this->db->where('password', sha1($login_data['password']));
@@ -98,13 +98,13 @@ class User_model extends CI_Model {
 
 		if (count($result)>0) {
 			return array(
-				'success' => true,
-				'user_data' => $result
-				);
+			             'success' => true,
+			             'user_data' => $result
+			             );
 		}else{
 			return array(
-				'success' => false,
-				);
+			             'success' => false,
+			             );
 		}
 	}
 
@@ -131,9 +131,9 @@ class User_model extends CI_Model {
 		$result = $this->db->insert('user_work_histories', $work);
 
 		return array(
-			'success' => $result,
-			'last_inserted_data' => ($result == true) ? $this->get_user_work_histories(array('id' => $this->db->insert_id())) : '',
-			);
+		             'success' => $result,
+		             'last_inserted_data' => ($result == true) ? $this->get_user_work_histories(array('id' => $this->db->insert_id())) : '',
+		             );
 	}
 
 	public function get_user_work_histories($id)
@@ -185,6 +185,36 @@ class User_model extends CI_Model {
 	public function get_table_rows_count($table_name)
 	{
 		return $this->db->count_all($table_name);
+	}
+
+	public function insert_admin_message($object)
+	{
+		$this->db->insert('admin_message', $object);
+		return $this->db->insert_id();
+	}
+
+	public function update_admin_message($message_id,$object)
+	{
+
+		$this->db->where('admin_message_id', $message_id);
+		return $this->db->update('admin_message', $object);
+	}
+
+	public function get_admin_message($message_id)
+	{
+		$this->db->where('admin_message_id', $message_id);
+		$q = $this->db->get('admin_message');
+		return $q->result_array();
+	}
+
+	public function get_all_broadcast_message($limit,$offset)
+	{
+		return $this->db->get('admin_message', $limit, $offset)->result_array();
+	}
+
+	public function get_all_broadcast_message_count()
+	{
+		return $this->db->count_all('admin_message');
 	}
 }
 

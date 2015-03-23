@@ -1,16 +1,122 @@
+<style type="text/css">
+tr{
+	cursor: pointer;
+}
+
+.list td{
+	line-height: 3 !important;
+}
+
+
+
+</style>
 <h3>{{ messageId }}</h3>
-<form>
-	<input type="text" ng-model="id" hidden>
-	<br>
-	<input type="text" class="form-control" ng-model="subject" placeholder="Subject">
-	<br>
-	<br>
-	<div text-angular ng-model="htmlMessage"></div>
-	<br>
-	<br>
-	<div class="btn-group" role="group" aria-label="...">
-		<button ng-click="saveMessage()" type="button" class="btn btn-success"> <i class="fa fa-save"></i> Save</button>
-		<button type="button" class="btn btn-danger"> <i class="fa fa-trash"></i> Delete</button>
-		<!-- <button type="button" class="btn btn-success"> <i class="fa fa-edit"></i> Update</button> -->
-	</div>
-</form>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	
+	<form>
+		<input type="text" ng-model="id" hidden>
+		<br>
+		<input type="text" class="form-control" ng-model="subject" placeholder="Subject">
+		<br>
+		<br>
+		<div text-angular ng-model="htmlMessage"></div>
+		<br>
+		<br>
+		<div class="btn-group" role="group" aria-label="...">
+			<button ng-click="saveMessage()" type="button" class="btn btn-success"> <i class="fa fa-save"></i> Save</button>
+			<button type="button" class="btn btn-danger"> <i class="fa fa-trash"></i> Delete</button>
+			<!-- <button type="button" class="btn btn-success"> <i class="fa fa-edit"></i> Update</button> -->
+		</div>
+	</form>
+</div>
+
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="!id">
+	<h3>All Messages</h3>
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Subject</th>
+				<th>Targeted</th>
+				<th>Achieved</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(key, value) in allMessages" ng-click="goToMessageDetails({{value.admin_message_id}})">
+				<td> {{ $index + 1 }} </td>
+				<td> {{value.subject}} </td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="!!id">
+	<h3>Selected Alumnies</h3>
+
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>NSU ID</th>
+				<th>Name</th>
+				<th>Sent Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(key, value) in messageGroupDetails">
+				<td> {{value.nsu_id}} </td>
+				<td> {{value.name}} </td>
+				<td> {{ value.message_sent == 'not_sent' ? 'Not Sent' : 'Sent' }} </td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="!!id">
+
+	<h3>Select Alumnies
+
+		<select ng-model="limit" ng-change="getAlumni(0)" class="form-control pull-right" style="width:100px;">
+			<option>100</option>
+			<option>200</option>
+			<option>500</option>
+			<option value="{{allAlumniCount}}">All</option>
+		</select>
+	</h3>
+
+	<table class="table table-striped table-hover table-bordered list">
+		<thead>
+			<tr>
+				<th><input type="checkbox" ng-model="allChecked" ng-click="toggleAllMemberSelect(allChecked)"></th>
+				<th></th>
+				<th></th>
+				<th>Name</th>
+				<th>ID</th>
+				<th>Join Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(key, value) in allAlumni" ng-click="goToProfile({{value.user_id}})">
+				<td> 
+					<label>
+						<input type="checkbox" ng-click="toggleGroupMember({{value.user_id}})" ng-checked="allChecked">
+					</label>
+				</td>
+				<td> {{key + offset + 1}} </td>
+				<td> <img src="api/uploads/profile_pictures/thumbnails/{{value.profile_pic || 'default.png'}}" class="img-responsive img-circle" alt="{{value.first_name}} {{value.last_name}}" style="width: 50px; display:inline;"> </td>
+				<td> {{value.first_name}} {{value.last_name}}</td>
+				<td> {{value.nsu_id}} </td>
+				<td> {{value.create_date | formatToDate}} </td>
+			</tr>
+			<tr>
+				<td colspan="5" align="center">
+					<ul class="pagination pagination-small">
+						<li ng-repeat="i in getArrayToNumber() track by $index"><a href="" ng-click="getAlumni({{limit * $index}})">{{$index + 1}}</a></li>
+					</ul>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
