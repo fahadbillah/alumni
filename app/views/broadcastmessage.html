@@ -27,7 +27,13 @@ tr{
 			<button type="button" class="btn btn-danger"> <i class="fa fa-trash"></i> Delete</button>
 			<!-- <button type="button" class="btn btn-success"> <i class="fa fa-edit"></i> Update</button> -->
 		</div>
-		<button ng-if="id" ng-disabled="messageGroupDetails.length == 0" type="button" class="btn btn-success pull-right">Send <i class="fa fa-send"></i></button>
+		<div class="btn-group pull-right" role="group" aria-label="...">
+			<button ng-if="id" ng-disabled="!buttonClicked" type="button" class="btn btn-danger" ng-click="endSendingMessage()">Stop <i class="fa fa-close"></i></button>
+			<button ng-if="id" ng-disabled="messageGroupDetails.length == 0 || buttonClicked" type="button" class="btn btn-success" ng-click="sendMessage()">Send <i class="fa fa-send"></i></button>
+			<!-- <button type="button" class="btn btn-success"> <i class="fa fa-edit"></i> Update</button> -->
+		</div>
+		<!-- <button ng-if="id" ng-disabled="!buttonClicked" type="button" class="btn btn-danger pull-right" ng-click="endSendingMessage()">Send <i class="fa fa-close"></i></button> &nbsp; -->
+		<!-- <button ng-if="id" ng-disabled="messageGroupDetails.length == 0 || buttonClicked" type="button" class="btn btn-success pull-right" ng-click="sendMessage()">Send <i class="fa fa-send"></i></button> -->
 	</form>
 </div>
 

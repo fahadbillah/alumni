@@ -199,7 +199,7 @@
 
  		$http.get('api/index.php/user/get_all_broadcast_user_list/'+$routeParams.messageId)
  		.success(function(data) {
- 			console.log(data);
+ 			// console.log(data);
  			$scope.messageGroup = data.list;
  			var temp = [];
  			angular.forEach(data.details,function(e,i) {
@@ -208,7 +208,7 @@
  					'name' : e.first_name +' '+ e.last_name,
  					'nsu_id' : e.nsu_id,
  					'profile_pic' : e.profile_pic,
- 					'message_sent' : 'not_sent',
+ 					'message_sent' : e.message_sent,
  				})
  			})
  			$scope.messageGroupDetails = temp;
@@ -231,22 +231,37 @@
  		return $scope.checkExists == true ? true : checked;
  	}
 
+ 	$scope.buttonClicked = false;
+ 	$scope.breakLoop = false;
 
  	$scope.sendMessage = function() {
  		if (!$routeParams.messageId) {
  			return false;
  		}
+ 		$scope.buttonClicked = true;
 
  		$http.get('api/index.php/user/broadcast/'+$routeParams.messageId)
  		.success(function(data) {
  			console.log(data);
- 			alert('All email sent!');
+ 			// alert('All email sent!');
  		})
  		.error(function(data, status, headers, config) {
  			console.log(data);
  		});
 
- 		checkSentStatus($routeParams.messageId);
+
+ 		if ($scope.breakLoop == true) {
+ 			return false;
+ 		};
+
+ 		getBroadcastList();
+ 		window.setTimeout($scope.sendMessage, 15000);
+ 		// checkSentStatus($routeParams.messageId);
+ 	}
+
+ 	$scope.endSendingMessage = function() {
+ 		$scope.buttonClicked = false;
+ 		$scope.breakLoop = true;
  	}
 
  	var checkSentStatus = function(id) {

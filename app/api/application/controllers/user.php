@@ -28,10 +28,10 @@ class User extends CI_Controller {
 		$user_data = $this->user_model->select_a_user_from_user_table_by_user_id($user_id);
 		$user_data[0]['total_point'] = $this->user_point($user_id);
 		$returned_data = array(
-			'success' => (count($user_data) == 0)? false:true,
-			'message' => 'User info loaded successfully!',
-			'user_data' => $user_data[0],
-			);
+		                       'success' => (count($user_data) == 0)? false:true,
+		                       'message' => 'User info loaded successfully!',
+		                       'user_data' => $user_data[0],
+		                       );
 		jsonify($returned_data);
 	}
 
@@ -39,13 +39,13 @@ class User extends CI_Controller {
 	{
 		if ($this->session->userdata('is_logged_in') === true) {
 			$session_data = array(
-				'is_logged_in' => true,
-				'user_data' => $this->session->userdata('user_data'),
-				);
+			                      'is_logged_in' => true,
+			                      'user_data' => $this->session->userdata('user_data'),
+			                      );
 		}else{
 			$session_data = array(
-				'is_logged_in' => false,
-				);
+			                      'is_logged_in' => false,
+			                      );
 		}
 		jsonify($session_data);
 	}
@@ -133,15 +133,15 @@ class User extends CI_Controller {
 		if (!is_dir('./uploads/profile_pictures')) {
 			if(mkdir('./uploads/profile_pictures', 0755, true) !== true){
 				jsonify(array(
-					'success' => false, 
-					'message' => array(
-						'title' => 'Cannot create profile_pictures folder in server!', 
-						'body' => '', 
-						),
-					'action' => array(
-						'actionName' => 'server_fail', 
-						),
-					));
+				        'success' => false, 
+				        'message' => array(
+				                           'title' => 'Cannot create profile_pictures folder in server!', 
+				                           'body' => '', 
+				                           ),
+				        'action' => array(
+				                          'actionName' => 'server_fail', 
+				                          ),
+				        ));
 				exit();
 			}
 		}
@@ -202,11 +202,10 @@ class User extends CI_Controller {
 			$this->db->where('user_id', $value);
 			$this->db->where('admin_message_id', $data['message_id']);
 			if($this->db->count_all_results('broadcast_message') == 0){
-				$object = array(
-					'user_id' => $value,
-					'admin_message_id' => $data['message_id'],
-					'message_sent' => 'not_sent',
-					);
+				$object = array('user_id' => $value,
+				                'admin_message_id' => $data['message_id'],
+				                'message_sent' => 'not_sent',
+				                );
 				$this->db->insert('broadcast_message', $object);
 				unset($new_recepients[$key]);
 			}else{
@@ -244,18 +243,16 @@ class User extends CI_Controller {
 
 			$last_message = $this->user_model->insert_admin_message($object); 
 
-			$returned_data = array(
-				'success' => true,
-				'message' => 'Message Saved',
-				'redirect_to' => $last_message
-				);
+			$returned_data = array('success' => true,
+			                       'message' => 'Message Saved',
+			                       'redirect_to' => $last_message
+			                       );
 		} else {
 
 			$this->user_model->update_admin_message($post_data['message_id'],$object); 
-			$returned_data = array(
-				'success' => true,
-				'message' => 'Message Saved',
-				);
+			$returned_data = array('success' => true,
+			                       'message' => 'Message Saved',
+			                       );
 		}
 
 		jsonify($returned_data);
@@ -270,31 +267,30 @@ class User extends CI_Controller {
 	public function get_all_broadcast_message($limit = 10,$offset = 0)
 	{
 		jsonify(array(
-			'list' => $this->user_model->get_all_broadcast_message($limit,$offset),
-			'count' => $this->user_model->get_all_broadcast_message_count(),
-			));
+		        'list' => $this->user_model->get_all_broadcast_message($limit,$offset),
+		        'count' => $this->user_model->get_all_broadcast_message_count(),
+		        ));
 	}
 
 	public function create_admin_message_table()
 	{
-		$fields = array(
-			'admin_message_id' => array(
-				'type' => 'INT',
-				'constraint' => 5, 
-				'unsigned' => TRUE,
-				'auto_increment' => TRUE
-				),
-			'subject' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
-				),
-			'html_message' => array(
-				'type' =>'TEXT',
-				),
-			'create_date' => array(
-				'type' => 'TIMESTAMP',
-				),
-			);
+		$fields = array('admin_message_id' => array(
+		                'type' => 'INT',
+		                'constraint' => 5, 
+		                'unsigned' => TRUE,
+		                'auto_increment' => TRUE
+		                ),
+		'subject' => array(
+		                   'type' => 'VARCHAR',
+		                   'constraint' => '100',
+		                   ),
+		'html_message' => array(
+		                        'type' =>'TEXT',
+		                        ),
+		'create_date' => array(
+		                       'type' => 'TIMESTAMP',
+		                       ),
+		);
 		$this->dbforge->add_field($fields);
 		$this->dbforge->add_key('admin_message_id', TRUE);
 		$this->dbforge->create_table('admin_message', TRUE);
@@ -302,29 +298,24 @@ class User extends CI_Controller {
 
 	public function broadcast_list()
 	{
-		$fields = array(
-			'broadcast_message_id' => array(
-				'type' => 'INT',
-				'constraint' => 11, 
-				'unsigned' => TRUE,
-				'auto_increment' => TRUE
-				),
-			'user_id' => array(
-				'type' => 'INT',
-				'constraint' => 11, 
-				),
-			'admin_message_id' => array(
-				'type' => 'INT',
-				'constraint' => 11, 
-				),
-			'message_sent' => array(
-				'type' => 'VARCHAR',
-				'constraint' => 20, 
-				),
-			'create_date' => array(
-				'type' => 'TIMESTAMP',
-				),
-			);
+		$fields = array('broadcast_message_id' => array(
+		                'type' => 'INT',
+		                'constraint' => 11, 
+		                'unsigned' => TRUE,
+		                'auto_increment' => TRUE
+		                ),
+		'user_id' => array('type' => 'INT',
+		                   'constraint' => 11, 
+		                   ),
+		'admin_message_id' => array('type' => 'INT',
+		                            'constraint' => 11, 
+		                            ),
+		'message_sent' => array('type' => 'VARCHAR',
+		                        'constraint' => 20, 
+		                        ),
+		'create_date' => array('type' => 'TIMESTAMP',
+		                       ),
+		);
 		$this->dbforge->add_field($fields);
 		$this->dbforge->add_key('broadcast_message_id', TRUE);
 		$this->dbforge->create_table('broadcast_message', TRUE);
@@ -332,16 +323,15 @@ class User extends CI_Controller {
 
 	public function get_all_broadcast_user_list($message_id)
 	{
-		$this->db->select('
-			users.user_id,
-			users.nsu_id,
-			users.first_name,
-			users.last_name,
-			users.profile_pic,
-			broadcast_message.broadcast_message_id,
-			broadcast_message.admin_message_id,
-			broadcast_message.message_sent
-			');
+		$this->db->select('users.user_id,
+		                  users.nsu_id,
+		                  users.first_name,
+		                  users.last_name,
+		                  users.profile_pic,
+		                  broadcast_message.broadcast_message_id,
+		                  broadcast_message.admin_message_id,
+		                  broadcast_message.message_sent
+		                  ');
 		$this->db->from('broadcast_message');
 		$this->db->join('users', 'users.user_id = broadcast_message.user_id');
 		$this->db->where('broadcast_message.admin_message_id', $message_id);
@@ -358,11 +348,89 @@ class User extends CI_Controller {
 			array_push($list, $value['user_id']);
 		}
 
-		$result = array(
-			'details' => $details,
-			'list' => $list,
-			);
+		$result = array('details' => $details,
+		                'list' => $list,
+		                );
 		jsonify($result);
+	}
+
+	public function broadcast($message_id = '')
+	{
+		if ($message_id == '') {
+			$result = array('success' => false,
+			                'message' => 'Select a message',
+			                );
+			jsonify($result);
+		}
+
+		$this->db->select('*');
+		$this->db->from('broadcast_message');
+		$this->db->join('users', 'broadcast_message.user_id = users.user_id');
+		$this->db->join('admin_message', 'admin_message.admin_message_id = broadcast_message.admin_message_id');
+		$this->db->where('admin_message.admin_message_id', $message_id);
+		$this->db->where('broadcast_message.message_sent', 'not_sent');
+		$this->db->limit(1);
+		$q = $this->db->get();
+		$result = $q->result_array();
+
+		// pr($result);
+		// exit();
+
+		if (count($result) == 0) {
+			$result = array('success' => true,
+			                'message' => 'All Message Sent Successfully!',
+			                );
+			jsonify($result);
+		}
+
+
+
+
+		$config = Array(
+		                'protocol' => 'smtp',
+		                'smtp_host' => 'mail.nsubusinessalumni.org',
+		                'smtp_port' => 26,
+		                'smtp_timeout' =>'7',
+		                'charset' => 'utf-8',
+		                'newline' => "\r\n",
+		                'smtp_user' => 'no-reply@nsubusinessalumni.org', 
+		                'smtp_pass' => '.@ZJRn~yo6TC', 
+		                'mailtype' => 'html',
+		                'validation' => TRUE,
+		                'wordwrap' => TRUE
+		                );
+
+		$this->load->library('email',$config);
+
+		$this->email->from('no-reply@nsubusinessalumni.org', 'NSU Business Alumni');
+		$this->email->to($result[0]['email']);
+		// $this->email->to('fahadbillah@yahoo.com');
+			// $this->email->cc('another@example.com');
+			// $this->email->bcc('and@another.com');
+		$this->email->subject($result[0]['subject']);
+		$this->email->message($result[0]['html_message']);
+
+		$email_result = $this->email->send();
+
+
+		if ($email_result == true) {
+			$object = array(
+			                'message_sent' => 'sent',
+			                );
+			$this->db->where('broadcast_message_id', $result[0]['broadcast_message_id']);
+			$this->db->update('broadcast_message', $object);
+			$return_data['success'] = $email_result;
+			$return_data['message'] = 'Email Sent';
+		}else{
+			$return_data['success'] = false;
+			$return_data['message'] = 'Email Send failed';
+		}
+
+		$return_data['email'] = $this->email->print_debugger();
+
+		jsonify($return_data);
+		
+
 	}
 }
 
