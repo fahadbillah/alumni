@@ -1,0 +1,35 @@
+<h3>Total Alumni: {{totalAlumni}}</h3>
+<table class="table table-condensed table-hover table-striped table-bordered">
+	<thead>
+		<tr>
+			<th>Full Survey Complete: {{completionStat.full}}</th>
+			<th>Partial Survey Complete: {{completionStat.partial}}</th>
+		</tr>
+		<tr>
+			<th>Survey Level</th>
+			<th>Completed</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Personal Info</td>
+			<td>{{completionStatistics.personalInfo}}</td>
+		</tr>
+		<tr>
+			<td>Life After Graduation Part:1</td>
+			<td>{{completionStatistics.lag1}}</td>
+		</tr>
+		<tr>
+			<td>Life After Graduation Part:2</td>
+			<td>{{completionStatistics.lag2}}</td>
+		</tr>
+		<tr>
+			<td>Experience</td>
+			<td>{{completionStatistics.exp}}</td>
+		</tr>
+		<tr>
+			<td>Comment</td>
+			<td>{{completionStatistics.comment}}</td>
+		</tr>
+	</tbody>
+</table>

@@ -281,12 +281,6 @@ class Survey extends CI_Controller {
 		$educational_experience = true;
 		$comment = true;
 
-		// vd(in_array('personalInfoCompleted', $result));
-		// vd(in_array('afterGraduationInfoCompleted', $result));
-		// vd(in_array('LAG2Completed', $result));
-		// vd(in_array('eExpCompleted', $result));
-		// vd(in_array('commentCompleted', $result));
-
 		foreach ($result as $key => $value) {
 
 
@@ -335,6 +329,45 @@ class Survey extends CI_Controller {
 
 		echo "all_completed";
 		exit();
+	}
+
+
+	public function survey_completion_level($id)
+	{
+		$all_forms = ['personalInfoCompleted','afterGraduationInfoCompleted','LAG2Completed','eExpCompleted','commentCompleted'];
+		$this->db->select('*');
+		$this->db->from('user_survey_answers');
+		$this->db->where_in($all_forms);
+		$this->db->where('user_id',$id);
+		$q = $this->db->get();
+		$result = $q->result_array();
+		$count = 0;
+
+		foreach ($result as $key => $value) {
+
+
+			if ($value['question_name'] == 'personalInfoCompleted' && $count < 2) {
+				$count = 1;
+			}
+
+			if ($value['question_name'] == 'afterGraduationInfoCompleted' && $count < 3) {
+				$count = 2;
+			}
+
+			if ($value['question_name'] == 'LAG2Completed' && $count < 4) {
+				$count = 3;
+			}
+
+			if ($value['question_name'] == 'eExpCompleted' && $count < 5) {
+				$count = 4;
+			}
+
+			if ($value['question_name'] == 'commentCompleted' && $count < 6) {
+				$count = 5;
+			}
+
+		}
+		return $count;
 	}
 
 	public function get_user_id_from_session()
@@ -422,6 +455,115 @@ class Survey extends CI_Controller {
 			echo "comment";
 			exit();
 		}
+	}
+
+	public function get_all_user_survey()
+	{
+		if ($this->session->userdata('is_logged_in') == false || $this->session->userdata('user_data')['role'] != 'admin') {
+			jsonify(array(
+			        'success' => false, 
+			        'message' => 'Please login to see details'
+			        ));
+		}
+		$result = $this->Survey_model->get_all_user_survey();
+
+		if (count($result) === 0) {
+
+			jsonify(array(
+			        'success' => false, 
+			        'message' => 'No data available!'
+			        ));
+		}
+
+		$this->load->model('User_model');
+
+		jsonify(array(
+		        'success' => true, 
+		        'data' => $result,
+		        'totalAlumni' => $this->User_model->get_total_alumni_count(),
+		        ));
+
+	}
+
+	public function get_survey_completion_stat()
+	{
+
+		$allAlumni = $this->db->select('user_id')->get('users')->result_array();
+		$completion_level_by_user_count = array(
+		                                        'personalInfo' => 0,
+		                                        'lag1' => 0,
+		                                        'lag2' => 0,
+		                                        'exp' => 0,
+		                                        'comment' => 0,
+		                                        );
+		foreach ($allAlumni as $key => $value) {
+			
+			switch ($this->survey_completion_level($value['user_id'])) {
+				case 1:
+				$completion_level_by_user_count['personalInfo']++;
+				break;
+				case 2:
+				$completion_level_by_user_count['lag1']++;
+				break;
+				case 3:
+				$completion_level_by_user_count['lag2']++;
+				break;
+				case 4:
+				$completion_level_by_user_count['exp']++;
+				break;
+				case 5:
+				$completion_level_by_user_count['comment']++;
+				break;
+			}
+		}
+
+		$this->load->model('User_model');
+
+		jsonify(array(
+		        'success' => true, 
+		        'completionStatistics' => $completion_level_by_user_count,
+		        ));
+	}
+
+	public function completed_type()
+	{
+
+
+		$this->db->select('user_id');
+		$this->db->from('users');
+		$q = $this->db->get();
+		$user_id = $q->result_array();
+		$partial = 0;
+		$full = 0;
+
+		foreach ($user_id as $key => $value) {
+			$all_forms = ['personalInfoCompleted','afterGraduationInfoCompleted','LAG2Completed','eExpCompleted','commentCompleted'];
+			$this->db->select('user_id,question_name');
+			$this->db->from('user_survey_answers');
+			$this->db->where('user_id',$value['user_id']);
+			$this->db->where_in('question_name', $all_forms);
+			// $this->db->distinct();
+			// $this->db->group_by('user_id');
+			$q = $this->db->get();
+			$result = $q->result_array();
+
+			// echo count($result);
+			// echo "<br>";
+
+			if (count($result) == 5) {
+				$full++;
+			} else {
+				$partial++;
+			}
+		}
+
+		
+
+
+		jsonify(array(
+		        'full' => $full, 
+		        'partial' => $partial,
+		        ));
 	}
 }
 

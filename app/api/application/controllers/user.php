@@ -73,6 +73,13 @@ class User extends CI_Controller {
 		jsonify($returned_data);
 	}
 
+	public function total_alumni_count()
+	{
+		$returned_data['totalAlumni'] = $this->user_model->get_total_alumni_count();
+
+		jsonify($returned_data);
+	}
+
 	public function user_point($user_id)
 	{
 		$referral_count = $this->user_model->get_referral_count($user_id);

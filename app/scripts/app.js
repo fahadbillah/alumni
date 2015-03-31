@@ -129,6 +129,10 @@
       authorizedRoles: [USER_ROLES.admin]
     }
   })
+   .when('/mainSurvey', {
+     templateUrl: 'views/mainsurvey.html',
+     controller: 'MainsurveyCtrl'
+   })
    .otherwise({
      redirectTo: '/'
    });

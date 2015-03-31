@@ -20,7 +20,7 @@
  	// 	return false;
  	// }
 
- 	if ($routeParams.messageId == undefined) {
+ 	if ($routeParams.messageId === undefined) {
 
  		$scope.messageId = 'New Message';
  		$scope.id = '';
@@ -41,20 +41,20 @@
 
  		$scope.messageId = 'Message ID: '+$routeParams.messageId ;
  		$scope.id = $routeParams.messageId ;
- 	};
+ 	}
 
 
 
  	$scope.saveMessage  = function() {
- 		if ($scope.subject == '' || $scope.subject == undefined) {
+ 		if ($scope.subject === '' || $scope.subject === undefined) {
  			alert('Please Fill subject');
  			return false;
- 		};
+ 		}
 
- 		if ($scope.htmlMessage == '' || $scope.htmlMessage == undefined) {
+ 		if ($scope.htmlMessage === '' || $scope.htmlMessage === undefined) {
  			alert('Please Fill Message');
  			return false;
- 		};
+ 		}
 
  		var message = $.param({
  			'csrf_test_name': $cookies['XSRF-TOKEN'],
@@ -124,7 +124,7 @@
  		if ($scope.allAlumniCount === undefined) {
  			return false;
  		};
- 		if ($scope.allAlumniCount % $scope.limit == 0) {
+ 		if ($scope.allAlumniCount % $scope.limit === 0) {
  			return new Array(Math.floor($scope.allAlumniCount/$scope.limit));   
  		} else{
  			return new Array(Math.floor($scope.allAlumniCount/$scope.limit)+1);   
@@ -157,7 +157,7 @@
  	var getAlumniById = function (id) {
  		var user;
  		angular.forEach($scope.allAlumni,function(e,i) {
- 			if (e.user_id == id) {
+ 			if (e.user_id === id) {
  				user = {
  					'user_id' : e.user_id,
  					'name' : e.first_name +' '+ e.last_name,
@@ -223,12 +223,12 @@
  	$scope.checkExists = function(id) {
  		var checked = false;
  		angular.forEach($scope.messageGroup, function(e,i) {
- 			if (e == id) {
+ 			if (e === id) {
  				checked = true;
  			};
  		})
 
- 		return $scope.checkExists == true ? true : checked;
+ 		return $scope.checkExists === true ? true : checked;
  	}
 
  	$scope.buttonClicked = false;
@@ -250,7 +250,7 @@
  		});
 
 
- 		if ($scope.breakLoop == true) {
+ 		if ($scope.breakLoop === true) {
  			return false;
  		};
 
