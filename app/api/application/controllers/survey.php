@@ -485,6 +485,31 @@ class Survey extends CI_Controller {
 
 	}
 
+	public function get_all_user_survey_question()
+	{
+		if ($this->session->userdata('is_logged_in') == false || $this->session->userdata('user_data')['role'] != 'admin') {
+			jsonify(array(
+			        'success' => false, 
+			        'message' => 'Please login to see details'
+			        ));
+		}
+		$result = $this->Survey_model->get_all_user_survey_question();
+
+		if (count($result) === 0) {
+
+			jsonify(array(
+			        'success' => false, 
+			        'message' => 'No data available!'
+			        ));
+		}
+
+		jsonify(array(
+		        'success' => true, 
+		        'data' => $result,
+		        ));
+
+	}
+
 	public function get_survey_completion_stat()
 	{
 

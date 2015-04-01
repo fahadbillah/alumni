@@ -61,6 +61,12 @@ class Survey_model extends CI_Model {
 		return $this->db->get('user_survey_answers')->result_array();
 	}
 
+
+	public function get_all_user_survey_question()
+	{
+		return $this->db->select('question_name')->group_by('question_name')->get('user_survey_answers')->result_array();
+	}
+
 	public function check_next_form_to_be_filled($user_id)
 	{
 		// $all_forms = ['personalInfoCompleted','afterGraduationInfoCompleted','LAG2Completed','eExpCompleted','commentCompleted'];

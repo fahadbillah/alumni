@@ -1,5 +1,16 @@
+<!-- <div style="background: rgba(0, 0, 0, 0.5);z-index: 1000000;position: fixed;top: 0;left: 0;width:100%;height:100%;">
+	<div style="position: fixed;top: 0px;left: 0px;width: 100%;height: 100%;">
+		<i class="fa fa-spinner fa-pulse fa-3x" style="color:#fff;"></i>
+	</div>
+</div> -->
+
+<div id='loading_div' style="position: fixed;top: 0px;left: 0px;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5);z-index: 1000000;">
+	<i class="fa fa-spinner fa-pulse fa-3x" style="position: absolute;left: 0px;right: 0px;top: 0px;bottom: 0px;margin: auto;color:#fff;"></i>
+</div>
+
+
 <h3>Total Alumni: {{totalAlumni}}</h3>
-<table class="table table-condensed table-hover table-striped table-bordered">
+<table class="table table-responsive table-condensed table-hover table-striped table-bordered">
 	<thead>
 		<tr>
 			<th>Full Survey Complete: {{completionStat.full}}</th>
@@ -33,3 +44,69 @@
 		</tr>
 	</tbody>
 </table>
+
+<!-- <div class="col-md-6 col-lg-6"> -->
+
+
+
+<!-- <table class="table table-responsive table-condensed table-hover table-striped table-bordered">
+	<legend>
+		
+	</legend>
+	<tbody>
+		<tr>
+			<td>Total Answered</td>
+			<td> {{resultCount}} </td>
+		</tr>
+		<tr>
+			<td>All Answers</td>
+			<td> 
+				<table class="table table-responsive table-condensed table-striped">
+					<tbody>
+						<tr ng-repeat="(key, value) in resultArray">
+							<td> {{value.question_answer || 'Blank' }}</td>
+							<td> {{value.count}} </td>
+						</tr>
+					</tbody>
+				</table> 
+			</td>
+		</tr>
+	</tbody>
+</table> -->
+<!-- </div> -->
+
+<!-- <div class="col-md-6 col-lg-6"> -->
+
+<table class="table table-responsive table-hover table-condensed table-bordered table-striped">
+	<legend>
+		<select ng-model="questionNo" class="form-control" ng-change="getQuestionStat(questionNo)">
+			<option value="">Select Question</option>
+			<optgroup label="Personal Info">
+				<option value="country">Country</option>
+				<option value="address">Address</option>
+				<option value="ugTitle">Title of undergraduate degree</option>
+				<option value="gTitle">Title of graduate degree</option>
+				<option value="methodOfContact">Preferred method of contact</option>
+			</optgroup>
+			<optgroup label="Life After Graduation Part-1">
+				<option value="q8">Q-8: Name</option>
+				<option value="q9">Q-9: Name</option>
+				<option value="q10">Q-10: Name</option>
+			</optgroup>
+		</select>
+	</legend>
+	<legend>
+		<input type="text" class="form-control" ng-model="search" ng-change="seachByKey(search)" placeholder="Search Here">
+	</legend>
+	<thead>
+		<tr>
+			<th>Answer <span class="pull-right">Total: {{resultArraySearch.length}} </span></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="(key, value) in resultArraySearch">
+			<td> {{value.question_answer}} </td>
+		</tr>
+	</tbody>
+</table>
+<!-- </div> -->
