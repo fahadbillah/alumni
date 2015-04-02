@@ -3,11 +3,40 @@
 		<i class="fa fa-spinner fa-pulse fa-3x" style="color:#fff;"></i>
 	</div>
 </div> -->
-
+<!-- 
 <div id='loading_div' style="position: fixed;top: 0px;left: 0px;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5);z-index: 1000000;">
 	<i class="fa fa-spinner fa-pulse fa-3x" style="position: absolute;left: 0px;right: 0px;top: 0px;bottom: 0px;margin: auto;color:#fff;"></i>
 </div>
+-->
 
+<style type="text/css">
+.loader-inner{
+	position: fixed;
+	background: rgba(125, 125, 125, 0.5);
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	width: 100%;
+	height: 100%;
+}
+.loader-inner div{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	background: rgba(255, 1, 1, 0.5);
+}
+</style>
+
+<div class="loader-inner ball-scale-multiple" ng-show="loader">
+	<div></div>
+	<div></div>
+	<div></div>
+</div>
 
 <h3>Total Alumni: {{totalAlumni}}</h3>
 <table class="table table-responsive table-condensed table-hover table-striped table-bordered">
@@ -77,35 +106,115 @@
 
 <!-- <div class="col-md-6 col-lg-6"> -->
 
-<table class="table table-responsive table-hover table-condensed table-bordered table-striped">
-	<legend>
-		<select ng-model="questionNo" class="form-control" ng-change="getQuestionStat(questionNo)">
-			<option value="">Select Question</option>
-			<optgroup label="Personal Info">
-				<option value="country">Country</option>
-				<option value="address">Address</option>
-				<option value="ugTitle">Title of undergraduate degree</option>
-				<option value="gTitle">Title of graduate degree</option>
-				<option value="methodOfContact">Preferred method of contact</option>
-			</optgroup>
-			<optgroup label="Life After Graduation Part-1">
-				<option value="q8">Q-8: Name</option>
-				<option value="q9">Q-9: Name</option>
-				<option value="q10">Q-10: Name</option>
-			</optgroup>
-		</select>
-	</legend>
-	<legend>
-		<input type="text" class="form-control" ng-model="search" ng-change="seachByKey(search)" placeholder="Search Here">
-	</legend>
+<legend>
+	<select ng-model="questionNo" class="form-control" ng-change="getQuestionStat(questionNo)">
+		<option value="">Select Question</option>
+		<optgroup label="Personal Info">
+			<option value="country">Country</option>
+			<option value="address">Address</option>
+			<option value="ugTitle">Title of undergraduate degree</option>
+			<option value="gTitle">Title of graduate degree</option>
+			<option value="methodOfContact">Preferred method of contact</option>
+		</optgroup>
+		<optgroup label="Life After Graduation Part-1">
+			<option value="afterGraduationInfo">Life After Graduation</option>
+			<option value="q9">Q-9: Name</option>
+			<option value="q10">Q-10: Name</option>
+		</optgroup>
+	</select>
+</legend> 
+<legend>
+	<input type="text" class="form-control" ng-model="search" ng-change="seachByKey(search)" placeholder="Search Here">
+</legend>
+<table class="table table-responsive table-hover table-condensed table-bordered table-striped" ng-if="questionNo != 'afterGraduationInfo'">
 	<thead>
 		<tr>
+			<!-- <th ng-if="questionNo == 'afterGraduationInfo'">Question</th> -->
 			<th>Answer <span class="pull-right">Total: {{resultArraySearch.length}} </span></th>
+			<!-- <th ng-if="questionNo == 'afterGraduationInfo'">Count</th> -->
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="(key, value) in resultArraySearch">
+			<!-- <td ng-if="questionNo == 'afterGraduationInfo'"> {{camelCaseToHuman(value.question_name.question_name)}} </td> -->
 			<td> {{value.question_answer}} </td>
+			<!-- <td ng-if="questionNo == 'afterGraduationInfo'"> {{value.count}} </td> -->
+		</tr>
+
+	</tbody>
+</table>
+
+<table class="table table-responsive table-hover table-condensed table-bordered table-striped" ng-if="questionNo == 'afterGraduationInfo'">
+	<thead>
+		<tr>
+			<th>Question</th>
+			<th>Total Answered</th>
+			<th>Yes</th>
+			<th>No</th>
+			<th>Important</th>
+		</tr>
+	</thead>
+	<tbody>
+		// 	case 'important' :
+		// 	case 'jobNumber' :
+		// 	case 'jobTitle' : 
+		// 	case 'jobResponsibility' :
+		// 	case 'jobRelationToStudy' :
+		<tr>
+			<td>Working full-time {{lag1('workingFullTime')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+			<td> {{lagResult.important}} </td>
+		</tr>
+		<tr>
+			<td>Working part-time {{lag1('workingPartTime')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+			<td> {{lagResult.important}} </td>
+		</tr>
+		<tr>
+			<td>Due to start a job in the next month {{lag1('startJobNextMonth')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+			<td> {{lagResult.important}} </td>
+		</tr>
+		<tr>
+			<td>Engaged in full­time further study, training or research {{lag1('furthurStudyTrainingResearch')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+			<td> {{lagResult.important}} </td>
+		</tr>
+		<tr>
+			<td>Engaged in part-time further study, training or research {{lag1('partTimeStudyTrainingResearch')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+			<td> {{lagResult.important}} </td>
+		</tr>
+		<tr>
+			<td>Taking time out in order to travel {{lag1('travelTime')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+			<td> {{lagResult.important}} </td>
+		</tr>
+		<tr>
+			<td>Unemployed[SKIP THE REST OF SECTION B] {{lag1('unemployed')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+			<td> {{lagResult.important}} </td>
+		</tr>
+		<tr>
+			<td>Doing something else (e.g. retired, looking after the home or family) {{lag1('doElse')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+			<td> {{lagResult.important}} </td>
 		</tr>
 	</tbody>
 </table>

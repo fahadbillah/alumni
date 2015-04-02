@@ -21,6 +21,8 @@
  	// 	return false;
  	// }
 
+ 	$scope.loader = true;
+
  	$scope.surveyData = [];
  	$scope.totalAlumni = 0;
  	$scope.completionStatistics = [];
@@ -35,6 +37,8 @@
  			if (data.success === false) {
  				alert(data.message);
  			};
+ 			$scope.loader = false;
+
  			console.log(data);
  			$scope.surveyData = data.data;
  		})
@@ -105,13 +109,85 @@
  	fullPartialStat();
  	allSurveyQuestions();
 
+ 	$scope.lag1 = function(k) {
+ 		var tempKey = [];
+ 		var tempValue = [];
+ 		var counter = 0;
+ 		var tempValueFull = [];
 
- 	$scope.getQuestionStat = function(id) {
- 		console.log(id);
- 		$scope.resultArray =[];
- 		$scope.resultArrayMain = [];
- 		$scope.resultArraySearch = [];
- 		$scope.resultCount = 0;
+ 		$scope.lagResult = {
+ 			'totalCounter': 0,
+ 			'answerTrue': 0,
+ 			'answerFalse': 0,
+ 			'important': 0,
+ 		}
+ 		angular.forEach($scope.surveyData,function(e,i) {
+
+ 			if(e.question_name == k){
+ 				$scope.lagResult.totalCounter++;
+ 				if (e.question_answer == 'true') {
+ 					$scope.lagResult['answerTrue']++;
+ 				}else{
+ 					$scope.lagResult['answerFalse']++;
+ 				}
+ 			}
+
+
+ 			// switch(e.question_name){
+ 			// 	case 'label_1':
+ 			// 	case 'workingFullTime':
+ 			// 	case 'workingPartTime' :
+ 			// 	case 'startJobNextMonth' :
+ 			// 	case 'furthurStudyTrainingResearch' :
+ 			// 	case 'partTimeStudyTrainingResearch' :
+ 			// 	case 'travelTime' : 
+ 			// 	case 'unemployed' : 
+ 			// 	case 'doElse' : 
+ 			// 	case 'important' :
+ 			// 	case 'jobNumber' :
+ 			// 	case 'jobTitle' : 
+ 			// 	case 'jobResponsibility' :
+ 			// 	case 'jobRelationToStudy' :
+			// console.log(e);
+			// if(tempKey.indexOf(e.question_name) < 0){
+			// 	tempKey.push(e.question_name);
+			// 	tempValueFull.push(e);
+			// 	tempValue[e.question_name] = 1;
+			// }else{
+			// 	tempValue[e.question_name]++;
+			// }
+			// break;
+ 			// }
+ 		});
+ 		// console.log(tempKey);
+ 		// console.log(tempValue);
+ 		// $scope.resultArraySearch = [];
+ 		// angular.forEach(tempKey, function(e,i) {
+
+ 		// 	$scope.resultArraySearch.push({
+ 		// 		'question_name': e,
+ 		// 		'question_answer': tempValueFull[i],
+ 		// 		'count': tempValue[e]
+ 		// 	});
+
+ 		// })
+console.log($scope.lagResult);
+}
+
+$scope.getQuestionStat = function(id) {
+	console.log(id);
+	$scope.resultArray =[];
+	$scope.resultArrayMain = [];
+	$scope.resultArraySearch = [];
+	$scope.resultCount = 0;
+
+
+	if (id === 'afterGraduationInfo') {
+		return false;
+ 			// lag1()
+ 		};
+
+
  		angular.forEach($scope.surveyData,function(e,i) {
  			if (e.question_name == id) {
  				$scope.resultArray.push(e);
@@ -149,13 +225,12 @@
 
  	$scope.seachByKey = function(key) {
  		console.log(key);
+ 		$scope.resultArraySearch = $scope.resultArrayMain;
 
  		if (key.trim() === '') {
- 			$scope.resultArraySearch = $scope.resultArrayMain;
  			return false;
  		};
  		var temp = [];
-
  		key = $.trim(key);
  		var rgx = new RegExp(key,"gi");
  		var tokenized = key.split(' ');
@@ -171,7 +246,16 @@
  		// 		temp.push(e);
  		// 	}
  		// })
- 		$scope.resultArraySearch = temp;
- 	}
+$scope.resultArraySearch = temp;
+}
 
- }]);
+
+$scope.camelCaseToHuman = function(key) {
+	key = key.replace(/([A-Z])/g, ' $1')
+	key = key.replace(/^./, function(str){ 
+		return str.toUpperCase();
+	});
+	return key;
+}
+
+}]);
