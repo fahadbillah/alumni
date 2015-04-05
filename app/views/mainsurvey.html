@@ -1,4 +1,5 @@
-<!-- <div style="background: rgba(0, 0, 0, 0.5);z-index: 1000000;position: fixed;top: 0;left: 0;width:100%;height:100%;">
+<!-- 
+<div style="background: rgba(0, 0, 0, 0.5);z-index: 1000000;position: fixed;top: 0;left: 0;width:100%;height:100%;">
 	<div style="position: fixed;top: 0px;left: 0px;width: 100%;height: 100%;">
 		<i class="fa fa-spinner fa-pulse fa-3x" style="color:#fff;"></i>
 	</div>
@@ -74,37 +75,6 @@
 	</tbody>
 </table>
 
-<!-- <div class="col-md-6 col-lg-6"> -->
-
-
-
-<!-- <table class="table table-responsive table-condensed table-hover table-striped table-bordered">
-	<legend>
-		
-	</legend>
-	<tbody>
-		<tr>
-			<td>Total Answered</td>
-			<td> {{resultCount}} </td>
-		</tr>
-		<tr>
-			<td>All Answers</td>
-			<td> 
-				<table class="table table-responsive table-condensed table-striped">
-					<tbody>
-						<tr ng-repeat="(key, value) in resultArray">
-							<td> {{value.question_answer || 'Blank' }}</td>
-							<td> {{value.count}} </td>
-						</tr>
-					</tbody>
-				</table> 
-			</td>
-		</tr>
-	</tbody>
-</table> -->
-<!-- </div> -->
-
-<!-- <div class="col-md-6 col-lg-6"> -->
 
 <legend>
 	<select ng-model="questionNo" class="form-control" ng-change="getQuestionStat(questionNo)">
@@ -118,31 +88,87 @@
 		</optgroup>
 		<optgroup label="Life After Graduation Part-1">
 			<option value="afterGraduationInfo">Life After Graduation</option>
-			<option value="q9">Q-9: Name</option>
-			<option value="q10">Q-10: Name</option>
-		</optgroup>
-	</select>
-</legend> 
-<legend>
-	<input type="text" class="form-control" ng-model="search" ng-change="seachByKey(search)" placeholder="Search Here">
-</legend>
-<table class="table table-responsive table-hover table-condensed table-bordered table-striped" ng-if="questionNo != 'afterGraduationInfo'">
-	<thead>
-		<tr>
-			<!-- <th ng-if="questionNo == 'afterGraduationInfo'">Question</th> -->
-			<th>Answer <span class="pull-right">Total: {{resultArraySearch.length}} </span></th>
-			<!-- <th ng-if="questionNo == 'afterGraduationInfo'">Count</th> -->
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="(key, value) in resultArraySearch">
-			<!-- <td ng-if="questionNo == 'afterGraduationInfo'"> {{camelCaseToHuman(value.question_name.question_name)}} </td> -->
-			<td> {{value.question_answer}} </td>
-			<!-- <td ng-if="questionNo == 'afterGraduationInfo'"> {{value.count}} </td> -->
-		</tr>
+			<option value="jobNumber">If you will have more than one job on 12 January 2015, how many jobs will you have in total?</option>
+			<option value="jobTitle">For the following questions, please provide details of your current position. <br>
+				What is your job title?</option>
+				<option value="jobResponsibility">What do you mainly do in your job?</option>
+				<option value="jobRelationToStudy">Is your current position related to your undergraduate field(s)of study?</option>
+				<option value=""></option>
+			</optgroup>
+			<optgroup label="SECTION B: Life after Graduation">
 
-	</tbody>
-</table>
+				<option value="currentPositionStatus">In your current position are you _______</option>
+				<option value="jobQualification">If employed, did you need the qualification you recently obtained to get the job? </option>
+				<option value="jobDecision">Why did you decide to take the job you will be doing or are currently doing?</option>
+				<option value="jobSource">How did you first find out about the job?</option>
+				<option value="nsuPrep">How well did North South University prepare you for your current career or for the activities mentioned in question 11?</option>
+			</optgroup>
+			<optgroup label="SECTION C: Your overall education experience">
+				<option value="yearGap">How many years after you finished undergrad did you start your graduate or professional education?</option>
+				<option value="">How well have your courses prepared you for each of your following after-graduation activities?</option>
+				<option value="coCurriculam">Were you involved in any extra-curricular activities providedby North South University? If yes, then please specify what kind of activity/activities.</option>
+				<option value=""></option>
+				<option value="encourage">Would you encourage a current high school senior who resembles you when you were a high school senior (similar background, ability, interests and temperament) to attend North South University?</option>
+				<option value="finance">Did the benefits you received from attending North South University out weigh the financial costs to you and your family? Mark the best answer.</option>
+				<option value="connected">Today, how connected do you feel to North South University?</option>
+				<option value="pplConnection">Are you regularly in touch with people you met at North South University?(Mark all that apply)</option>
+
+			</optgroup>
+		</select>
+	</legend> 
+	<legend>
+		<input type="text" class="form-control" ng-model="search" placeholder="Search Here">
+	</legend>
+
+	<div ng-if="questionNo != 'afterGraduationInfo' && questionNo != 'jobDecision'">
+		<table class="table table-responsive table-condensed table-hover table-striped table-bordered">
+			<tbody>
+				<tr>
+					<td>Total Answered</td>
+					<td> {{resultCount}} </td>
+				</tr>
+				<tr>
+					<td>All Answers</td>
+					<td> 
+						<table class="table table-responsive table-condensed table-striped">
+							<tbody>
+								<tr>
+									<th>Answer</th>
+									<th>Total</th>
+								</tr>
+								<tr ng-repeat="(key, value) in resultArray | filter:search">
+									<td> {{value.question_answer || 'Blank' }}</td>
+									<td> {{value.count}} ({{(value.count/resultCount)*100  | number:2}}%) </td>
+								</tr>
+							<!-- <tr>
+								<td></td>
+								<td>{{sum}}</td>
+							</tr> -->
+						</tbody>
+					</table> 
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+<!-- all results -->
+<!-- 
+<div class="col-md-6 col-lg-6" ng-if="questionNo != 'afterGraduationInfo'">
+	<table class="table table-responsive table-hover table-condensed table-bordered table-striped col-md-6">
+		<thead>
+			<tr>
+				<th>Answer <span class="pull-right">Total: {{resultArraySearch.length}} </span></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(key, value) in resultArraySearch">
+				<td> {{value.question_answer}} </td>
+			</tr>
+
+		</tbody>
+	</table>
+</div> -->
 
 <table class="table table-responsive table-hover table-condensed table-bordered table-striped" ng-if="questionNo == 'afterGraduationInfo'">
 	<thead>
@@ -155,11 +181,6 @@
 		</tr>
 	</thead>
 	<tbody>
-		// 	case 'important' :
-		// 	case 'jobNumber' :
-		// 	case 'jobTitle' : 
-		// 	case 'jobResponsibility' :
-		// 	case 'jobRelationToStudy' :
 		<tr>
 			<td>Working full-time {{lag1('workingFullTime')}}</td>
 			<td> {{lagResult.totalCounter}} </td>
@@ -218,4 +239,76 @@
 		</tr>
 	</tbody>
 </table>
-<!-- </div> -->
+
+<table class="table table-responsive table-hover table-condensed table-bordered table-striped" ng-if="questionNo == 'jobDecision'">
+	<thead>
+		<tr>
+			<th>Question</th>
+			<th>Total Answered</th>
+			<th>Yes</th>
+			<th>No</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>It fitted well with my career plan/it was exactly the type of work I wanted {{lag1('jobDecisionA10')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>It was the best job offer I received {{lag1('jobDecisionA1')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>It was the only job offer I received {{lag1('jobDecisionA2')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>It was an opportunity to progress in the organization {{lag1('jobDecisionA3')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>To see if I would like the type of work it involved training or research {{lag1('jobDecisionA4')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>To gain and broaden my experience in order to get the type of job I really want {{lag1('jobDecisionA5')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>It was in the right location {{lag1('jobDecisionA6')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>The job was well-paid {{lag1('jobDecisionA7')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>In order to earn a living/pay off debts	{{lag1('jobDecisionA8')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Other {{lag1('jobDecisionA9')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+	</tbody>
+</table>

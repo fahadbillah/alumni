@@ -39,7 +39,7 @@
  			};
  			$scope.loader = false;
 
- 			console.log(data);
+ 			// console.log(data);
  			$scope.surveyData = data.data;
  		})
  		.error(function(data, status, headers, config) {
@@ -53,7 +53,7 @@
  			if (data.success === false) {
  				alert(data.message);
  			};
- 			console.log(data);
+ 			// console.log(data);
  			$scope.completionStatistics = data.completionStatistics;
  		})
  		.error(function(data, status, headers, config) {
@@ -67,7 +67,7 @@
  			if (data.success === false) {
  				alert(data.message);
  			};
- 			console.log(data);
+ 			// console.log(data);
  			$scope.totalAlumni = data.totalAlumni;
  		})
  		.error(function(data, status, headers, config) {
@@ -81,7 +81,7 @@
  			if (data.success === false) {
  				alert(data.message);
  			};
- 			console.log(data);
+ 			// console.log(data);
  			$scope.completionStat = data;
  		})
  		.error(function(data, status, headers, config) {
@@ -95,7 +95,7 @@
  			if (data.success === false) {
  				alert(data.message);
  			};
- 			console.log(data);
+ 			// console.log(data);
  			$scope.allQuestions = data.data;
  		})
  		.error(function(data, status, headers, config) {
@@ -130,6 +130,11 @@
  				}else{
  					$scope.lagResult['answerFalse']++;
  				}
+ 				// console.log(e);
+ 			}
+
+ 			if(e.question_answer.toLowerCase() == k.toLowerCase()){
+ 				$scope.lagResult['important']++;
  			}
 
 
@@ -177,76 +182,70 @@ console.log($scope.lagResult);
 $scope.getQuestionStat = function(id) {
 	console.log(id);
 	$scope.resultArray =[];
+	$scope.groupResult =[];
 	$scope.resultArrayMain = [];
 	$scope.resultArraySearch = [];
 	$scope.resultCount = 0;
 
 
-	if (id === 'afterGraduationInfo') {
+	if (id === 'afterGraduationInfo' || id === 'jobDecision') {
 		return false;
- 			// lag1()
- 		};
+	};
 
+	angular.forEach($scope.surveyData,function(e,i) {
+		if (e.question_name == id) {
+			$scope.resultArray.push(e);
+			$scope.resultArrayMain.push(e);
+			$scope.resultArraySearch.push(e)
+		};
+	});
+	$scope.resultCount = $scope.resultArray.length;
+	groupBy();
+}
 
- 		angular.forEach($scope.surveyData,function(e,i) {
- 			if (e.question_name == id) {
- 				$scope.resultArray.push(e);
- 				$scope.resultArrayMain.push(e);
- 				$scope.resultArraySearch.push(e)
- 			};
- 		});
- 		$scope.resultCount = $scope.resultArray.length;
- 		groupBy();
- 	}
+var groupBy = function() {
+	var tempKey = [];
+	var tempValue = [];
+	angular.forEach($scope.resultArray,function(e,i) {
+		if(tempKey.indexOf(e.question_answer) < 0){
+			tempKey.push(e.question_answer);
+			tempValue[e.question_answer] = 1;
+		}else{
+			tempValue[e.question_answer]++;
+		}
+	});
+	// $scope.groupResult =[];
+	// console.log(tempKey);
+	// console.log(tempValue);
+	$scope.resultArray = [];
+	angular.forEach(tempKey, function(e,i) {
 
- 	var groupBy = function() {
- 		var tempKey = [];
- 		var tempValue = [];
- 		angular.forEach($scope.resultArray,function(e,i) {
- 			if(tempKey.indexOf(e.question_answer) < 0){
- 				tempKey.push(e.question_answer);
- 				tempValue[e.question_answer] = 1;
- 			}else{
- 				tempValue[e.question_answer]++;
- 			}
- 		});
- 		console.log(tempKey);
- 		console.log(tempValue);
- 		$scope.resultArray = [];
- 		angular.forEach(tempKey, function(e,i) {
+		$scope.resultArray.push({
+			'question_answer': e,
+			'count': tempValue[e]
+		});
 
- 			$scope.resultArray.push({
- 				'question_answer': e,
- 				'count': tempValue[e]
- 			});
+	})
+	$scope.groupResult = $scope.resultArray;
+}
 
- 		})
- 	}
+$scope.seachByKey = function(key) {
+	// console.log(key);
+	$scope.resultArray = $scope.groupResult;
 
- 	$scope.seachByKey = function(key) {
- 		console.log(key);
- 		$scope.resultArraySearch = $scope.resultArrayMain;
-
- 		if (key.trim() === '') {
- 			return false;
- 		};
- 		var temp = [];
- 		key = $.trim(key);
- 		var rgx = new RegExp(key,"gi");
- 		var tokenized = key.split(' ');
- 		angular.forEach($scope.resultArraySearch, function(elm,idx) {
- 			if (elm.question_answer.match(rgx)!==null && elm.question_answer.match(rgx).length>0) {
- 				temp.push(elm);
- 			};
- 		})
-
-
- 		// angular.forEach($scope.resultArraySearch,function(e,i) {
- 		// 	if(e.question_answer == key){
- 		// 		temp.push(e);
- 		// 	}
- 		// })
-$scope.resultArraySearch = temp;
+	if (key.trim() === '') {
+		return false;
+	};
+	var temp = [];
+	key = $.trim(key);
+	var rgx = new RegExp(key,"gi");
+	var tokenized = key.split(' ');
+	angular.forEach($scope.resultArray, function(elm,idx) {
+		if (elm.question_answer.match(rgx)!==null && elm.question_answer.match(rgx).length>0) {
+			temp.push(elm);
+		};
+	})
+	$scope.resultArray = temp;
 }
 
 
@@ -257,5 +256,15 @@ $scope.camelCaseToHuman = function(key) {
 	});
 	return key;
 }
+
+
+
+$scope.getTotal = function(arr) {
+	var total = 0;
+	angular.forEach(arr, function(e,i) {
+		total += e.count;
+	});
+	return total;
+};
 
 }]);
