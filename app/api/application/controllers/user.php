@@ -404,53 +404,87 @@ class User extends CI_Controller {
 
 
 
+		/*
+        'smtp_user' => 'no-reply@nsubusinessalumni.org', 
+        'smtp_pass' => '.@ZJRn~yo6TC', 
+		*/
+        $config = Array(
+                        'protocol' => 'smtp',
+                        'smtp_host' => 'mail.nsubusinessalumni.org',
+                        'smtp_port' => 26,
+                        'smtp_timeout' =>'7',
+                        'charset' => 'utf-8',
+                        'newline' => '\r\n',
+                        'smtp_user' => 'alumni.association@nsubusinessalumni.org', 
+                        'smtp_pass' => 'm577kj4LgD', 
+                        'mailtype' => 'html',
+                        'validation' => TRUE,
+                        'wordwrap' => TRUE
+                        );
 
-		$config = Array(
-		                'protocol' => 'smtp',
-		                'smtp_host' => 'mail.nsubusinessalumni.org',
-		                'smtp_port' => 26,
-		                'smtp_timeout' =>'7',
-		                'charset' => 'utf-8',
-		                'newline' => "\r\n",
-		                'smtp_user' => 'no-reply@nsubusinessalumni.org', 
-		                'smtp_pass' => '.@ZJRn~yo6TC', 
-		                'mailtype' => 'html',
-		                'validation' => TRUE,
-		                'wordwrap' => TRUE
-		                );
+        $this->load->library('email',$config);
 
-		$this->load->library('email',$config);
-
-		$this->email->from('alumni.association@nsubusinessalumni.org', 'NSU Business Alumni');
-		$this->email->to($result[0]['email']);
+        $this->email->from('alumni.association@nsubusinessalumni.org', 'NSU Business Alumni');
+        $this->email->to($result[0]['email']);
 		// $this->email->to('fahadbillah@yahoo.com');
 			// $this->email->cc('another@example.com');
 			// $this->email->bcc('and@another.com');
-		$this->email->subject($result[0]['subject']);
-		$this->email->message($result[0]['html_message']);
+        $this->email->subject($result[0]['subject']);
+        $this->email->message($result[0]['html_message']);
 
-		$email_result = $this->email->send();
+        $email_result = $this->email->send();
 
 
-		if ($email_result == true) {
-			$object = array(
-			                'message_sent' => 'sent',
-			                );
-			$this->db->where('broadcast_message_id', $result[0]['broadcast_message_id']);
-			$this->db->update('broadcast_message', $object);
-			$return_data['success'] = $email_result;
-			$return_data['message'] = 'Email Sent';
-		}else{
-			$return_data['success'] = false;
-			$return_data['message'] = 'Email Send failed';
-		}
+        if ($email_result == true) {
+        	$object = array(
+        	                'message_sent' => 'sent',
+        	                );
+        	$this->db->where('broadcast_message_id', $result[0]['broadcast_message_id']);
+        	$this->db->update('broadcast_message', $object);
+        	$return_data['success'] = $email_result;
+        	$return_data['message'] = 'Email Sent';
+        }else{
+        	$return_data['success'] = false;
+        	$return_data['message'] = 'Email Send failed';
+        }
 
-		$return_data['email'] = $this->email->print_debugger();
+        $return_data['email'] = $this->email->print_debugger();
 
-		jsonify($return_data);
-		
+        jsonify($return_data);
+        
 
-	}
+    }
+
+    public function test()
+    {
+		/*
+        'smtp_user' => 'no-reply@nsubusinessalumni.org', 
+        'smtp_pass' => '.@ZJRn~yo6TC', 
+		*/
+        $config = Array(
+                        'protocol' => 'smtp',
+                        'smtp_host' => 'mail.nsubusinessalumni.org',
+                        'smtp_port' => 26,
+                        'smtp_timeout' =>'7',
+                        'charset' => 'utf-8',
+                        'newline' => '\r\n',
+                        'smtp_user' => 'alumni.association@nsubusinessalumni.org', 
+                        'smtp_pass' => 'm577kj4LgD', 
+                        'mailtype' => 'html',
+                        'validation' => TRUE,
+                        'wordwrap' => TRUE
+                        );
+
+        $this->load->library('email',$config);
+
+        $this->email->from('alumni.association@nsubusinessalumni.org', 'NSU Business Alumni');
+        $this->email->to('fahadbillah@yahoo.com');
+        $this->email->subject('Test Subject');
+        $this->email->message('Test Message.');
+
+        $this->email->send();
+        vd($this->email->print_debugger());
+    }
 }
 
 /* offset of file user.php */

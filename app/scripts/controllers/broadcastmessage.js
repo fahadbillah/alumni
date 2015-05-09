@@ -137,7 +137,7 @@
  	$scope.toggleGroupMember = function(id) {
  		var insert = true;
  		angular.forEach($scope.messageGroup, function(e,i) {
- 			if (e === id){
+ 			if (parseInt(e) === parseInt(id)){
  				$scope.messageGroup.splice(i, 1);
  				$scope.messageGroupDetails.splice(i, 1);
  				insert = false;
@@ -157,7 +157,7 @@
  	var getAlumniById = function (id) {
  		var user;
  		angular.forEach($scope.allAlumni,function(e,i) {
- 			if (e.user_id === id) {
+ 			if (parseInt(e.user_id) === parseInt(id)) {
  				user = {
  					'user_id' : e.user_id,
  					'name' : e.first_name +' '+ e.last_name,
@@ -223,7 +223,7 @@
  	$scope.checkExists = function(id) {
  		var checked = false;
  		angular.forEach($scope.messageGroup, function(e,i) {
- 			if (e === id) {
+ 			if (parseInt(e) === parseInt(id)) {
  				checked = true;
  			};
  		})
