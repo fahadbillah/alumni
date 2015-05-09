@@ -188,7 +188,7 @@ $scope.getQuestionStat = function(id) {
 	$scope.resultCount = 0;
 
 
-	if (id === 'afterGraduationInfo' || id === 'jobDecision') {
+	if (id === 'afterGraduationInfo' || id === 'jobDecision' || id === 'leadership' || id === 'activityPrep') {
 		return false;
 	};
 
@@ -227,6 +227,22 @@ var groupBy = function() {
 
 	})
 	$scope.groupResult = $scope.resultArray;
+}
+
+var groupByKey = function(key) {
+	var tempKey = [];
+	var tempValue = [];
+	var counter = 0;
+	angular.forEach($scope.resultArray,function(e,i) {
+		if (key === e.question_answer) {
+			counter++;
+		}
+	});
+	$scope.groupResult = {
+		'question_answer': e,
+		'count': counter
+	};
+
 }
 
 $scope.seachByKey = function(key) {

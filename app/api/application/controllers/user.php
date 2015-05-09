@@ -363,12 +363,24 @@ class User extends CI_Controller {
 
 	public function broadcast($message_id = '')
 	{
+
+		if ($this->session->userdata('user_data')['role'] != 'admin') {
+			$result = array('success' => false,
+			                'message' => 'You are not allowed to send email! Only admins allowed.',
+			                );
+			jsonify($result);
+		}
+
 		if ($message_id == '') {
 			$result = array('success' => false,
 			                'message' => 'Select a message',
 			                );
 			jsonify($result);
 		}
+
+
+		// vd($this->session->all_userdata());
+		// exit();
 
 		$this->db->select('*');
 		$this->db->from('broadcast_message');
@@ -409,7 +421,7 @@ class User extends CI_Controller {
 
 		$this->load->library('email',$config);
 
-		$this->email->from('no-reply@nsubusinessalumni.org', 'NSU Business Alumni');
+		$this->email->from('alumni.association@nsubusinessalumni.org', 'NSU Business Alumni');
 		$this->email->to($result[0]['email']);
 		// $this->email->to('fahadbillah@yahoo.com');
 			// $this->email->cc('another@example.com');

@@ -105,14 +105,18 @@
 			</optgroup>
 			<optgroup label="SECTION C: Your overall education experience">
 				<option value="yearGap">How many years after you finished undergrad did you start your graduate or professional education?</option>
-				<option value="">How well have your courses prepared you for each of your following after-graduation activities?</option>
+				<option value="activityPrep">How well have your courses prepared you for each of your following after-graduation activities?</option>
 				<option value="coCurriculam">Were you involved in any extra-curricular activities providedby North South University? If yes, then please specify what kind of activity/activities.</option>
-				<option value=""></option>
+				<option value="leadership">How well did the extra-curricular activities that you were involved in (including internships undertaken while you were studying)… prepare you to deal with different challenges in your work life?</option>
 				<option value="encourage">Would you encourage a current high school senior who resembles you when you were a high school senior (similar background, ability, interests and temperament) to attend North South University?</option>
 				<option value="finance">Did the benefits you received from attending North South University out weigh the financial costs to you and your family? Mark the best answer.</option>
 				<option value="connected">Today, how connected do you feel to North South University?</option>
 				<option value="pplConnection">Are you regularly in touch with people you met at North South University?(Mark all that apply)</option>
-
+			</optgroup>
+			<optgroup label="SECTION D: Comments/Recommendations">
+				<option value="q1">Do you think there is more that North South University should offer a student for his/her betterment apart from curricular and extracurricular activities? If yes, please mention below.</option>
+				<option value="q2">What would you recommend for North South University to improve its quality, not just in terms of education or extracurricular activities but as an institutionthat would bring the excellence in every student? </option>
+				<option value="q3">Comments or any other Recommendations</option>
 			</optgroup>
 		</select>
 	</legend> 
@@ -306,6 +310,122 @@
 		</tr>
 		<tr>
 			<td>Other {{lag1('jobDecisionA9')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+	</tbody>
+</table>
+
+<table class="table table-responsive table-hover table-condensed table-bordered table-striped" ng-if="questionNo == 'leadership'">
+	<thead>
+		<tr>
+			<th>Question</th>
+			<th>Total Answered</th>
+			<th>Yes</th>
+			<th>No</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Efficiency in Leadership {{lag1('leadership')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Teamwork {{lag1('teamwork')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Adhere to Punctuality {{lag1('punctuality')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Introducing new ideas in work {{lag1('ideas')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Develop career‐ or work‐related knowledge and skills {{lag1('skill')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Acquire new skills and knowledge on your own {{lag1('newSkill')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Write clearly and effectively {{lag1('writing')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+	</tbody>
+</table>
+
+<table class="table table-responsive table-hover table-condensed table-bordered table-striped" ng-if="questionNo == 'activityPrep'">
+	<thead>
+		<tr>
+			<th>Question</th>
+			<th>Total Answered</th>
+			<th>Yes</th>
+			<th>No</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Further Studies {{lag1('activityPrepA1DnA')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Employment {{lag1('activityPrepA2DnA')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Being Self-employed/Freelance {{lag1('activityPrepA3DnA')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Introducing new ideas in work {{lag1('activityPrepA4DnA')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Develop career‐ or work‐related knowledge and skills {{lag1('activityPrepA5DnA')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Acquire new skills and knowledge on your own {{lag1('activityPrepA6DnA')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Write clearly and effectively {{lag1('activityPrepA7DnA')}}</td>
+			<td> {{lagResult.totalCounter}} </td>
+			<td> {{lagResult.answerTrue}} </td>
+			<td> {{lagResult.answerFalse}} </td>
+		</tr>
+		<tr>
+			<td>Think analytically and logically {{lag1('activityPrepA8DnA')}}</td>
 			<td> {{lagResult.totalCounter}} </td>
 			<td> {{lagResult.answerTrue}} </td>
 			<td> {{lagResult.answerFalse}} </td>

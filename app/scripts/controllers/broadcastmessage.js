@@ -15,10 +15,10 @@
  	'Karma'
  	];
 
- 	// if (!AuthService.isAuthorized([USER_ROLES.admin])) {
- 	// 	$location.path('/login');
- 	// 	return false;
- 	// }
+ 	if (!AuthService.isAuthorized([USER_ROLES.admin])) {
+ 		$location.path('/login');
+ 		return false;
+ 	}
 
  	if ($routeParams.messageId === undefined) {
 
