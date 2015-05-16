@@ -23,6 +23,9 @@
 			<td> {{value.email}} </td>
 			<td> {{value.message}} </td>
 			<td> {{value.date_created}} </td>
+			<td> 
+				<a class="btn btn-default" ng-click="showModal(value)">Reply</a>
+			</td>
 		</tr>
 	</tbody>
 	<tfoot>
@@ -37,3 +40,31 @@
 		</tr>
 	</tfoot>
 </table>
+<form class="form-horizontal" role="form">
+	<div class="modal fade in" ng-show="modal" style="display:block;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ng-click="showModal()">&times;</button>
+					<h4 class="modal-title">Reply to : {{reply.name}}</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Receiver</label>
+						<input type="text" name="" class="form-control" ng-model="reply.receiver">
+					</div>
+
+					<div class="form-group">
+						<label>Message</label>
+						<textarea ng-mode="reply.message" class="form-control"></textarea>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" ng-click="showModal()">Close</button>
+					<button type="button" class="btn btn-primary" ng-click="sendReply(reply)"><i class="fa fa-send fa-lg"></i> Send</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+</form>

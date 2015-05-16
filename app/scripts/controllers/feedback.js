@@ -57,4 +57,49 @@
  			return new Array(Math.floor($scope.allFeedbackCount/$scope.limit)+1);   
  		};
  	}
+
+ 	$scope.reply = {
+ 		name: '',
+ 		receiver: '',
+ 		original_message: '',
+ 		message:''
+ 	}
+
+ 	var reset = function() {
+ 		$scope.modal = false;
+ 		$scope.reply.name = '';
+ 		$scope.reply.receiver = '';
+ 		$scope.reply.original_message = '';
+ 		$scope.reply.message = '';
+ 	};
+
+ 	$scope.modal = false;
+ 	$scope.receiver = '';
+ 	$scope.showModal = function(f) {
+ 		if (!f) {
+ 			reset();
+ 			return false
+ 		};
+ 		$scope.modal = true;
+ 		$scope.reply.name = f.name;
+ 		$scope.reply.receiver = f.email;
+ 		$scope.reply.original_message = f.message;
+ 	};
+
+ 	$scope.sendReply = function(reply) {
+ 		reply.csrf_test_name = $cookies['XSRF-TOKEN'];
+ 		// reply.name = 'Fahad Billah';
+ 		// reply.receiver = 'fahadbillah@yahoo.com';
+ 		// reply.original_message = 'old test message';
+ 		// reply.message = 'test message';
+ 		reply = $.param(reply);
+ 		$http.post('api/index.php/user/reply_to_feedback',reply,{headers : {'Content-Type': 'application/x-www-form-urlencoded'}})
+ 		.success(function(data) {
+ 			console.log(data);
+ 			if (!!data.success) {
+ 				reset();
+ 				alert('Email send successfully!');
+ 			};
+ 		});
+ 	};
  }]);
