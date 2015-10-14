@@ -1,946 +1,946 @@
-<style type="text/css">
-h3,legend{
-	text-align: center;
-}
-</style>
-<div class="">
-	<h3><u>North South University Alumni Survey 2015</u></h3>
-	<hr>
-	<form name="personal" class="form-horizontal" ng-if="!personalInfo.personalInfoCompleted" ng-submit="personalInfoSubmit()" novalidate>
-		<div class="form-group">
-			<legend>SECTION A: Personal Information</legend>
-		</div>
-
-		<div class="form-group">
-			<label for="">Name : </label>
-			<strong>{{currentUser.first_name}} {{currentUser.last_name}}</strong>
-		</div>
-
-		<div class="form-group">
-			<label for="">NSU ID : </label>
-			<strong>{{currentUser.nsu_id}}</strong>
-		</div>
-
-		<div class="form-group">
-			<label for="">Country</label>
-			<input type="text" class="form-control" ng-model="personalInfo.country" name="country" required>
-			<span ng-if="personal.country.$error.required && personal.country.$dirty" class="label label-danger">Required</span>
-		</div>
-
-		<div class="form-group">
-			<label for="">address</label>
-			<textarea class="form-control" ng-model="personalInfo.address" name="address" required></textarea>
-			<span ng-if="personal.address.$error.required && personal.address.$dirty" class="label label-danger">Required</span>
-		</div>
-
-		<div class="form-group">
-			<label for="">Title of undergraduate degree</label>
-			<input type="text" class="form-control" ng-model="personalInfo.ugTitle" name="ugTitle">
-			<!-- <span ng-if="personal.ugTitle.$error.required && personal.ugTitle.$dirty" class="label label-danger">Required</span> -->
-			<label>
-				<input type="radio" ng-model="personalInfo.ugNsuOrOther" value="nsu" name="ugNsuOrOther">
-				NSU
-			</label>
-			<label>
-				<input type="radio" ng-model="personalInfo.ugNsuOrOther" value="other" name="ugNsuOrOther">
-				Other
-			</label>
-			<!-- <span ng-if="personal.ugNsuOrOther.$error.required && personal.ugNsuOrOther.$dirty" class="label label-danger">Required</span> -->
-		</div>
-
-
-		<div class="form-group">
-			<label for="">Title of graduate degree</label>
-			<input type="text" class="form-control" ng-model="personalInfo.gTitle" name="gTitle">
-			<!-- <span ng-if="personal.gTitle.$error.required && personal.gTitle.$dirty" class="label label-danger">Required</span> -->
-			<label>
-				<input type="radio" ng-model="personalInfo.gNsuOrOther" value="nsu" name="gNsuOrOther">
-				NSU
-			</label>
-			<label>
-				<input type="radio" ng-model="personalInfo.gNsuOrOther" value="other" name="gNsuOrOther">
-				Other
-			</label>
-			<!-- <span ng-if="personal.gNsuOrOther.$error.required && personal.gNsuOrOther.$dirty" class="label label-danger">Required</span> -->
-
-			<!-- <span>{{personal.$pristine}}</span><br> -->
-		</div>
-
-		<div class="form-group">
-			<label for="">Preferred method of contact</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="personalInfo.methodOfContact" value="Phone" name="method" required>
-				Phone
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="personalInfo.methodOfContact" value="Email" name="method" required>
-				E-mail
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="personalInfo.methodOfContact" value="By_post" name="method" required>
-				By Post
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="personalInfo.methodOfContact" value="other" name="method" required>
-				Other
-			</label>
-			<input type="text" class="form-control" ng-if="personalInfo.methodOfContact == 'other'" ng-model="personalInfo.otherMethodOfContact" name="method" required>
-			<span ng-if="personal.method.$error.required && personal.method.$dirty" class="label label-danger">Required</span>
-			<!-- <span>{{personalInfo.methodOfContact}}</span> -->
-		</div>
-
-		<div class="form-group">
-			<button type="submit" ng-disabled="personal.$pristine || personal.$invalid || buttonClicked
-			" class="btn btn-primary btn-block">Submit</button>
-			<!-- <span>{{personal.$pristine}}</span><br> -->
-			<!-- <span>{{personal.$invalid}}</span><br> -->
-			<!-- <span>{{personal}}</span> -->
-		</div>
-	</form>
-
-
-	<form name="LAG" class="form-horizontal" role="form" ng-if="!afterGraduationInfo.afterGraduationInfoCompleted" ng-submit="afterGraduationInfoSubmit()" novalidate>
-		<div class="form-group">
-			<legend>SECTION B: Life after Graduation</legend>
-			<small>Please tick all the activities you will be doing/have done after your graduation and then indicate which one is the most important to you.</small>
-		</div>
-
-
-		<div class="form-group">
-			<table class="table table-striped table-hover table-bordered">
-				<thead>
-					<tr>
-						<th></th>
-						<th>
-							Activities you will be doing or have done
-						</th>
-						<th>Importance</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							*Working full-time
-						</td>
-						<th>
-							<input type="checkbox" ng-model="afterGraduationInfo.workingFullTime" value="true">
-						</th>
-						<th>
-							<input type="radio" ng-model="afterGraduationInfo.important" value="workingFullTime" name="important">
-						</th>
-					</tr>
-					<tr>
-						<td>**Working part-time</td>
-						<th>
-							<input type="checkbox" ng-model="afterGraduationInfo.workingPartTime" value="true">
-						</th>
-						<th>
-							<input type="radio" ng-model="afterGraduationInfo.important" value="workingPartTime" name="important">
-						</th>
-					</tr>
-					<tr>
-						<td>Due to start a job in the next month</td>
-						<th>
-							<input type="checkbox" ng-model="afterGraduationInfo.startJobNextMonth" value="true">
-						</th>
-						<th>
-							<input type="radio" ng-model="afterGraduationInfo.important" value="startJobNextMonth" name="important">
-						</th>
-					</tr>
-					<tr>
-						<td>Engaged in full­time further study, training or research</td>
-						<th>
-							<input type="checkbox" ng-model="afterGraduationInfo.furthurStudyTrainingResearch" value="true">
-						</th>
-						<th>
-							<input type="radio" ng-model="afterGraduationInfo.important" value="furthurStudyTrainingResearch" name="important">
-						</th>
-					</tr>
-					<tr>
-						<td>
-							Engaged in part-time further study, training or research
-						</td>
-						<th>
-							<input type="checkbox" ng-model="afterGraduationInfo.partTimeStudyTrainingResearch" value="true">
-						</th>
-						<th>
-							<input type="radio" ng-model="afterGraduationInfo.important" value="partTimeStudyTrainingResearch" name="important">
-						</th>
-					</tr>
-					<tr>
-						<td>
-							Taking time out in order to travel	
-						</td>
-						<th>
-							<input type="checkbox" ng-model="afterGraduationInfo.travelTime" value="true">
-						</th>
-						<th>
-							<input type="radio" ng-model="afterGraduationInfo.important" value="travelTime" name="important">
-						</th>
-					</tr>
-					<tr>
-						<td>
-							Unemployed[SKIP THE REST OF SECTION B]
-						</td>
-						<th>
-							<input type="checkbox" ng-model="afterGraduationInfo.unemployed" value="true">
-						</th>
-						<th>
-							<input type="radio" ng-model="afterGraduationInfo.important" value="unemployed" name="important">
-						</th>
-					</tr>
-					<tr>
-						<td>
-							Doing something else (e.g. retired, looking after the home or family)
-						</td>
-						<th>
-							<input type="checkbox" ng-model="afterGraduationInfo.doElse" value="true">
-						</th>
-						<th>
-							<input type="radio" ng-model="afterGraduationInfo.important" value="doElse" name="important">
-						</th>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<div class="panel panel-info">
-			<div class="panel-body">
-				<p>
-					*includes self­employed/freelance, voluntary or other unpaid work, developing a professional portfolio/creative practice or on an internship/placement)
-					** includes self­employed/freelance, voluntary or other unpaid work, developing a professional portfolio/creative practice or on an internship/placement)
-				</p>
-			</div>
-		</div>
-
-
-
-		<div class="form-group">
-			<label for="">If you will have more than one job on 12 January 2015, how many jobs will you have in total?</label>
-			<br>
-			<label>
-				<input type="radio" name="howManyJobs" value="None" ng-model="afterGraduationInfo.jobNumber" required>
-				None
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="howManyJobs" value="One" ng-model="afterGraduationInfo.jobNumber" required>
-				One
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="howManyJobs" value="Two" ng-model="afterGraduationInfo.jobNumber" required>
-				Two
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="howManyJobs" value="Three" ng-model="afterGraduationInfo.jobNumber" required>
-				Three
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="howManyJobs" value="Four" ng-model="afterGraduationInfo.jobNumber" required>
-				Four
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="howManyJobs" value="Five" ng-model="afterGraduationInfo.jobNumber" required>
-				Five
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="howManyJobs" value="More than five" ng-model="afterGraduationInfo.jobNumber" required>
-				More than five
-			</label>
-			<span ng-if="LAG.howManyJobs.$error.required && LAG.howManyJobs.$dirty" class="label label-danger">Required</span>
-		</div>
-
-		<div class="form-group">
-			<label>
-				For the following questions, please provide details of your current position. <br>
-				What is your job title?
-			</label>
-			<input type="text" class="form-control" ng-model="afterGraduationInfo.jobTitle" name="jobTitle">
-		</div>
-
-		<div class="form-group">
-			<label>
-				 What do you mainly do in your job?
-			</label>
-			<textarea class="form-control" ng-model="afterGraduationInfo.jobResponsibility" name="jobResponsibility" required></textarea>
-		</div>
-
-		<div class="form-group">
-			<label>
-				Is your current position related to your undergraduate field(s)of study?
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="afterGraduationInfo.jobRelationToStudy" value="Yes, same field as major(s)" name="studyRelatedJob">
-				Yes, same field as major(s)
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="afterGraduationInfo.jobRelationToStudy" value="Yes ,related to major(s)" name="studyRelatedJob">
-				Yes ,related to major(s)
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="afterGraduationInfo.jobRelationToStudy" value="No, not related" name="studyRelatedJob">
-				No, not related
-			</label>
-		</div>
-
-		<div class="form-group">
-			<button type="submit" class="btn btn-primary btn-block" ng-disabled="LAG.$pristine">Submit</button>
-		</div>
-	</form>
-
-
-	<form name="LAG2Form" class="form-horizontal" role="form" ng-submit="LAG2Submit()" ng-if="!LAG2.LAG2Completed">
-		<div class="form-group">
-			<legend>SECTION B: Life after Graduation</legend>
-		</div>
-
-
-		<div class="form-group">
-			<label>
-				In your current position are you
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Self-employed" name="currentPositionStatus">
-				Self-employed
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Starting up own business" name="currentPositionStatus">
-				Starting up own business
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="On a permanent or open-ended contract" name="currentPositionStatus">
-				On a permanent or open-ended contract
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="On a fixed-term contract lasting 12 months or longer" name="currentPositionStatus">
-				On a fixed-term contract lasting 12 months or longer
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="On a fixed-term contract lasting less than 12 months" name="currentPositionStatus">
-				On a fixed-term contract lasting less than 12 months
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Doing voluntary work" name="currentPositionStatus">
-				Doing voluntary work
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Developing a professional portfolio/creative practice" name="currentPositionStatus">
-				Developing a professional portfolio/creative practice
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Temping" name="currentPositionStatus">
-				Temping
-			</label>
-			<br>
-			<label>
-				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Other" name="currentPositionStatus">
-				Other
-			</label>
-			<input class="form-control" ng-model="LAG2.currentPositionStatusOther" ng-if="LAG2.currentPositionStatus == 'Other'">
-		</div>
-
-		<div class="form-group">
-			<label>
-				If employed, did you need the qualification you recently obtained to get the job? 
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobQualification" name="jobQualification" value="Yes: the qualification was a formal requirement">
-				Yes: the qualification was a formal requirement
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobQualification" name="jobQualification" value="Yes: while the qualification was not a formal requirement it did give me an advantage">
-				Yes: while the qualification was not a formal requirement it did give me an advantage
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobQualification" name="jobQualification" value="No: the qualification was not required">
-				No: the qualification was not required
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobQualification" name="jobQualification" value="Don’t know">
-				Don’t know
-			</label>
-			<br>
-		</div>
-
-		<div class="form-group">
-			<label>
-				Why did you decide to take the job you will be doing or are currently doing?
-			</label>	
-			<table class="table table-hover table-responsive table-condensed table-striped">
-				<tbody>
-					<tr>
-						<td>
-							It fitted well with my career plan/it was exactly the type of work I wanted
-						</td>
-						<td>
-							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA10" value="It fitted well with my career plan/it was exactly the type of work I wanted" name="jobDecision"></label>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							It was the best job offer I received
-						</td>
-						<td>
-							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA1" value="It was the best job offer I received" name="jobDecision"></label>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							It was the only job offer I received
-						</td>
-						<td>
-							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA2" value="It was the only job offer I received" name="jobDecision"></label>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							It was an opportunity to progress in the organization
-						</td>
-						<td>
-							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA3" value="It was an opportunity to progress in the organization" name="jobDecision"></label>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							To see if I would like the type of work it involved
-						</td>
-						<td>
-							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA4" value="To see if I would like the type of work it involved" name="jobDecision"></label>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							To gain and broaden my experience in order to get the type of job I really want
-						</td>
-						<td>
-							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA5" value="To gain and broaden my experience in order to get the type of job I really want" name="jobDecision"></label>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							It was in the right location
-						</td>
-						<td>
-							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA6" value="It was in the right location" name="jobDecision"></label>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							The job was well-paid
-						</td>
-						<td>
-							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA7" value="The job was well-paid" name="jobDecision"></label>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							In order to earn a living/pay off debts
-						</td>
-						<td>
-							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA8" value="In order to earn a living/pay off debts" name="jobDecision"></label>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							Other
-							<input type="text" class="form-control" ng-model="LAG2.jobDecisionA9" name="jobDecisionTxt">
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<div class="form-group">
-			<label>
-				How did you first find out about the job?
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobSource" value="Your university/college Careers Service" name="jobSource">
-				Your university/college Careers Service
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobSource" value="Other university/college source (e.g. lecturer, website)" name="jobSource">
-				Other university/college source (e.g. lecturer, website)
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobSource" value="Media (e.g. newspaper/magazine advertisement)" name="jobSource">
-				Media (e.g. newspaper/magazine advertisement)
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobSource" value="Personal contacts, including family and friends" name="jobSource">
-				Personal contacts, including family and friends
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobSource" value="Social media/professional networking sites" name="jobSource">
-				Social media/professional networking sites
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobSource" value="Already worked there (including on an internship/placement)" name="jobSource">
-				Already worked there (including on an internship/placement)
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobSource" value="Employer's website" name="jobSource">
-				Employer's website
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobSource" value="Recruitment agency/website" name="jobSource">
-				Recruitment agency/website
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobSource" value="Speculative application" name="jobSource">
-				Speculative application
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.jobSource" value="Other" name="jobSource">
-				Other
-			</label>
-			<input type="text" class="form-control" ng-model="LAG2.jobSourceOther" name="jobSourceOtherF" ng-if="LAG2.jobSource == 'Other'" >
-		</div>
-
-		<div class="form-group">
-			<label>
-				How well did North South University prepare you for your current career or for the activities mentioned in question 11?
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="Very well">
-				Very well
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="More than adequately">
-				More than adequately
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="Adequately">
-				Adequately
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="Less than adequately">
-				Less than adequately
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="Very poorly">
-				Very poorly
-			</label>
-			<br>
-			<label>
-				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="Not applicable">
-				Not applicable 
-			</label>
-		</div>
-
-
-		<div class="form-group">
-			<button type="submit" class="btn btn-primary btn-block" ng-disabled="LAG2Form.$pristine">Submit</button>
-		</div>
-	</form>
-
-	<form name="educationalExp" class="form-horizontal" role="form" ng-if="!eExp.eExpCompleted" ng-submit="eExpSubmit()">
-		<div class="form-group">
-			<legend>
-				SECTION C: Your overall education experience
-			</legend>
-		</div>
-
-		<div class="form-group">
-			<label>
-				How many years after you finished undergrad did you start your graduate or professional education?
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="Immediately (simultaneously or the following fall or spring or summer?)">
-				Immediately (simultaneously or the following fall or spring or summer?)
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="1 year later">
-				1 year later
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="2 to 3 years later">
-				2 to 3 years later
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="4 to 6 years later">
-				4 to 6 years later
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="7 to 10 years later">
-				7 to 10 years later
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="11 or more years later">
-				11 or more years later
-			</label>
-		</div>
-
-		<div class="form-group">
-			<label>
-				For question 2 and 4 please fill up the tables with a tick if the situation doesn’t apply to you or and rate each category between 1-5, if it does; where 1-5 mean are as follows,
-			</label>
-			<br>
-			<ol>
-				<li>
-					Very well
-				</li>
-				<li>
-					Well
-				</li>
-				<li>
-					Not very well
-				</li>
-				<li>
-					Not at all
-				</li>
-				<li>
-					Can’t tell
-				</li>
-			</ol>
-		</div>
-
-		<div class="form-group">
-			<label>
-				How well have your courses prepared you for each of your following after-graduation activities?
-			</label>
-			<table class="table table-striped table-hover table-condensed">
-				<thead>
-					<tr>
-						<th></th>
-						<th>Rating ( between 1-5)</th>
-						<th>Does not apply</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							Further Studies
-						</td>
-						<td>
-							<input type="number" min="1" max="5" name="activityPrepA1" class="form-control" ng-model="eExp.activityPrepA1" >
-						</td>
-						<td>
-							<input type="checkbox" name="activityPrepA1DnA" ng-model="eExp.activityPrepA1DnA" value="true">
-						</td>
-					</tr>
-					<tr>
-						<td>Employment</td>
-						<td>
-							<input type="number" min="1" max="5" name="activityPrepA2" class="form-control" ng-model="eExp.activityPrepA2">
-						</td>
-						<td>
-							<input type="checkbox" name="activityPrepA2DnA" ng-model="eExp.activityPrepA2DnA" value="true">
-						</td>
-					</tr>
-					<tr>
-						<td>Being Self-employed/Freelance</td>
-						<td>
-							<input type="number" min="1" max="5" name="activityPrepA3" class="form-control" ng-model="eExp.activityPrepA3">
-						</td>
-						<td>
-							<input type="checkbox" name="activityPrepA3DnA" ng-model="eExp.activityPrepA3DnA" value="true">
-						</td>
-					</tr>
-					<tr>
-						<td>Introducing new ideas in work</td>
-						<td>
-							<input type="number" min="1" max="5" name="activityPrepA4" class="form-control" ng-model="eExp.activityPrepA4">
-						</td>
-						<td>
-							<input type="checkbox" name="activityPrepA4DnA" ng-model="eExp.activityPrepA4DnA" value="true">
-						</td>
-					</tr>
-					<tr>
-						<td>Develop career‐ or work‐related knowledge and skills</td>
-						<td>
-							<input type="number" min="1" max="5" name="activityPrepA5" class="form-control" ng-model="eExp.activityPrepA5">
-						</td>
-						<td>
-							<input type="checkbox" name="activityPrepA5DnA" ng-model="eExp.activityPrepA5DnA" value="true">
-						</td>
-					</tr>
-					<tr>
-						<td>Acquire new skills and knowledge on your own</td>
-						<td>
-							<input type="number" min="1" max="5" name="activityPrepA6" class="form-control" ng-model="eExp.activityPrepA6">
-						</td>
-						<td>
-							<input type="checkbox" name="activityPrepA6DnA" ng-model="eExp.activityPrepA6DnA" value="true">
-						</td>
-					</tr>
-					<tr>
-						<td>Write clearly and effectively </td>
-						<td>
-							<input  type="number" min="1" max="5" name="activityPrepA7" class="form-control" ng-model="eExp.activityPrepA7">
-						</td>
-						<td>
-							<input type="checkbox" name="activityPrepA7DnA" ng-model="eExp.activityPrepA7DnA" value="true">
-						</td>
-					</tr>
-					<tr>
-						<td>Think analytically and logically</td>
-						<td>
-							<input type="number" min="1" max="5" name="activityPrepA8" class="form-control" ng-model="eExp.activityPrepA8">
-						</td>
-						<td>
-							<input type="checkbox" name="activityPrepA8DnA" ng-model="eExp.activityPrepA8DnA" value="true">
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<div class="form-group">
-			<label>
-				Were you involved in any extra-curricular activities providedby North South University? If yes, then please specify what kind of activity/activities.
-			</label>
-			<textarea class="form-control" ng-model="eExp.coCurriculam" name="coCurriculam"></textarea>
-		</div>
-
-		<div class="form-group">
-			<label>
-				How well did the extra-curricular activities that you were involved in (including internships undertaken while you were studying)… prepare you to deal with different challenges in your work life?
-			</label>
-			<table class="table table-striped table-hover table-condensed">
-				<thead>
-					<tr>
-						<th></th>
-						<th>Rating ( between 1-5)</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							Efficiency in Leadership	
-						</td>
-						<td>
-							<input type="number" min="1" max="5" class="form-control" ng-model="eExp.leadership" name="leadership">
-						</td>
-					</tr>
-					<tr>
-						<td>Teamwork</td>
-						<td>
-							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.teamwork" name="teamwork">
-						</td>
-					</tr>
-					<tr>
-						<td>Adhere to Punctuality</td>
-						<td>
-							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.punctuality" name="punctuality">
-						</td>
-					</tr>
-					<tr>
-						<td>Introducing new ideas in work</td>
-						<td>
-							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.ideas" name="ideas">
-						</td>
-					</tr>
-					<tr>
-						<td>Develop career‐ or work‐related knowledge and skills</td>
-						<td>
-							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.skill" name="skill">
-						</td>
-					</tr>
-					<tr>
-						<td>Acquire new skills and knowledge on your own</td>
-						<td>
-							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.newSkill" name="newSkill">
-						</td>
-					</tr>
-					<tr>
-						<td>Write clearly and effectively </td>
-						<td>
-							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.writing">
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<div class="form-group">
-			<label>
-				5.	Would you encourage a current high school senior who resembles you when you were a high school senior (similar background, ability, interests and temperament) to attend North South University?
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="encourage" ng-model="eExp.encourage" value="Definitely Would">
-				Definitely Would
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="encourage" ng-model="eExp.encourage" value="Probably Would">
-				Probably Would
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="encourage" ng-model="eExp.encourage" value="Maybe">
-				Maybe
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="encourage" ng-model="eExp.encourage" value="Probably Would NOT">
-				Probably Would NOT
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="encourage" ng-model="eExp.encourage" value="Definitely Would NOT">
-				Definitely Would NOT
-			</label>
-		</div>
-
-		<div class="form-group">
-			<label>
-				Did the benefits you received from attending North South University out weigh the financial costs to you and your family? Mark the best answer.
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="finance" ng-model="eExp.finance" value="Yes, definitely">
-				Yes, definitely
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="finance" ng-model="eExp.finance" value="Maybe">
-				Maybe
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="finance" ng-model="eExp.finance" value="No, definitely not">
-				No, definitely not
-			</label>
-		</div>
-
-		<div class="form-group">
-			<label>
-				Today, how connected do you feel to North South University?
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="connected" ng-model="eExp.connected" value="Very connected">
-				Very connected
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="connected" ng-model="eExp.connected" value="Moderately connected">
-				Moderately connected
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="connected" ng-model="eExp.connected" value="Some what connected">
-				Some what connected
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="connected" ng-model="eExp.connected" value="Not very connected">
-				Not very connected
-			</label>
-		</div>
-
-		<div class="form-group">
-			<label>
-				Are you regularly in touch with people you met at North South University?(Mark all that apply)
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="pplConnection" ng-model="eExp.pplConnection" value="Yes, with, with my advisor(s)">
-				a.	Yes, with, with my advisor(s)
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="pplConnection" ng-model="eExp.pplConnection" value="Yes, with my  professors/lecturers or the staffs">
-				b.	Yes, with my  professors/lecturers or the staffs
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="pplConnection" ng-model="eExp.pplConnection" value="Yes, with members of my team or club">
-				c.	Yes, with members of my team or club
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="pplConnection" ng-model="eExp.pplConnection" value="Yes, with former classmates,  or acquaintances  from to NSU">
-				d.	Yes, with former classmates,  or acquaintances  from to NSU 
-			</label>
-			<br>
-			<label>
-				<input type="radio" name="pplConnection" ng-model="eExp.pplConnection" value="No">
-				e.	No
-			</label>
-		</div>
-
-		<div class="form-group">
-			<button type="submit" class="btn btn-primary btn-block" ng-disabled="educationalExp.$pristine">Submit</button>
-		</div>
-	</form>
-
-	<form name="commentForm" class="form-horizontal" role="form" ng-submit="commentSubmit()" ng-if="!comment.commentCompleted">
-		<div class="form-group">
-			<legend>SECTION D: Comments/Recommendations</legend>
-		</div>
-
-		<div class="form-group">
-			<label>
-				Do you think there is more that North South University should offer a student for his/her betterment apart from curricular and extracurricular activities? If yes, please mention below.
-			</label>
-			<textarea class="form-control" ng-model="comment.q1" name="q1" required></textarea>
-			<span class="label label-danger" ng-if="commentForm.q1.$error.required && commentForm.q1.$dirty"></span>
-		</div>
-
-		<div class="form-group">
-			<label>
-				What would you recommend for North South University to improve its quality, not just in terms of education or extracurricular activities but as an institutionthat would bring the excellence in every student?
-			</label>
-			<textarea class="form-control" ng-model="comment.q2" name="q2" required></textarea>
-			<span class="label label-danger" ng-if="commentForm.q2.$error.required && commentForm.q2.$dirty"></span>
-		</div>
-
-		<div class="form-group">
-			<label>Comments or any other Recommendations</label>
-			<textarea class="form-control" ng-model="comment.q3" name="q3" required></textarea>
-			<span class="label label-danger" ng-if="commentForm.q3.$error.required && commentForm.q3.$dirty"></span>
-		</div>
-
-		<div class="form-group">
-			<button type="submit" class="btn btn-primary btn-block" ng-disabled="commentForm.$pristine || commentForm.$invalid">Submit</button>
-		</div>
-	</form>
-</div>
+<style type="text/css">
+h3,legend{
+	text-align: center;
+}
+</style>
+<div class="">
+	<h3><u>North South University Alumni Survey 2015</u></h3>
+	<hr>
+	<form name="personal" class="form-horizontal" ng-if="!personalInfo.personalInfoCompleted" ng-submit="personalInfoSubmit()" novalidate>
+		<div class="form-group">
+			<legend>SECTION A: Personal Information</legend>
+		</div>
+
+		<div class="form-group">
+			<label for="">Name : </label>
+			<strong>{{currentUser.first_name}} {{currentUser.last_name}}</strong>
+		</div>
+
+		<div class="form-group">
+			<label for="">NSU ID : </label>
+			<strong>{{currentUser.nsu_id}}</strong>
+		</div>
+
+		<div class="form-group">
+			<label for="">Country</label>
+			<input type="text" class="form-control" ng-model="personalInfo.country" name="country" required>
+			<span ng-if="personal.country.$error.required && personal.country.$dirty" class="label label-danger">Required</span>
+		</div>
+
+		<div class="form-group">
+			<label for="">address</label>
+			<textarea class="form-control" ng-model="personalInfo.address" name="address" required></textarea>
+			<span ng-if="personal.address.$error.required && personal.address.$dirty" class="label label-danger">Required</span>
+		</div>
+
+		<div class="form-group">
+			<label for="">Title of undergraduate degree</label>
+			<input type="text" class="form-control" ng-model="personalInfo.ugTitle" name="ugTitle">
+			<!-- <span ng-if="personal.ugTitle.$error.required && personal.ugTitle.$dirty" class="label label-danger">Required</span> -->
+			<label>
+				<input type="radio" ng-model="personalInfo.ugNsuOrOther" value="nsu" name="ugNsuOrOther">
+				NSU
+			</label>
+			<label>
+				<input type="radio" ng-model="personalInfo.ugNsuOrOther" value="other" name="ugNsuOrOther">
+				Other
+			</label>
+			<!-- <span ng-if="personal.ugNsuOrOther.$error.required && personal.ugNsuOrOther.$dirty" class="label label-danger">Required</span> -->
+		</div>
+
+
+		<div class="form-group">
+			<label for="">Title of graduate degree</label>
+			<input type="text" class="form-control" ng-model="personalInfo.gTitle" name="gTitle">
+			<!-- <span ng-if="personal.gTitle.$error.required && personal.gTitle.$dirty" class="label label-danger">Required</span> -->
+			<label>
+				<input type="radio" ng-model="personalInfo.gNsuOrOther" value="nsu" name="gNsuOrOther">
+				NSU
+			</label>
+			<label>
+				<input type="radio" ng-model="personalInfo.gNsuOrOther" value="other" name="gNsuOrOther">
+				Other
+			</label>
+			<!-- <span ng-if="personal.gNsuOrOther.$error.required && personal.gNsuOrOther.$dirty" class="label label-danger">Required</span> -->
+
+			<!-- <span>{{personal.$pristine}}</span><br> -->
+		</div>
+
+		<div class="form-group">
+			<label for="">Preferred method of contact</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="personalInfo.methodOfContact" value="Phone" name="method" required>
+				Phone
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="personalInfo.methodOfContact" value="Email" name="method" required>
+				E-mail
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="personalInfo.methodOfContact" value="By_post" name="method" required>
+				By Post
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="personalInfo.methodOfContact" value="other" name="method" required>
+				Other
+			</label>
+			<input type="text" class="form-control" ng-if="personalInfo.methodOfContact == 'other'" ng-model="personalInfo.otherMethodOfContact" name="method" required>
+			<span ng-if="personal.method.$error.required && personal.method.$dirty" class="label label-danger">Required</span>
+			<!-- <span>{{personalInfo.methodOfContact}}</span> -->
+		</div>
+
+		<div class="form-group">
+			<button type="submit" ng-disabled="personal.$pristine || personal.$invalid || buttonClicked
+			" class="btn btn-primary btn-block">Submit</button>
+			<!-- <span>{{personal.$pristine}}</span><br> -->
+			<!-- <span>{{personal.$invalid}}</span><br> -->
+			<!-- <span>{{personal}}</span> -->
+		</div>
+	</form>
+
+
+	<form name="LAG" class="form-horizontal" role="form" ng-if="!afterGraduationInfo.afterGraduationInfoCompleted" ng-submit="afterGraduationInfoSubmit()" novalidate>
+		<div class="form-group">
+			<legend>SECTION B: Life after Graduation</legend>
+			<small>Please tick all the activities you will be doing/have done after your graduation and then indicate which one is the most important to you.</small>
+		</div>
+
+
+		<div class="form-group">
+			<table class="table table-striped table-hover table-bordered">
+				<thead>
+					<tr>
+						<th></th>
+						<th>
+							Activities you will be doing or have done
+						</th>
+						<th>Importance</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							*Working full-time
+						</td>
+						<th>
+							<input type="checkbox" ng-model="afterGraduationInfo.workingFullTime" value="true">
+						</th>
+						<th>
+							<input type="radio" ng-model="afterGraduationInfo.important" value="workingFullTime" name="important">
+						</th>
+					</tr>
+					<tr>
+						<td>**Working part-time</td>
+						<th>
+							<input type="checkbox" ng-model="afterGraduationInfo.workingPartTime" value="true">
+						</th>
+						<th>
+							<input type="radio" ng-model="afterGraduationInfo.important" value="workingPartTime" name="important">
+						</th>
+					</tr>
+					<tr>
+						<td>Due to start a job in the next month</td>
+						<th>
+							<input type="checkbox" ng-model="afterGraduationInfo.startJobNextMonth" value="true">
+						</th>
+						<th>
+							<input type="radio" ng-model="afterGraduationInfo.important" value="startJobNextMonth" name="important">
+						</th>
+					</tr>
+					<tr>
+						<td>Engaged in full­time further study, training or research</td>
+						<th>
+							<input type="checkbox" ng-model="afterGraduationInfo.furthurStudyTrainingResearch" value="true">
+						</th>
+						<th>
+							<input type="radio" ng-model="afterGraduationInfo.important" value="furthurStudyTrainingResearch" name="important">
+						</th>
+					</tr>
+					<tr>
+						<td>
+							Engaged in part-time further study, training or research
+						</td>
+						<th>
+							<input type="checkbox" ng-model="afterGraduationInfo.partTimeStudyTrainingResearch" value="true">
+						</th>
+						<th>
+							<input type="radio" ng-model="afterGraduationInfo.important" value="partTimeStudyTrainingResearch" name="important">
+						</th>
+					</tr>
+					<tr>
+						<td>
+							Taking time out in order to travel	
+						</td>
+						<th>
+							<input type="checkbox" ng-model="afterGraduationInfo.travelTime" value="true">
+						</th>
+						<th>
+							<input type="radio" ng-model="afterGraduationInfo.important" value="travelTime" name="important">
+						</th>
+					</tr>
+					<tr>
+						<td>
+							Unemployed[SKIP THE REST OF SECTION B]
+						</td>
+						<th>
+							<input type="checkbox" ng-model="afterGraduationInfo.unemployed" value="true">
+						</th>
+						<th>
+							<input type="radio" ng-model="afterGraduationInfo.important" value="unemployed" name="important">
+						</th>
+					</tr>
+					<tr>
+						<td>
+							Doing something else (e.g. retired, looking after the home or family)
+						</td>
+						<th>
+							<input type="checkbox" ng-model="afterGraduationInfo.doElse" value="true">
+						</th>
+						<th>
+							<input type="radio" ng-model="afterGraduationInfo.important" value="doElse" name="important">
+						</th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="panel panel-info">
+			<div class="panel-body">
+				<p>
+					*includes self­employed/freelance, voluntary or other unpaid work, developing a professional portfolio/creative practice or on an internship/placement)
+					** includes self­employed/freelance, voluntary or other unpaid work, developing a professional portfolio/creative practice or on an internship/placement)
+				</p>
+			</div>
+		</div>
+
+
+
+		<div class="form-group">
+			<label for="">If you will have more than one job on 12 January 2015, how many jobs will you have in total?</label>
+			<br>
+			<label>
+				<input type="radio" name="howManyJobs" value="None" ng-model="afterGraduationInfo.jobNumber" required>
+				None
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="howManyJobs" value="One" ng-model="afterGraduationInfo.jobNumber" required>
+				One
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="howManyJobs" value="Two" ng-model="afterGraduationInfo.jobNumber" required>
+				Two
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="howManyJobs" value="Three" ng-model="afterGraduationInfo.jobNumber" required>
+				Three
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="howManyJobs" value="Four" ng-model="afterGraduationInfo.jobNumber" required>
+				Four
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="howManyJobs" value="Five" ng-model="afterGraduationInfo.jobNumber" required>
+				Five
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="howManyJobs" value="More than five" ng-model="afterGraduationInfo.jobNumber" required>
+				More than five
+			</label>
+			<span ng-if="LAG.howManyJobs.$error.required && LAG.howManyJobs.$dirty" class="label label-danger">Required</span>
+		</div>
+
+		<div class="form-group">
+			<label>
+				For the following questions, please provide details of your current position. <br>
+				What is your job title?
+			</label>
+			<input type="text" class="form-control" ng-model="afterGraduationInfo.jobTitle" name="jobTitle">
+		</div>
+
+		<div class="form-group">
+			<label>
+				 What do you mainly do in your job?
+			</label>
+			<textarea class="form-control" ng-model="afterGraduationInfo.jobResponsibility" name="jobResponsibility" required></textarea>
+		</div>
+
+		<div class="form-group">
+			<label>
+				Is your current position related to your undergraduate field(s)of study?
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="afterGraduationInfo.jobRelationToStudy" value="Yes, same field as major(s)" name="studyRelatedJob">
+				Yes, same field as major(s)
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="afterGraduationInfo.jobRelationToStudy" value="Yes ,related to major(s)" name="studyRelatedJob">
+				Yes ,related to major(s)
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="afterGraduationInfo.jobRelationToStudy" value="No, not related" name="studyRelatedJob">
+				No, not related
+			</label>
+		</div>
+
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary btn-block" ng-disabled="LAG.$pristine">Submit</button>
+		</div>
+	</form>
+
+
+	<form name="LAG2Form" class="form-horizontal" role="form" ng-submit="LAG2Submit()" ng-if="!LAG2.LAG2Completed">
+		<div class="form-group">
+			<legend>SECTION B: Life after Graduation</legend>
+		</div>
+
+
+		<div class="form-group">
+			<label>
+				In your current position are you
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Self-employed" name="currentPositionStatus">
+				Self-employed
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Starting up own business" name="currentPositionStatus">
+				Starting up own business
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="On a permanent or open-ended contract" name="currentPositionStatus">
+				On a permanent or open-ended contract
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="On a fixed-term contract lasting 12 months or longer" name="currentPositionStatus">
+				On a fixed-term contract lasting 12 months or longer
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="On a fixed-term contract lasting less than 12 months" name="currentPositionStatus">
+				On a fixed-term contract lasting less than 12 months
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Doing voluntary work" name="currentPositionStatus">
+				Doing voluntary work
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Developing a professional portfolio/creative practice" name="currentPositionStatus">
+				Developing a professional portfolio/creative practice
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Temping" name="currentPositionStatus">
+				Temping
+			</label>
+			<br>
+			<label>
+				<input type="radio" class="" ng-model="LAG2.currentPositionStatus" value="Other" name="currentPositionStatus">
+				Other
+			</label>
+			<input class="form-control" ng-model="LAG2.currentPositionStatusOther" ng-if="LAG2.currentPositionStatus == 'Other'">
+		</div>
+
+		<div class="form-group">
+			<label>
+				If employed, did you need the qualification you recently obtained to get the job? 
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobQualification" name="jobQualification" value="Yes: the qualification was a formal requirement">
+				Yes: the qualification was a formal requirement
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobQualification" name="jobQualification" value="Yes: while the qualification was not a formal requirement it did give me an advantage">
+				Yes: while the qualification was not a formal requirement it did give me an advantage
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobQualification" name="jobQualification" value="No: the qualification was not required">
+				No: the qualification was not required
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobQualification" name="jobQualification" value="Don’t know">
+				Don’t know
+			</label>
+			<br>
+		</div>
+
+		<div class="form-group">
+			<label>
+				Why did you decide to take the job you will be doing or are currently doing?
+			</label>	
+			<table class="table table-hover table-responsive table-condensed table-striped">
+				<tbody>
+					<tr>
+						<td>
+							It fitted well with my career plan/it was exactly the type of work I wanted
+						</td>
+						<td>
+							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA10" value="It fitted well with my career plan/it was exactly the type of work I wanted" name="jobDecision"></label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							It was the best job offer I received
+						</td>
+						<td>
+							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA1" value="It was the best job offer I received" name="jobDecision"></label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							It was the only job offer I received
+						</td>
+						<td>
+							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA2" value="It was the only job offer I received" name="jobDecision"></label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							It was an opportunity to progress in the organization
+						</td>
+						<td>
+							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA3" value="It was an opportunity to progress in the organization" name="jobDecision"></label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							To see if I would like the type of work it involved
+						</td>
+						<td>
+							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA4" value="To see if I would like the type of work it involved" name="jobDecision"></label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							To gain and broaden my experience in order to get the type of job I really want
+						</td>
+						<td>
+							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA5" value="To gain and broaden my experience in order to get the type of job I really want" name="jobDecision"></label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							It was in the right location
+						</td>
+						<td>
+							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA6" value="It was in the right location" name="jobDecision"></label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							The job was well-paid
+						</td>
+						<td>
+							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA7" value="The job was well-paid" name="jobDecision"></label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							In order to earn a living/pay off debts
+						</td>
+						<td>
+							<label><input type="checkbox" class="" ng-model="LAG2.jobDecisionA8" value="In order to earn a living/pay off debts" name="jobDecision"></label>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							Other
+							<input type="text" class="form-control" ng-model="LAG2.jobDecisionA9" name="jobDecisionTxt">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="form-group">
+			<label>
+				How did you first find out about the job?
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobSource" value="Your university/college Careers Service" name="jobSource">
+				Your university/college Careers Service
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobSource" value="Other university/college source (e.g. lecturer, website)" name="jobSource">
+				Other university/college source (e.g. lecturer, website)
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobSource" value="Media (e.g. newspaper/magazine advertisement)" name="jobSource">
+				Media (e.g. newspaper/magazine advertisement)
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobSource" value="Personal contacts, including family and friends" name="jobSource">
+				Personal contacts, including family and friends
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobSource" value="Social media/professional networking sites" name="jobSource">
+				Social media/professional networking sites
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobSource" value="Already worked there (including on an internship/placement)" name="jobSource">
+				Already worked there (including on an internship/placement)
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobSource" value="Employer's website" name="jobSource">
+				Employer's website
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobSource" value="Recruitment agency/website" name="jobSource">
+				Recruitment agency/website
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobSource" value="Speculative application" name="jobSource">
+				Speculative application
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.jobSource" value="Other" name="jobSource">
+				Other
+			</label>
+			<input type="text" class="form-control" ng-model="LAG2.jobSourceOther" name="jobSourceOtherF" ng-if="LAG2.jobSource == 'Other'" >
+		</div>
+
+		<div class="form-group">
+			<label>
+				How well did North South University prepare you for your current career or for the activities mentioned in question 11?
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="Very well">
+				Very well
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="More than adequately">
+				More than adequately
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="Adequately">
+				Adequately
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="Less than adequately">
+				Less than adequately
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="Very poorly">
+				Very poorly
+			</label>
+			<br>
+			<label>
+				<input type="radio" ng-model="LAG2.nsuPrep" name="nsuPrep" value="Not applicable">
+				Not applicable 
+			</label>
+		</div>
+
+
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary btn-block" ng-disabled="LAG2Form.$pristine">Submit</button>
+		</div>
+	</form>
+
+	<form name="educationalExp" class="form-horizontal" role="form" ng-if="!eExp.eExpCompleted" ng-submit="eExpSubmit()">
+		<div class="form-group">
+			<legend>
+				SECTION C: Your overall education experience
+			</legend>
+		</div>
+
+		<div class="form-group">
+			<label>
+				How many years after you finished undergrad did you start your graduate or professional education?
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="Immediately (simultaneously or the following fall or spring or summer?)">
+				Immediately (simultaneously or the following fall or spring or summer?)
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="1 year later">
+				1 year later
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="2 to 3 years later">
+				2 to 3 years later
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="4 to 6 years later">
+				4 to 6 years later
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="7 to 10 years later">
+				7 to 10 years later
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="yearGap" ng-model="eExp.yearGap" value="11 or more years later">
+				11 or more years later
+			</label>
+		</div>
+
+		<div class="form-group">
+			<label>
+				For question 2 and 4 please fill up the tables with a tick if the situation doesn’t apply to you or and rate each category between 1-5, if it does; where 1-5 mean are as follows,
+			</label>
+			<br>
+			<ol>
+				<li>
+					Very well
+				</li>
+				<li>
+					Well
+				</li>
+				<li>
+					Not very well
+				</li>
+				<li>
+					Not at all
+				</li>
+				<li>
+					Can’t tell
+				</li>
+			</ol>
+		</div>
+
+		<div class="form-group">
+			<label>
+				How well have your courses prepared you for each of your following after-graduation activities?
+			</label>
+			<table class="table table-striped table-hover table-condensed">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Rating ( between 1-5)</th>
+						<th>Does not apply</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							Further Studies
+						</td>
+						<td>
+							<input type="number" min="1" max="5" name="activityPrepA1" class="form-control" ng-model="eExp.activityPrepA1" >
+						</td>
+						<td>
+							<input type="checkbox" name="activityPrepA1DnA" ng-model="eExp.activityPrepA1DnA" value="true">
+						</td>
+					</tr>
+					<tr>
+						<td>Employment</td>
+						<td>
+							<input type="number" min="1" max="5" name="activityPrepA2" class="form-control" ng-model="eExp.activityPrepA2">
+						</td>
+						<td>
+							<input type="checkbox" name="activityPrepA2DnA" ng-model="eExp.activityPrepA2DnA" value="true">
+						</td>
+					</tr>
+					<tr>
+						<td>Being Self-employed/Freelance</td>
+						<td>
+							<input type="number" min="1" max="5" name="activityPrepA3" class="form-control" ng-model="eExp.activityPrepA3">
+						</td>
+						<td>
+							<input type="checkbox" name="activityPrepA3DnA" ng-model="eExp.activityPrepA3DnA" value="true">
+						</td>
+					</tr>
+					<tr>
+						<td>Introducing new ideas in work</td>
+						<td>
+							<input type="number" min="1" max="5" name="activityPrepA4" class="form-control" ng-model="eExp.activityPrepA4">
+						</td>
+						<td>
+							<input type="checkbox" name="activityPrepA4DnA" ng-model="eExp.activityPrepA4DnA" value="true">
+						</td>
+					</tr>
+					<tr>
+						<td>Develop career‐ or work‐related knowledge and skills</td>
+						<td>
+							<input type="number" min="1" max="5" name="activityPrepA5" class="form-control" ng-model="eExp.activityPrepA5">
+						</td>
+						<td>
+							<input type="checkbox" name="activityPrepA5DnA" ng-model="eExp.activityPrepA5DnA" value="true">
+						</td>
+					</tr>
+					<tr>
+						<td>Acquire new skills and knowledge on your own</td>
+						<td>
+							<input type="number" min="1" max="5" name="activityPrepA6" class="form-control" ng-model="eExp.activityPrepA6">
+						</td>
+						<td>
+							<input type="checkbox" name="activityPrepA6DnA" ng-model="eExp.activityPrepA6DnA" value="true">
+						</td>
+					</tr>
+					<tr>
+						<td>Write clearly and effectively </td>
+						<td>
+							<input  type="number" min="1" max="5" name="activityPrepA7" class="form-control" ng-model="eExp.activityPrepA7">
+						</td>
+						<td>
+							<input type="checkbox" name="activityPrepA7DnA" ng-model="eExp.activityPrepA7DnA" value="true">
+						</td>
+					</tr>
+					<tr>
+						<td>Think analytically and logically</td>
+						<td>
+							<input type="number" min="1" max="5" name="activityPrepA8" class="form-control" ng-model="eExp.activityPrepA8">
+						</td>
+						<td>
+							<input type="checkbox" name="activityPrepA8DnA" ng-model="eExp.activityPrepA8DnA" value="true">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="form-group">
+			<label>
+				Were you involved in any extra-curricular activities providedby North South University? If yes, then please specify what kind of activity/activities.
+			</label>
+			<textarea class="form-control" ng-model="eExp.coCurriculam" name="coCurriculam"></textarea>
+		</div>
+
+		<div class="form-group">
+			<label>
+				How well did the extra-curricular activities that you were involved in (including internships undertaken while you were studying)… prepare you to deal with different challenges in your work life?
+			</label>
+			<table class="table table-striped table-hover table-condensed">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Rating ( between 1-5)</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							Efficiency in Leadership	
+						</td>
+						<td>
+							<input type="number" min="1" max="5" class="form-control" ng-model="eExp.leadership" name="leadership">
+						</td>
+					</tr>
+					<tr>
+						<td>Teamwork</td>
+						<td>
+							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.teamwork" name="teamwork">
+						</td>
+					</tr>
+					<tr>
+						<td>Adhere to Punctuality</td>
+						<td>
+							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.punctuality" name="punctuality">
+						</td>
+					</tr>
+					<tr>
+						<td>Introducing new ideas in work</td>
+						<td>
+							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.ideas" name="ideas">
+						</td>
+					</tr>
+					<tr>
+						<td>Develop career‐ or work‐related knowledge and skills</td>
+						<td>
+							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.skill" name="skill">
+						</td>
+					</tr>
+					<tr>
+						<td>Acquire new skills and knowledge on your own</td>
+						<td>
+							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.newSkill" name="newSkill">
+						</td>
+					</tr>
+					<tr>
+						<td>Write clearly and effectively </td>
+						<td>
+							<input type="number"  min="1" max="5" class="form-control" ng-model="eExp.writing">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="form-group">
+			<label>
+				5.	Would you encourage a current high school senior who resembles you when you were a high school senior (similar background, ability, interests and temperament) to attend North South University?
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="encourage" ng-model="eExp.encourage" value="Definitely Would">
+				Definitely Would
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="encourage" ng-model="eExp.encourage" value="Probably Would">
+				Probably Would
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="encourage" ng-model="eExp.encourage" value="Maybe">
+				Maybe
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="encourage" ng-model="eExp.encourage" value="Probably Would NOT">
+				Probably Would NOT
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="encourage" ng-model="eExp.encourage" value="Definitely Would NOT">
+				Definitely Would NOT
+			</label>
+		</div>
+
+		<div class="form-group">
+			<label>
+				Did the benefits you received from attending North South University out weigh the financial costs to you and your family? Mark the best answer.
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="finance" ng-model="eExp.finance" value="Yes, definitely">
+				Yes, definitely
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="finance" ng-model="eExp.finance" value="Maybe">
+				Maybe
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="finance" ng-model="eExp.finance" value="No, definitely not">
+				No, definitely not
+			</label>
+		</div>
+
+		<div class="form-group">
+			<label>
+				Today, how connected do you feel to North South University?
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="connected" ng-model="eExp.connected" value="Very connected">
+				Very connected
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="connected" ng-model="eExp.connected" value="Moderately connected">
+				Moderately connected
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="connected" ng-model="eExp.connected" value="Some what connected">
+				Some what connected
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="connected" ng-model="eExp.connected" value="Not very connected">
+				Not very connected
+			</label>
+		</div>
+
+		<div class="form-group">
+			<label>
+				Are you regularly in touch with people you met at North South University?(Mark all that apply)
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="pplConnection" ng-model="eExp.pplConnection" value="Yes, with, with my advisor(s)">
+				a.	Yes, with, with my advisor(s)
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="pplConnection" ng-model="eExp.pplConnection" value="Yes, with my  professors/lecturers or the staffs">
+				b.	Yes, with my  professors/lecturers or the staffs
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="pplConnection" ng-model="eExp.pplConnection" value="Yes, with members of my team or club">
+				c.	Yes, with members of my team or club
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="pplConnection" ng-model="eExp.pplConnection" value="Yes, with former classmates,  or acquaintances  from to NSU">
+				d.	Yes, with former classmates,  or acquaintances  from to NSU 
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="pplConnection" ng-model="eExp.pplConnection" value="No">
+				e.	No
+			</label>
+		</div>
+
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary btn-block" ng-disabled="educationalExp.$pristine">Submit</button>
+		</div>
+	</form>
+
+	<form name="commentForm" class="form-horizontal" role="form" ng-submit="commentSubmit()" ng-if="!comment.commentCompleted">
+		<div class="form-group">
+			<legend>SECTION D: Comments/Recommendations</legend>
+		</div>
+
+		<div class="form-group">
+			<label>
+				Do you think there is more that North South University should offer a student for his/her betterment apart from curricular and extracurricular activities? If yes, please mention below.
+			</label>
+			<textarea class="form-control" ng-model="comment.q1" name="q1" required></textarea>
+			<span class="label label-danger" ng-if="commentForm.q1.$error.required && commentForm.q1.$dirty"></span>
+		</div>
+
+		<div class="form-group">
+			<label>
+				What would you recommend for North South University to improve its quality, not just in terms of education or extracurricular activities but as an institutionthat would bring the excellence in every student?
+			</label>
+			<textarea class="form-control" ng-model="comment.q2" name="q2" required></textarea>
+			<span class="label label-danger" ng-if="commentForm.q2.$error.required && commentForm.q2.$dirty"></span>
+		</div>
+
+		<div class="form-group">
+			<label>Comments or any other Recommendations</label>
+			<textarea class="form-control" ng-model="comment.q3" name="q3" required></textarea>
+			<span class="label label-danger" ng-if="commentForm.q3.$error.required && commentForm.q3.$dirty"></span>
+		</div>
+
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary btn-block" ng-disabled="commentForm.$pristine || commentForm.$invalid">Submit</button>
+		</div>
+	</form>
+</div>

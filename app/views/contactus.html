@@ -1,1 +1,72 @@
-<p>This is the contactus view.</p>
+<style type="text/css">
+sup{
+	color: red;
+}
+</style>
+<div class="col-md-8 col-md-offset-2">
+	<form name="contactForm" class="form-horizontal" role="form">
+		<div class="form-group">
+			<legend>Contact Us</legend>
+		</div>
+
+		<div class="form-group">
+			<label for="">Name <sup><i class="fa fa-asterisk"></i></sup></label>
+			<input type="text" class="form-control" name="name" ng-model="contact.name" placeholder="Your name" required>
+			<span class="label label-danger" ng-show="contactForm.name.$invalid && contactForm.name.$dirty">Required</span>
+		</div>
+
+		<div class="form-group">
+			<label for="">Organization <sup><i class="fa fa-asterisk"></i></sup></label>
+			<input type="text" class="form-control" name="organization" ng-model="contact.organization" placeholder="Your organization" required>
+			<span class="label label-danger" ng-show="contactForm.organization.$invalid && contactForm.organization.$dirty">Required</span>
+		</div>
+
+		<div class="form-group">
+			<label for="">Designation <sup><i class="fa fa-asterisk"></i></sup></label>
+			<input type="text" class="form-control" name="designation" ng-model="contact.designation" placeholder="Your designation" required>
+			<span class="label label-danger" ng-show="contactForm.designation.$invalid && contactForm.designation.$dirty">Required</span>
+		</div>
+
+		<div class="form-group">
+			<label for="">Contact Number <sup><i class="fa fa-asterisk"></i></sup></label>
+			<input type="text" class="form-control" name="contactno" ng-model="contact.contactno" placeholder="Your contact number" required>
+			<span class="label label-danger" ng-show="contactForm.contactno.$invalid && contactForm.contactno.$dirty">Required</span>
+		</div>
+
+		<div class="form-group">
+			<label for="">Email <sup><i class="fa fa-asterisk"></i></sup></label>
+			<input type="email" class="form-control" name="email" ng-model="contact.email" placeholder="Your email" required>
+			<span class="label label-danger" ng-show="contactForm.email.$invalid && contactForm.email.$dirty">Valid email required</span>
+		</div>
+
+		<div class="form-group">
+			<label for="">NSU ID</label>
+			<input type="text" class="form-control" name="nsuid" ng-model="contact.nsuid" placeholder="Your nsu id">
+		</div>
+
+		<div class="form-group">
+			<label for="">Area of Interest <sup><i class="fa fa-asterisk"></i></sup></label>
+			<select name="interest" ng-model="contact.interest" class="form-control" required>
+				<option value="">Select Area of Interest</option>
+				<option value="Volunteering">Volunteering</option>
+				<option value="Becoming a year representative">Becoming a year representative</option>
+				<option value="Becoming a country contact">Becoming a country contact</option>
+				<option value="Other">Other</option>
+			</select>
+			<span class="label label-danger" ng-show="contactForm.interest.$invalid && contactForm.interest.$dirty">Required</span>
+			<br>
+			<input ng-if="contact.interest == 'Other'" type="text" class="form-control" name="other" ng-model="contact.other" placeholder="Write your own interest" required>
+			<span class="label label-danger" ng-show="contactForm.other.$invalid && contactForm.other.$dirty">Required</span>
+		</div>
+
+		<div class="form-group">
+			<label for="">Message</label>
+			<textarea name="message" ng-model="contact.message" cols="3" rows="10" class="form-control"></textarea>
+			<span class="label label-danger" ng-show="contactForm.message.$invalid && contactForm.message.$dirty">Required</span>
+		</div>
+
+		<div class="form-group">
+			<button type="submit" ng-click="contactSubmit(contact)" class="btn btn-primary" ng-disabled="contactForm.$invalid || contactForm.$pristine || buttonClicked">Submit</button>
+		</div>
+	</form>
+</div>

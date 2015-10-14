@@ -21,16 +21,16 @@ class My_Session extends CI_Session {
      */
     public function sess_update()
     {
-      $CI =& get_instance();
+        $CI =& get_instance();
 
-      if (false)
-      {
-        parent::sess_update();
-      }
+        if (false)
+        {
+            parent::sess_update();
+        }
     }
 
-  }
+}
 
 // ------------------------------------------------------------------------
-  /* End of file MY_Session.php */
+/* End of file MY_Session.php */
 /* Location: ./application/libraries/MY_Session.php */

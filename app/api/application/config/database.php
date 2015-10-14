@@ -48,16 +48,16 @@
 $active_group = 'default';
 $active_record = TRUE;
 
+// $db['default']['hostname'] = 'localhost';
+// $db['default']['username'] = 'root';
+// $db['default']['password'] = '';
+// $db['default']['database'] = 'nsu_sob_alumni';
+
+// staging
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = '';
-$db['default']['database'] = 'nsu_sob_alumni';
-
-// staging
-// $db['default']['hostname'] = 'localhost';
-// $db['default']['username'] = 'nsuschoo_root';
-// $db['default']['password'] = '^MPmi%RXOa5B';
-// $db['default']['database'] = 'nsuschoo_alumni';
+$db['default']['database'] = 'alumni';
 
 // $db['default']['hostname'] = '192.168.100.219';
 // $db['default']['username'] = 'adnan';
